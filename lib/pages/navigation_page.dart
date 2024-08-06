@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/pages/derdiedas_page.dart';
+import 'package:ysty_style_words/pages/flashcards_page.dart';
+import 'package:ysty_style_words/pages/matching_page.dart';
+import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import '../widgets/navigation_button.dart';
 
 enum NavigationStatus {
@@ -29,32 +33,10 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(FontAwesomeIcons.circleUser),
-            const SizedBox(width: 10.0,),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(color: Colors.grey, width: 3),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text("Category", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-              ),
-            ),
-            const SizedBox(width: 10.0,),
-            Icon(FontAwesomeIcons.gear),
-          ],
-        ),
-        // centerTitle: true,
-        
-      ),
+      // appBar: AppBar(title: const MainAppBar()),
+      // appBar: _showAppBar(),
       body: SafeArea(
-        child: Container(color: Colors.red,),
+        child: _showNavPage(),
       ),
       bottomSheet: Container(color: Colors.grey.shade200,
         height: 60.0,
@@ -78,4 +60,33 @@ class _NavigationPageState extends State<NavigationPage> {
         ),),
     );
   }
+
+  // Widget _showAppBar(){
+  //   switch (_navigationStatus){
+  //     case NavigationStatus.flashcards_nav:
+  //       return const MainAppBar(leftIcon: Icon(FontAwesomeIcons.user), onPressedLeftIcon: (){}, rightIcon: Icon(FontAwesomeIcons.gear), onPressedRightIcon: (){});
+  //     case NavigationStatus.matching_nav:
+  //       return const MatchingPage();
+  //     case NavigationStatus.derdiedas_nav:
+  //       return const DerDieDasPage();
+  //     default:
+  //       return const FlashcardsPage();
+  //   }
+  //
+  // }
+
+  Widget _showNavPage(){
+    switch (_navigationStatus){
+      case NavigationStatus.flashcards_nav:
+        return const FlashcardsPage();
+      case NavigationStatus.matching_nav:
+        return const MatchingPage();
+      case NavigationStatus.derdiedas_nav:
+        return const DerDieDasPage();
+      default:
+        return const FlashcardsPage();
+    }
+
+  }
+
 }
