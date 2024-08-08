@@ -2,7 +2,7 @@
 
 A new Ysty Style German language learning app project.
 
-## Tha figma concept:
+## The figma concept:
 <p align="center">
 <img src="/screenshots/figmaUI.png"/>
 </p>
@@ -23,3 +23,8 @@ On the Der/Die/Das page you can make sure that you know the grammatical gender c
 I will use JSON for the "Flashcard Content" and a local db for the "User Progress".
 
 There will be a native ad after every 40 or so swipe on the Flashcard page. The same applies for the Der/Die/Das page. An Interstitial ad after every game in the MatchingGame page 
+
+## Figma concept for the rest of the pages:
+<p align="center">
+<img src="/screenshots/figmaUI2.png"/>
+</p>
