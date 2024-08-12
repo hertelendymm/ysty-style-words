@@ -29,7 +29,7 @@ There will be a native ad after every 40 or so swipe on the Flashcard page. The 
 <img src="/screenshots/figmaUI2.png"/>
 </p>
 
-On your profile page you can check how many words you know, how good is your Der/Die/Das knowledge (or your guessing game). You can also check more apps made by us and I want to add a way to export/import your "User Progress".
+On your profile page you can check how many words you know, how good is your Der/Die/Das knowledge (or your guessing game) and your high score on the matching game. You can also check more apps made by us and I want to add a way to export/import your "User Progress".
 
 You can choose the category you want to practise on the category page. I'm planning to add option to choose between A1-A2, B1-B2 and C1-C2 level categories. 
 
