@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/pages/profile_page.dart';
 
 import 'categories_page.dart';
 
@@ -20,16 +21,13 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-                onTap: (){},
+                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
                 child: const Icon(FontAwesomeIcons.user)
             ),
             const SizedBox(width: 10.0,),
             Expanded(
               child: GestureDetector(
-                onTap: (){Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CategoriesPage()),);
-                },
+                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoriesPage())),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
@@ -43,7 +41,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
             const SizedBox(width: 10.0,),
             GestureDetector(
                 onTap: (){},
-                child: const Icon(FontAwesomeIcons.gear)
+                child: const Icon(FontAwesomeIcons.rotate)
             ),
           ],
         ),

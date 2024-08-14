@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 
 import 'categories_page.dart';
 
@@ -26,10 +27,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
             const SizedBox(width: 10.0,),
             Expanded(
               child: GestureDetector(
-                onTap: (){Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CategoriesPage()),);
-                },
+                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoriesPage())),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
@@ -42,7 +40,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
             ),
             const SizedBox(width: 10.0,),
             GestureDetector(
-                onTap: (){},
+                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const DerDieDasHelpPage())),
                 child: const Icon(FontAwesomeIcons.lightbulb)
             ),
           ],
