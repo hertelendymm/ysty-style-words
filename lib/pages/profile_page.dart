@@ -7,7 +7,9 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
           child: Icon(
@@ -64,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         border: Border.all(color: Colors.grey.shade300, width: 1),
-                        color: Colors.grey.shade200,
+                        color: Colors.grey.shade100,
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                       child: Column(

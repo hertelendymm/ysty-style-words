@@ -15,7 +15,9 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +49,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
         ),
         // centerTitle: true,
       ),
-      body: Container(color: Colors.red,),
+      body: Container(color: Colors.white,),
     );
   }
 }

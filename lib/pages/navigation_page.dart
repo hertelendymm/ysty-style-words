@@ -35,8 +35,12 @@ class _NavigationPageState extends State<NavigationPage> {
     return Scaffold(
       // appBar: AppBar(title: const MainAppBar()),
       // appBar: _showAppBar(),
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: _showNavPage(),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 60.0),
+          child: _showNavPage(),
+        ),
       ),
       bottomSheet: Container(color: Colors.grey.shade200,
         height: 60.0,
