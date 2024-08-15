@@ -95,11 +95,11 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
               ),
               Row(
                 children: [
-                  Expanded(child: ButtonRounded(text: "der")),
+                  Expanded(child: ButtonRounded(text: "der", onPressed: (){},)),
                   SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "die")),
+                  Expanded(child: ButtonRounded(text: "die", onPressed: (){})),
                   SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "das")),
+                  Expanded(child: ButtonRounded(text: "das", onPressed: (){})),
                 ],
               )
             ],
