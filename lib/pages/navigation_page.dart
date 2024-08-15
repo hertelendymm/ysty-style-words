@@ -4,7 +4,7 @@ import 'package:ysty_style_words/pages/derdiedas_page.dart';
 import 'package:ysty_style_words/pages/flashcards_page.dart';
 import 'package:ysty_style_words/pages/matching_page.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
-import '../widgets/navigation_button.dart';
+import '../widgets/button_navigation.dart';
 
 enum NavigationStatus {
   flashcards_nav,
@@ -48,15 +48,15 @@ class _NavigationPageState extends State<NavigationPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            NavigationButton(
+            ButtonNavigation(
               isActive: _navigationStatus == NavigationStatus.flashcards_nav,
               onPressed: () => switchNav(NavigationStatus.flashcards_nav),
             ),
-            NavigationButton(
+            ButtonNavigation(
               isActive: _navigationStatus == NavigationStatus.matching_nav,
               onPressed: () => switchNav(NavigationStatus.matching_nav),
             ),
-            NavigationButton(
+            ButtonNavigation(
               isActive: _navigationStatus == NavigationStatus.derdiedas_nav,
               onPressed: () => switchNav(NavigationStatus.derdiedas_nav),
             ),

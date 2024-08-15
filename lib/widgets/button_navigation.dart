@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NavigationButton extends StatelessWidget {
-  const NavigationButton({
+class ButtonNavigation extends StatelessWidget {
+  const ButtonNavigation({
     super.key,
     this.isActive=false,
     required this.onPressed,
