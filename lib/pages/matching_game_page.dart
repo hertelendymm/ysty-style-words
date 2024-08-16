@@ -24,10 +24,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfilePage())),
+                onTap: () => Navigator.pop(context),
                 child: const Icon(FontAwesomeIcons.xmark)),
             const SizedBox(
               width: 10.0,
