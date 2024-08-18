@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
-import 'package:ysty_style_words/pages/profile_page.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/widgets/main_app_bar.dart';
 
-import 'categories_page.dart';
 
 class DerDieDasPage extends StatefulWidget {
   const DerDieDasPage({super.key});
@@ -18,64 +16,18 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfilePage())),
-                child: const Icon(FontAwesomeIcons.user)),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CategoriesPage())),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.grey, width: 3),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: const Text(
-                    "Category",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-            GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DerDieDasHelpPage())),
-                child: const Icon(FontAwesomeIcons.lightbulb)),
-          ],
-        ),
-        // centerTitle: true,
-      ),
+      appBar: MyAppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 80.0),
-                margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
-                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+                width: MediaQuery.sizeOf(context).width,
+                height: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     border: Border.all(color: Colors.grey.shade300, width: 3),
@@ -83,6 +35,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('________',
                         style: TextStyle(
@@ -95,13 +48,21 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
               ),
               Row(
                 children: [
-                  Expanded(child: ButtonRounded(text: "der", onPressed: (){},)),
+                  Expanded(
+                      child: ButtonRounded(
+                    text: "der",
+                    onPressed: () {},
+                  )),
                   SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "die", onPressed: (){})),
+                  Expanded(child: ButtonRounded(text: "die", onPressed: () {})),
                   SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "das", onPressed: (){})),
+                  Expanded(child: ButtonRounded(text: "das", onPressed: () {})),
                 ],
-              )
+              ),
+              ButtonRounded(text: "Help", backgroundColor: Colors.grey.shade200, textColor: Colors.black, onPressed: ()=>Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DerDieDasHelpPage()))),
             ],
           ),
         ),
