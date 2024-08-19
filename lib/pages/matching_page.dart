@@ -17,7 +17,7 @@ class _MatchingPageState extends State<MatchingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MyAppBar(),
+      appBar: MainAppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20.0),
