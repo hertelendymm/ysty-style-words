@@ -31,7 +31,7 @@ class SettingsPage extends StatelessWidget {
                   border: Border.all(color: Colors.grey.shade300, width: 1),
                 ),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
                   child: const Column(
                     children: [
                       Text("1274", style: TextStyle(color: Colors.black, fontSize: 80.0, fontWeight: FontWeight.bold)),
@@ -47,14 +47,14 @@ class SettingsPage extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Colors.grey, width: 1),
-                        color: Colors.black
+                        border: Border.all(color: Colors.grey.shade300, width: 1),
+                        color: Colors.grey.shade100,
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                       child: const Column(
                         children: [
-                          Text("89%", style: TextStyle(color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold)),
-                          Text("Der/Die/Das", style: TextStyle(color: Colors.white),),
+                          Text("89%", style: TextStyle(color: Colors.black, fontSize: 30.0, fontWeight: FontWeight.bold)),
+                          Text("Der/Die/Das",),
                         ],
                       ),
                     ),
@@ -80,10 +80,11 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 10.0),
               const TitleWSeparator(level: "Spracheinstellungen"),
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _languageButton(true),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(width: 20.0),
                   _languageButton(false),
                 ],
               ),
@@ -128,31 +129,33 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _languageButton(bool isActive){
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(color: isActive ? Colors.blue : Colors.grey.shade200, width: 4),
-        color: Colors.white
-      ),
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child:  Row(
-        children: [
-          Image.asset(isActive ? 'images/uk_flag_icon.png':'images/magyar_flag_icon.png' , width: 50.0, height: 50.0,),
-          SizedBox(width: 20.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                  isActive ? 'English' :'Magyar',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: isActive ? Colors.blue : Colors.grey )
-              ),
-              Text(
-                  isActive ? 'German':'Német' ,
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: isActive ? Colors.blue : Colors.grey)
-              ),
-            ],
-          ),
-        ],
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(color: isActive ? Colors.black : Colors.grey.shade200, width: 3),
+          color: isActive ? Colors.black : Colors.white
+        ),
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        child:  Row(
+          children: [
+            Image.asset(isActive ? 'images/uk_flag_icon.png':'images/magyar_flag_icon.png' , width: 36.0, height: 36.0,),
+            SizedBox(width: 20.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    isActive ? 'English' :'Magyar',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.grey )
+                ),
+                Text(
+                    isActive ? 'German':'Német' ,
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.grey)
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
