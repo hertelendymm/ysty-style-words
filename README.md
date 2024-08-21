@@ -2,9 +2,14 @@
 
 A new Ysty Style German language learning app project.
 
-## The figma concept:
+## The figma concepts:
 <p align="center">
 <img src="/screenshots/figmaUI.png"/>
+</p>
+
+## The new figma concepts:
+<p align="center">
+<img src="/screenshots/figmaUInew.png"/>
 </p>
 
 The main navigation has 3 main page:
