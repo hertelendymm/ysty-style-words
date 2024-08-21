@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/secondary_app_bar.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
@@ -90,13 +89,13 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 10.0),
               const TitleWSeparator(level: "Links"),
-              _TempLinkButton('Link 1'),
-              _TempLinkButton('Link 2'),
-              _TempLinkButton('Link 3'),
-              _TempLinkButton('Link 4'),
-              _TempLinkButton('Link 5'),
-              _TempLinkButton('Link 6'),
-              _TempLinkButton('More apps'),
+              _tempLinkButton('Link 1'),
+              _tempLinkButton('Link 2'),
+              _tempLinkButton('Link 3'),
+              _tempLinkButton('Link 4'),
+              _tempLinkButton('Link 5'),
+              _tempLinkButton('Link 6'),
+              _tempLinkButton('More apps'),
             ],
           ),
         ),
@@ -104,7 +103,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _TempLinkButton(String title) {
+  Widget _tempLinkButton(String title) {
     return Container(
         padding: const EdgeInsets.all(20.0),
         margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -136,11 +135,11 @@ class SettingsPage extends StatelessWidget {
           border: Border.all(color: isActive ? Colors.black : Colors.grey.shade200, width: 3),
           color: isActive ? Colors.black : Colors.white
         ),
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         child:  Row(
           children: [
             Image.asset(isActive ? 'images/uk_flag_icon.png':'images/magyar_flag_icon.png' , width: 36.0, height: 36.0,),
-            SizedBox(width: 20.0),
+            const SizedBox(width: 20.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
