@@ -2,7 +2,7 @@
 
 A new Ysty Style German language learning app project.
 
-## The figma concepts:
+## The original figma concepts:
 <p align="center">
 <img src="/screenshots/figmaUI.png"/>
 </p>
@@ -11,6 +11,8 @@ A new Ysty Style German language learning app project.
 <p align="center">
 <img src="/screenshots/figmaUInew.png"/>
 </p>
+
+Now the main pages have the same appBar.
 
 The main navigation has 3 main page:
 - Flashcard page
