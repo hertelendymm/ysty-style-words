@@ -31,10 +31,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             ),
             Expanded(
               child: GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CategoriesPage())),
+                // onTap: () => Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const CategoriesPage())),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),

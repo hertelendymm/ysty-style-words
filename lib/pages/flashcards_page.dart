@@ -1,22 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ysty_style_words/services/categoryServices.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'package:ysty_style_words/widgets/secondary_app_bar.dart';
 
 
 class FlashcardsPage extends StatefulWidget {
   const FlashcardsPage({super.key});
+  // const FlashcardsPage({super.key, required this.selectedCategory});
+
+  // final String selectedCategory;
 
   @override
   State<FlashcardsPage> createState() => _FlashcardsPageState();
 }
 
 class _FlashcardsPageState extends State<FlashcardsPage> {
+
+  // String _selectedCategory = 'Animal';
+  //
+  // Future<String?> loadSelectedCategory() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString('selectedCategory');
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   loadSelectedCategory().then((categoryName) {
+  //     if (categoryName != null) {
+  //       setState(() {
+  //         _selectedCategory = categoryName;
+  //       });
+  //     }
+  //   });
+  // }
+
+  // String _selectedCategory = 'Select a category';
+  String? _selectedCategory;
+
+  // getSelectedCategory() async {
+  //   String? selectedCategory = await CategoryService.loadSelectedCategory();
+  //   if (selectedCategory != null) {
+  //     setState(() {
+  //       _selectedCategory = _selectedCategory;
+  //     });
+  //   }
+  // }
+
+  // getSelectedCategory(){
+  //   CategoryService.loadSelectedCategory().then((categoryName) {
+  //     if (categoryName != null) {
+  //       // Use the categoryName to load relevant content
+  //       setState(() {
+  //         _selectedCategory = categoryName;
+  //       });
+  //     }
+  //   });
+  // }
+
+  Future<void> _loadSelectedCategory() async {
+    String? categoryName = await CategoryService.loadSelectedCategory();
+    setState(() {
+      _selectedCategory = categoryName;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      // getSelectedCategory();
+    _loadSelectedCategory();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const MainAppBar(),
+      // appBar: MainAppBar(),
+      // appBar: MainAppBar(selectedCategory: _selectedCategory ?? 'Select a category',),
+      // appBar: MainAppBar(selectedCategory: _selectedCategory),
+      // appBar: MainAppBar(selectedCategory: widget.selectedCategory),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ysty_style_words/services/categoryServices.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 
@@ -7,17 +9,74 @@ import 'matching_game_page.dart';
 
 class MatchingPage extends StatefulWidget {
   const MatchingPage({super.key});
+  // const MatchingPage({super.key, required this.selectedCategory});
+
+  // final String selectedCategory;
 
   @override
   State<MatchingPage> createState() => _MatchingPageState();
 }
 
 class _MatchingPageState extends State<MatchingPage> {
+
+  // String _selectedCategory = 'Animal';
+  //
+  // Future<String?> loadSelectedCategory() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString('selectedCategory');
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   loadSelectedCategory().then((categoryName) {
+  //     if (categoryName != null) {
+  //       setState(() {
+  //         _selectedCategory = categoryName;
+  //       });
+  //     }
+  //   });
+  // }
+
+  String _selectedCategory = 'Select a category';
+
+  // getSelectedCategory() async {
+  //   String? selectedCategory = await CategoryService.loadSelectedCategory();
+  //   if (selectedCategory != null) {
+  //     setState(() {
+  //       _selectedCategory = _selectedCategory;
+  //     });
+  //   }
+  // }
+
+  getSelectedCategory(){
+    CategoryService.loadSelectedCategory().then((categoryName) {
+      if (categoryName != null) {
+        // Use the categoryName to load relevant content
+        setState(() {
+          _selectedCategory = categoryName;
+        });
+      }
+    });
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSelectedCategory();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MainAppBar(),
+      // appBar: MainAppBar(),
+      // appBar: MainAppBar(selectedCategory: _selectedCategory),
+      // appBar: MainAppBar(selectedCategory: widget.selectedCategory),
+      // appBar: const MainAppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20.0),

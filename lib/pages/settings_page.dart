@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/widgets/secondary_app_bar.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
   bool isEnglishChosenLang(){
     /// TODO: Get chosen language settings from SharedPref (hungarian-german or english-german) and english should be the default
     return false;
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -21,7 +21,9 @@ class SecondaryAppBar extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Navigator.pop(context);
+                    },
                   child: Container(
                     // color: Colors.red,
                     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),

@@ -1,22 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
+import 'package:ysty_style_words/services/categoryServices.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 
 
 class DerDieDasPage extends StatefulWidget {
   const DerDieDasPage({super.key});
+  // const DerDieDasPage({super.key, required this.selectedCategory});
+
+  // final String selectedCategory;
 
   @override
   State<DerDieDasPage> createState() => _DerDieDasPageState();
 }
 
 class _DerDieDasPageState extends State<DerDieDasPage> {
+
+  String _selectedCategory = 'Select a category';
+
+  // getSelectedCategory() async {
+  //   String? selectedCategory = await CategoryService.loadSelectedCategory();
+  //   if (selectedCategory != null) {
+  //     setState(() {
+  //       _selectedCategory = _selectedCategory;
+  //     });
+  //   }
+  // }
+
+
+  getSelectedCategory(){
+    CategoryService.loadSelectedCategory().then((categoryName) {
+      if (categoryName != null) {
+        // Use the categoryName to load relevant content
+        setState(() {
+          _selectedCategory = categoryName;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSelectedCategory();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MainAppBar(),
+      // appBar: MainAppBar(),
+      // appBar: MainAppBar(selectedCategory: _selectedCategory),
+      // appBar: const MainAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
