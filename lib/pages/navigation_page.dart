@@ -10,11 +10,7 @@ import 'package:ysty_style_words/services/categoryServices.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import '../widgets/button_navigation.dart';
 
-enum NavigationStatus {
-  flashcards_nav,
-  matching_nav,
-  derdiedas_nav
-}
+enum NavigationStatus { flashcards_nav, matching_nav, derdiedas_nav }
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -26,7 +22,7 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcards_nav;
 
-  void switchNav(NavigationStatus newNavStatus){
+  void switchNav(NavigationStatus newNavStatus) {
     print("before: $_navigationStatus");
     setState(() {
       _navigationStatus = newNavStatus;
@@ -57,8 +53,10 @@ class _NavigationPageState extends State<NavigationPage> {
   bool _isLoading = true; // Add a loading state
 
   void refreshPage() {
-    setState(() {print("refressed =================================");
-    _loadSelectedCategory();});
+    setState(() {
+      print("refressed =================================");
+      _loadSelectedCategory();
+    });
   }
 
   @override
@@ -74,7 +72,6 @@ class _NavigationPageState extends State<NavigationPage> {
       _isLoading = false; // Update loading state after data is loaded
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +91,8 @@ class _NavigationPageState extends State<NavigationPage> {
           // child: _showNavPage(selectedCategory: _selectedCategory),
         ),
       ),
-      bottomSheet: Container(color: Colors.grey.shade200,
+      bottomSheet: Container(
+        color: Colors.grey.shade200,
         height: 60.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,67 +111,76 @@ class _NavigationPageState extends State<NavigationPage> {
               onPressed: () => switchNav(NavigationStatus.derdiedas_nav),
             ),
           ],
-        ),),
+        ),
+      ),
     );
   }
 
-  Widget _myAppBar(){
+  Widget _myAppBar() {
     return Column(
       children: [
-        SizedBox(
+        Container(
           height: kToolbarHeight + 12,
+          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CategoriesPage(onRefresh: refreshPage))),
-                    child: Container(
-                      // height: 40.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        border: Border.all(color: Colors.grey.shade300, width: 3),
-                      ),
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 6.0),
-                      // padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child:  Center(
-                          child: Text(_isLoading ? "" : _selectedCategory??"Select a Category",
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                            textAlign: TextAlign.center,
-                          )),
-
-
-                      /// TODO: From SharedPreference load the lest chosen category title!!!
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const SettingsPage())),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CategoriesPage(onRefresh: refreshPage))),
                   child: Container(
-                    // color: Colors.red,
-                    padding:
-                    const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
-                          color: Colors.grey.shade200),
-                      child: const Icon(FontAwesomeIcons.gear, color: Colors.black),
+                    // height: 40.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40.0),
+                      border: Border.all(color: Colors.grey.shade300, width: 3),
                     ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 0.0, vertical: 6.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+                    // padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Center(
+                        child: Text(
+                      _isLoading
+                          ? ""
+                          : _selectedCategory ?? "Select a Category",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                      textAlign: TextAlign.center,
+                    )),
+
+                    /// TODO: From SharedPreference load the lest chosen category title!!!
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                width: 20.0,
+              ),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage())),
+                child: Container(
+                  // color: Colors.red,
+                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0),
+                        color: Colors.grey.shade200),
+                    child:
+                        const Icon(FontAwesomeIcons.gear, color: Colors.black),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         Container(
           color: Colors.grey.shade200,
@@ -183,29 +190,28 @@ class _NavigationPageState extends State<NavigationPage> {
     );
   }
 
-  Widget _showNavPage(){
-  // Widget _showNavPage({required String selectedCategory}){
-    if(_isLoading) {
+  Widget _showNavPage() {
+    // Widget _showNavPage({required String selectedCategory}){
+    if (_isLoading) {
       return Container(
         child: CircularProgressIndicator(),
       );
-    }{
+    }
+    {
       switch (_navigationStatus) {
         case NavigationStatus.flashcards_nav:
           return FlashcardsPage();
-      // return  FlashcardsPage(selectedCategory: selectedCategory);
+        // return  FlashcardsPage(selectedCategory: selectedCategory);
         case NavigationStatus.matching_nav:
           return MatchingPage();
-      // return MatchingPage(selectedCategory: selectedCategory);
+        // return MatchingPage(selectedCategory: selectedCategory);
         case NavigationStatus.derdiedas_nav:
           return DerDieDasPage();
-      // return DerDieDasPage(selectedCategory: selectedCategory);
+        // return DerDieDasPage(selectedCategory: selectedCategory);
         default:
           return FlashcardsPage();
-      // return FlashcardsPage(selectedCategory: selectedCategory);
+        // return FlashcardsPage(selectedCategory: selectedCategory);
       }
     }
   }
-
-
 }
