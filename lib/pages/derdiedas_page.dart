@@ -16,7 +16,8 @@ class DerDieDasPage extends StatefulWidget {
 
 class _DerDieDasPageState extends State<DerDieDasPage> {
 
-  String _selectedCategory = 'Select a category';
+  String? _selectedCategory;
+  // String _selectedCategory = 'Select a category';
 
   // getSelectedCategory() async {
   //   String? selectedCategory = await CategoryService.loadSelectedCategory();
@@ -28,22 +29,22 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   // }
 
 
-  getSelectedCategory(){
-    CategoryService.loadSelectedCategory().then((categoryName) {
-      if (categoryName != null) {
-        // Use the categoryName to load relevant content
-        setState(() {
-          _selectedCategory = categoryName;
-        });
-      }
-    });
-  }
+  // getSelectedCategory(){
+  //   CategoryService.loadSelectedCategory().then((categoryName) {
+  //     if (categoryName != null) {
+  //       // Use the categoryName to load relevant content
+  //       setState(() {
+  //         _selectedCategory = categoryName;
+  //       });
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getSelectedCategory();
+    // getSelectedCategory();
   }
 
 
