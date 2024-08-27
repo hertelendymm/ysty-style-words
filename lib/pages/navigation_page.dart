@@ -7,7 +7,6 @@ import 'package:ysty_style_words/pages/flashcards_page.dart';
 import 'package:ysty_style_words/pages/matching_page.dart';
 import 'package:ysty_style_words/pages/settings_page.dart';
 import 'package:ysty_style_words/services/categoryServices.dart';
-import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import '../widgets/button_navigation.dart';
 
 enum NavigationStatus { flashcards_nav, matching_nav, derdiedas_nav }
@@ -66,7 +65,9 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   Future<void> _loadSelectedCategory() async {
+    print("_loadSelectedCategory");
     String? categoryName = await CategoryService.loadSelectedCategory();
+    print(categoryName);
     setState(() {
       _selectedCategory = categoryName;
       _isLoading = false; // Update loading state after data is loaded
@@ -117,6 +118,7 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   Widget _myAppBar() {
+    print("$_isLoading in the AppBar");
     return Column(
       children: [
         Container(

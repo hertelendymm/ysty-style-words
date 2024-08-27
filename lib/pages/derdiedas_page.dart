@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/services/categoryServices.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
-import 'package:ysty_style_words/widgets/main_app_bar.dart';
 
 
 class DerDieDasPage extends StatefulWidget {
