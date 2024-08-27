@@ -5,10 +5,10 @@ import 'package:ysty_style_words/services/category_services.dart';
 
 
 class FlashcardsPage extends StatefulWidget {
-  const FlashcardsPage({super.key});
-  // const FlashcardsPage({super.key, required this.selectedCategory});
+  // const FlashcardsPage({super.key});
+  const FlashcardsPage({super.key, required this.selectedCategory});
 
-  // final String selectedCategory;
+  final String selectedCategory;
 
   @override
   State<FlashcardsPage> createState() => _FlashcardsPageState();

@@ -5,10 +5,10 @@ import 'package:ysty_style_words/widgets/button_rounded.dart';
 
 
 class DerDieDasPage extends StatefulWidget {
-  const DerDieDasPage({super.key});
-  // const DerDieDasPage({super.key, required this.selectedCategory});
+  // const DerDieDasPage({super.key});
+  const DerDieDasPage({super.key, required this.selectedCategory});
 
-  // final String selectedCategory;
+  final String selectedCategory;
 
   @override
   State<DerDieDasPage> createState() => _DerDieDasPageState();
@@ -45,6 +45,11 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     // TODO: implement initState
     super.initState();
     // getSelectedCategory();
+    _loadGameData();
+  }
+
+  _loadGameData(){
+    print("DerDieDasPage: ${widget.selectedCategory}");
   }
 
 
@@ -62,8 +67,8 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 80.0),
-                margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 80.0),
+                margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
                 width: MediaQuery.sizeOf(context).width,
                 height: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(
@@ -75,11 +80,12 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('________',
+                    const Text('________',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
-                    Text('Krankenwagen',
-                        style: TextStyle(
+                    // Text('Krankenwagen',
+                    Text(widget.selectedCategory,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
                   ],
                 ),
@@ -91,9 +97,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                     text: "der",
                     onPressed: () {},
                   )),
-                  SizedBox(width: 20.0),
+                  const SizedBox(width: 20.0),
                   Expanded(child: ButtonRounded(text: "die", onPressed: () {})),
-                  SizedBox(width: 20.0),
+                  const SizedBox(width: 20.0),
                   Expanded(child: ButtonRounded(text: "das", onPressed: () {})),
                 ],
               ),

@@ -202,16 +202,16 @@ class _NavigationPageState extends State<NavigationPage> {
     {
       switch (_navigationStatus) {
         case NavigationStatus.flashcards_nav:
-          return FlashcardsPage();
+          return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
         // return  FlashcardsPage(selectedCategory: selectedCategory);
         case NavigationStatus.matching_nav:
-          return MatchingPage();
+          return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
         // return MatchingPage(selectedCategory: selectedCategory);
         case NavigationStatus.derdiedas_nav:
-          return DerDieDasPage();
+          return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
         // return DerDieDasPage(selectedCategory: selectedCategory);
         default:
-          return FlashcardsPage();
+          return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
         // return FlashcardsPage(selectedCategory: selectedCategory);
       }
     }

@@ -7,10 +7,10 @@ import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'matching_game_page.dart';
 
 class MatchingPage extends StatefulWidget {
-  const MatchingPage({super.key});
-  // const MatchingPage({super.key, required this.selectedCategory});
+  // const MatchingPage({super.key});
+  const MatchingPage({super.key, required this.selectedCategory});
 
-  // final String selectedCategory;
+  final String selectedCategory;
 
   @override
   State<MatchingPage> createState() => _MatchingPageState();
