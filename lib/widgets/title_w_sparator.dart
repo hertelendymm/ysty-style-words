@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 class TitleWSeparator extends StatelessWidget {
   const TitleWSeparator({
     super.key,
-    this.level="--",
+    this.title="--",
   });
 
-  final String level;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class TitleWSeparator extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(level, style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+          Text(title, style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
           Container(
             width: double.infinity,
             height: 5,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ysty_style_words/widgets/secondary_app_bar.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -166,7 +165,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    const TitleWSeparator(level: "Spracheinstellungen"),
+                    const TitleWSeparator(title: "Spracheinstellungen"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -176,7 +175,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    const TitleWSeparator(level: "Links"),
+                    const TitleWSeparator(title: "Links"),
                     _tempLinkButton('Link 1'),
                     _tempLinkButton('Link 2'),
                     _tempLinkButton('Link 3'),

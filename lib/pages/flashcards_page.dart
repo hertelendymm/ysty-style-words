@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/services/category_services.dart';
-import 'package:ysty_style_words/widgets/secondary_app_bar.dart';
 
 
 class FlashcardsPage extends StatefulWidget {
