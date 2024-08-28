@@ -25,4 +25,10 @@ class Word {
       category: json['category'],
     );
   }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'Word{wordId: $wordId, germanWord: $germanWord, englishMeaning: $englishMeaning, exampleSentence: $exampleSentence, article: $article, category: $category}\n';
+  }
 }

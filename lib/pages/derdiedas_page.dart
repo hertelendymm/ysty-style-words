@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/word_lists/flashcard_content.dart';
+import 'dart:convert';
 
 
 class DerDieDasPage extends StatefulWidget {
@@ -16,7 +20,12 @@ class DerDieDasPage extends StatefulWidget {
 
 class _DerDieDasPageState extends State<DerDieDasPage> {
 
-  String? _selectedCategory;
+  List<Word> wordData = [];
+  int wordIndex = 0;
+  bool isCorrectAnswerFound = false;
+  // String userAnswer = "";
+
+  // String? _selectedCategory;
   // String _selectedCategory = 'Select a category';
 
   // getSelectedCategory() async {
@@ -50,6 +59,41 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
 
   _loadGameData(){
     print("DerDieDasPage: ${widget.selectedCategory}");
+
+    for(var n in flashcardContents[widget.selectedCategory.toLowerCase()]!){
+      Word newWord = Word(
+        wordId: n["wordId"] ?? '',
+        germanWord: n["germanWord"] ?? '',
+        englishMeaning: n["englishMeaning"] ?? '',
+        exampleSentence: n["exampleSentence"] ?? '',
+        article: n["article"] ?? '',
+        category: n["category"] ?? '',
+      );
+      // print(newWord.toString());
+      wordData.add(newWord);
+    }
+    // print(wordData);
+    wordData.shuffle();
+    wordIndex = 0;
+    // print(wordData);
+  }
+
+  Word _getNextWord(){
+    setState(() {
+      wordIndex += 1;
+      if (wordIndex >= wordData.length){
+        _loadGameData();
+        wordIndex = 0;
+      }
+      isCorrectAnswerFound = false;
+    });
+    return wordData[wordIndex];
+  }
+
+  _checkAnswer(String userAnswer){
+    setState(() {
+      isCorrectAnswerFound = userAnswer == wordData[wordIndex].article;
+    });
   }
 
 
@@ -66,8 +110,25 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              // ButtonRounded(text: "Help", backgroundColor: Colors.grey.shade200, textColor: Colors.black, onPressed: ()=>Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => const DerDieDasHelpPage()))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(child: ButtonRounded(text: "Skip", onPressed: ()=>_getNextWord(), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.shuffle,)),
+                  const SizedBox(width: 20.0),
+                  Expanded(child: ButtonRounded(text: "Help", onPressed: () =>Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DerDieDasHelpPage())), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.lightbulb,)),
+                  // const SizedBox(width: 20.0),
+                  // Expanded(child: ButtonRounded(text: "Next", onPressed: () {}, backgroundColor: Colors.white, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.forwardStep,)),
+                ],
+              ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 80.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
                 margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
                 width: MediaQuery.sizeOf(context).width,
                 height: MediaQuery.sizeOf(context).width,
@@ -80,22 +141,30 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('________',
+                    Text(isCorrectAnswerFound?,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
+                    Text('------',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 40.0)),
+                    // Text('________',
+                    //     style: TextStyle(
+                    //         fontWeight: FontWeight.bold, fontSize: 40.0)),
                     // Text('Krankenwagen',
-                    Text(widget.selectedCategory,
+                    Text(wordData[wordIndex].germanWord,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
                   ],
                 ),
               ),
+              isCorrectAnswerFound ?
+              ButtonRounded(text: "Next", backgroundColor: Colors.black, textColor: Colors.white, onPressed: ()=>_getNextWord()):
               Row(
                 children: [
                   Expanded(
                       child: ButtonRounded(
                     text: "der",
-                    onPressed: () {},
+                    onPressed: ()=>_checkAnswer("der")
                   )),
                   const SizedBox(width: 20.0),
                   Expanded(child: ButtonRounded(text: "die", onPressed: () {})),
@@ -103,10 +172,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   Expanded(child: ButtonRounded(text: "das", onPressed: () {})),
                 ],
               ),
-              ButtonRounded(text: "Help", backgroundColor: Colors.grey.shade200, textColor: Colors.black, onPressed: ()=>Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const DerDieDasHelpPage()))),
+
             ],
           ),
         ),
