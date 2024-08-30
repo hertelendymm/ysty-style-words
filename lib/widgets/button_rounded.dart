@@ -20,7 +20,6 @@ class ButtonRounded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return GestureDetector(
     return GestureDetector(
       onTap: () => onPressed(),
       child: Container(
@@ -28,8 +27,6 @@ class ButtonRounded extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           color: backgroundColor,
         ),
-        // width: MediaQuery.sizeOf(context).width,
-        // margin: EdgeInsets.all(20.0),
         padding: const EdgeInsets.all(20.0),
         width: double.infinity,
         child: isIconWText ? Row(

@@ -45,14 +45,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     setState(() {
       wordData = [];
       for(var n in flashcardContents[_selectedCategory!.toLowerCase()]!){
-        Word newWord = Word(
-          wordId: n["wordId"] ?? '',
-          germanWord: n["germanWord"] ?? '',
-          englishMeaning: n["englishMeaning"] ?? '',
-          exampleSentence: n["exampleSentence"] ?? '',
-          article: n["article"] ?? '',
-          category: n["category"] ?? '',
-        );
+        Word newWord = Word.fromJson(n);
         wordData.add(newWord);
       }
       wordData.shuffle();
