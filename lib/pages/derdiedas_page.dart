@@ -23,7 +23,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   List<Word> wordData = [];
   int wordIndex = 0;
   bool isCorrectAnswerFound = false;
-  // String userAnswer = "";
+  String userAnswer = "";
+
+  String? _selectedCategory;
 
   // String? _selectedCategory;
   // String _selectedCategory = 'Select a category';
@@ -54,31 +56,57 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     // TODO: implement initState
     super.initState();
     // getSelectedCategory();
+    print("derdiedas init");
+    _selectedCategory = widget.selectedCategory;
     _loadGameData();
   }
 
-  _loadGameData(){
-    print("DerDieDasPage: ${widget.selectedCategory}");
-
-    for(var n in flashcardContents[widget.selectedCategory.toLowerCase()]!){
-      Word newWord = Word(
-        wordId: n["wordId"] ?? '',
-        germanWord: n["germanWord"] ?? '',
-        englishMeaning: n["englishMeaning"] ?? '',
-        exampleSentence: n["exampleSentence"] ?? '',
-        article: n["article"] ?? '',
-        category: n["category"] ?? '',
-      );
-      // print(newWord.toString());
-      wordData.add(newWord);
+  _checkCategory() async {
+    print("_checkCategory");
+    String? categoryName = await CategoryService.loadSelectedCategory();
+    print("current category===$_selectedCategory}");
+    print("categoryName===$categoryName}");
+    if (categoryName != _selectedCategory) {
+      // setState(() async {
+        print("_checkCategory change found");
+        _selectedCategory = categoryName;
+        await _loadGameData();
+        print("_checkCategory changed category");
+      // });
     }
-    // print(wordData);
-    wordData.shuffle();
-    wordIndex = 0;
-    // print(wordData);
   }
 
-  Word _getNextWord(){
+  _loadGameData(){
+    setState(() {
+      print("DerDieDasPage: ${_selectedCategory}");
+
+      wordData = [];
+      for(var n in flashcardContents[_selectedCategory!.toLowerCase()]!){
+        Word newWord = Word(
+          wordId: n["wordId"] ?? '',
+          germanWord: n["germanWord"] ?? '',
+          englishMeaning: n["englishMeaning"] ?? '',
+          exampleSentence: n["exampleSentence"] ?? '',
+          article: n["article"] ?? '',
+          category: n["category"] ?? '',
+        );
+        // print(newWord.toString());
+        wordData.add(newWord);
+      }
+      // print(wordData);
+      wordData.shuffle();
+      wordIndex = 0;
+      userAnswer = "";
+      // print(wordData);
+    });
+
+  }
+
+  Future<Word> _getNextWord()async{
+
+    print("_checkCategory before call");
+    await _checkCategory();
+    print("_checkCategory after call");
     setState(() {
       wordIndex += 1;
       if (wordIndex >= wordData.length){
@@ -86,12 +114,14 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
         wordIndex = 0;
       }
       isCorrectAnswerFound = false;
+      userAnswer = "";
     });
     return wordData[wordIndex];
   }
 
-  _checkAnswer(String userAnswer){
+  _checkAnswer(String answer){
     setState(() {
+      userAnswer = answer;
       isCorrectAnswerFound = userAnswer == wordData[wordIndex].article;
     });
   }
@@ -141,9 +171,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(isCorrectAnswerFound?,
+                    Text(userAnswer,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 40.0)),
+                            fontWeight: FontWeight.bold, fontSize: 40.0, color: isCorrectAnswerFound? Colors.green:Colors.red)),
                     Text('------',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
@@ -167,9 +197,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                     onPressed: ()=>_checkAnswer("der")
                   )),
                   const SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "die", onPressed: () {})),
+                  Expanded(child: ButtonRounded(text: "die", onPressed: ()=>_checkAnswer("die"))),
                   const SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "das", onPressed: () {})),
+                  Expanded(child: ButtonRounded(text: "das", onPressed: ()=>_checkAnswer("das"))),
                 ],
               ),
 

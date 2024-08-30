@@ -20,6 +20,8 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcards_nav;
+  String? _selectedCategory;
+  bool _isLoading = true; // Add a loading state
 
   void switchNav(NavigationStatus newNavStatus) {
     print("before: $_navigationStatus");
@@ -48,12 +50,11 @@ class _NavigationPageState extends State<NavigationPage> {
   //   });
   // }
 
-  String? _selectedCategory;
-  bool _isLoading = true; // Add a loading state
 
   void refreshPage() {
     setState(() {
       print("refressed =================================");
+      _isLoading = true;
       _loadSelectedCategory();
     });
   }
@@ -61,7 +62,7 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   void initState() {
     super.initState();
-    _loadSelectedCategory();
+    refreshPage();
   }
 
   Future<void> _loadSelectedCategory() async {
@@ -118,7 +119,7 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   Widget _myAppBar() {
-    print("$_isLoading in the AppBar");
+    // print("$_isLoading in the AppBar");
     return Column(
       children: [
         Container(
@@ -154,8 +155,6 @@ class _NavigationPageState extends State<NavigationPage> {
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                       textAlign: TextAlign.center,
                     )),
-
-                    /// TODO: From SharedPreference load the lest chosen category title!!!
                   ),
                 ),
               ),
@@ -192,14 +191,17 @@ class _NavigationPageState extends State<NavigationPage> {
     );
   }
 
-  Widget _showNavPage() {
+   _showNavPage() {
+    setState(() {
+      print("_showNavPage: $_selectedCategory");
+      _selectedCategory = _selectedCategory;
+    });
     // Widget _showNavPage({required String selectedCategory}){
     if (_isLoading) {
       return Container(
         child: CircularProgressIndicator(),
       );
-    }
-    {
+    }else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcards_nav:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
