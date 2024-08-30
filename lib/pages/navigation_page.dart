@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/pages/categories_page.dart';
 import 'package:ysty_style_words/pages/derdiedas_page.dart';
 import 'package:ysty_style_words/pages/flashcards_page.dart';
@@ -21,39 +20,19 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcards_nav;
   String? _selectedCategory;
-  bool _isLoading = true; // Add a loading state
+  bool _isLoading = true;
 
   void switchNav(NavigationStatus newNavStatus) {
-    print("before: $_navigationStatus");
     setState(() {
       _navigationStatus = newNavStatus;
     });
-    print("after: $_navigationStatus");
   }
 
-  // String _selectedCategory = 'Animal';
-  //
-  // Future<String?> loadSelectedCategory() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString('selectedCategory');
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   loadSelectedCategory().then((categoryName) {
-  //     if (categoryName != null) {
-  //       setState(() {
-  //         _selectedCategory = categoryName;
-  //       });
-  //     }
-  //   });
-  // }
 
 
   void refreshPage() {
     setState(() {
-      print("refressed =================================");
+      print("refressed nav page =================================");
       _isLoading = true;
       _loadSelectedCategory();
     });
@@ -66,9 +45,7 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   Future<void> _loadSelectedCategory() async {
-    print("_loadSelectedCategory");
     String? categoryName = await CategoryService.loadSelectedCategory();
-    print(categoryName);
     setState(() {
       _selectedCategory = categoryName;
       _isLoading = false; // Update loading state after data is loaded
@@ -85,12 +62,10 @@ class _NavigationPageState extends State<NavigationPage> {
           padding: const EdgeInsets.only(bottom: 60.0),
           child: Column(
             children: [
-              // MainAppBar(),
               _myAppBar(),
               Expanded(child: _showNavPage()),
             ],
           ),
-          // child: _showNavPage(selectedCategory: _selectedCategory),
         ),
       ),
       bottomSheet: Container(
@@ -119,7 +94,6 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   Widget _myAppBar() {
-    // print("$_isLoading in the AppBar");
     return Column(
       children: [
         Container(
@@ -192,29 +166,24 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
    _showNavPage() {
-    setState(() {
-      print("_showNavPage: $_selectedCategory");
-      _selectedCategory = _selectedCategory;
-    });
-    // Widget _showNavPage({required String selectedCategory}){
     if (_isLoading) {
-      return Container(
-        child: CircularProgressIndicator(),
+      return const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+        ],
       );
     }else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcards_nav:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
-        // return  FlashcardsPage(selectedCategory: selectedCategory);
         case NavigationStatus.matching_nav:
           return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
-        // return MatchingPage(selectedCategory: selectedCategory);
         case NavigationStatus.derdiedas_nav:
           return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
-        // return DerDieDasPage(selectedCategory: selectedCategory);
         default:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
-        // return FlashcardsPage(selectedCategory: selectedCategory);
       }
     }
   }
