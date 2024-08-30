@@ -8,7 +8,7 @@ import 'package:ysty_style_words/pages/settings_page.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import '../widgets/button_navigation.dart';
 
-enum NavigationStatus { FlashcardsNav, MatchingNav, DerdiedasNav }
+enum NavigationStatus { flashcardsNav, matchingNav, derdiedasNav }
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -18,7 +18,7 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  NavigationStatus _navigationStatus = NavigationStatus.FlashcardsNav;
+  NavigationStatus _navigationStatus = NavigationStatus.flashcardsNav;
   String? _selectedCategory;
   bool _isLoading = true;
 
@@ -32,7 +32,7 @@ class _NavigationPageState extends State<NavigationPage> {
 
   void refreshPage() {
     setState(() {
-      print("refressed nav page =================================");
+      debugPrint("refressed nav page =================================");
       _isLoading = true;
       _loadSelectedCategory();
     });
@@ -76,16 +76,16 @@ class _NavigationPageState extends State<NavigationPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.FlashcardsNav,
-              onPressed: () => switchNav(NavigationStatus.FlashcardsNav),
+              isActive: _navigationStatus == NavigationStatus.flashcardsNav,
+              onPressed: () => switchNav(NavigationStatus.flashcardsNav),
             ),
             ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.MatchingNav,
-              onPressed: () => switchNav(NavigationStatus.MatchingNav),
+              isActive: _navigationStatus == NavigationStatus.matchingNav,
+              onPressed: () => switchNav(NavigationStatus.matchingNav),
             ),
             ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.DerdiedasNav,
-              onPressed: () => switchNav(NavigationStatus.DerdiedasNav),
+              isActive: _navigationStatus == NavigationStatus.derdiedasNav,
+              onPressed: () => switchNav(NavigationStatus.derdiedasNav),
             ),
           ],
         ),
@@ -176,11 +176,11 @@ class _NavigationPageState extends State<NavigationPage> {
       );
     }else {
       switch (_navigationStatus) {
-        case NavigationStatus.FlashcardsNav:
+        case NavigationStatus.flashcardsNav:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
-        case NavigationStatus.MatchingNav:
+        case NavigationStatus.matchingNav:
           return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
-        case NavigationStatus.DerdiedasNav:
+        case NavigationStatus.derdiedasNav:
           return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
         default:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");

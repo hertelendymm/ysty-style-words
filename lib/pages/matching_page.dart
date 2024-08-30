@@ -22,7 +22,7 @@ class _MatchingPageState extends State<MatchingPage> {
       if (categoryName != null) {
         setState(() {
           _selectedCategory = categoryName;
-          print(_selectedCategory);
+          debugPrint(_selectedCategory);
         });
       }
     });
