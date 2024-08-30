@@ -5,11 +5,9 @@ import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
-import 'dart:convert';
 
 
 class DerDieDasPage extends StatefulWidget {
-  // const DerDieDasPage({super.key});
   const DerDieDasPage({super.key, required this.selectedCategory});
 
   final String selectedCategory;
@@ -27,59 +25,24 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
 
   String? _selectedCategory;
 
-  // String? _selectedCategory;
-  // String _selectedCategory = 'Select a category';
-
-  // getSelectedCategory() async {
-  //   String? selectedCategory = await CategoryService.loadSelectedCategory();
-  //   if (selectedCategory != null) {
-  //     setState(() {
-  //       _selectedCategory = _selectedCategory;
-  //     });
-  //   }
-  // }
-
-
-  // getSelectedCategory(){
-  //   CategoryService.loadSelectedCategory().then((categoryName) {
-  //     if (categoryName != null) {
-  //       // Use the categoryName to load relevant content
-  //       setState(() {
-  //         _selectedCategory = categoryName;
-  //       });
-  //     }
-  //   });
-  // }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // getSelectedCategory();
-    print("derdiedas init");
     _selectedCategory = widget.selectedCategory;
     _loadGameData();
   }
 
   _checkCategory() async {
-    print("_checkCategory");
     String? categoryName = await CategoryService.loadSelectedCategory();
-    print("current category===$_selectedCategory}");
-    print("categoryName===$categoryName}");
     if (categoryName != _selectedCategory) {
-      // setState(() async {
-        print("_checkCategory change found");
         _selectedCategory = categoryName;
         await _loadGameData();
-        print("_checkCategory changed category");
-      // });
     }
   }
 
   _loadGameData(){
     setState(() {
-      print("DerDieDasPage: ${_selectedCategory}");
-
       wordData = [];
       for(var n in flashcardContents[_selectedCategory!.toLowerCase()]!){
         Word newWord = Word(
@@ -90,23 +53,18 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
           article: n["article"] ?? '',
           category: n["category"] ?? '',
         );
-        // print(newWord.toString());
         wordData.add(newWord);
       }
-      // print(wordData);
       wordData.shuffle();
       wordIndex = 0;
       userAnswer = "";
-      // print(wordData);
     });
 
   }
 
   Future<Word> _getNextWord()async{
 
-    print("_checkCategory before call");
     await _checkCategory();
-    print("_checkCategory after call");
     setState(() {
       wordIndex += 1;
       if (wordIndex >= wordData.length){
@@ -131,19 +89,12 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: MainAppBar(),
-      // appBar: MainAppBar(selectedCategory: _selectedCategory),
-      // appBar: const MainAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // ButtonRounded(text: "Help", backgroundColor: Colors.grey.shade200, textColor: Colors.black, onPressed: ()=>Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => const DerDieDasHelpPage()))),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -153,8 +104,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const DerDieDasHelpPage())), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.lightbulb,)),
-                  // const SizedBox(width: 20.0),
-                  // Expanded(child: ButtonRounded(text: "Next", onPressed: () {}, backgroundColor: Colors.white, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.forwardStep,)),
                 ],
               ),
               Container(
@@ -174,13 +123,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                     Text(userAnswer,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0, color: isCorrectAnswerFound? Colors.green:Colors.red)),
-                    Text('------',
+                    const Text('------',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
-                    // Text('________',
-                    //     style: TextStyle(
-                    //         fontWeight: FontWeight.bold, fontSize: 40.0)),
-                    // Text('Krankenwagen',
                     Text(wordData[wordIndex].germanWord,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40.0)),
@@ -202,7 +147,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   Expanded(child: ButtonRounded(text: "das", onPressed: ()=>_checkAnswer("das"))),
                 ],
               ),
-
             ],
           ),
         ),
