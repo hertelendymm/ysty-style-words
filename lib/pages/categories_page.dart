@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
@@ -97,7 +96,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 children:  [
-                  TitleWSeparator(title: "A1-A2"),
+                  const TitleWSeparator(title: "A1-A2"),
                   _categotyItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
                   _categotyItem(title: "Animal", icon: FontAwesomeIcons.dog),
                   // _categotyItem(title: "Transportation", icon: FontAwesomeIcons.car),
@@ -181,7 +180,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -208,11 +207,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     // height: 40.0,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 0.0, vertical: 6.0),
-                    child: Center(
+                    child: const Center(
                         child: Text(
                           "Choose a Category",
                           style:
-                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
                           textAlign: TextAlign.center,
                         )),
                   ),
@@ -237,8 +236,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
       onTap: ()=> saveSelectedCategory(title),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: Colors.grey.shade300, width: 1),
@@ -247,9 +246,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
         child: Row(
           children: [
             Icon(icon, color: isActive ? Colors.white : Colors.black),
-            SizedBox(width: 20.0),
+            const SizedBox(width: 20.0),
             Text(title, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.black)),
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             Text("0%", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.black)),
           ],
         ),

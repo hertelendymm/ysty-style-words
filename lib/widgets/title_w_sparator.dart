@@ -14,7 +14,7 @@ class TitleWSeparator extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+          Text(title, style: const TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
           Container(
             width: double.infinity,
             height: 5,

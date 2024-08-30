@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ysty_style_words/pages/settings_page.dart';
-
-import 'categories_page.dart';
 
 class MatchingGamePage extends StatefulWidget {
   const MatchingGamePage({super.key});
@@ -102,6 +99,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           border: Border.all(color: Colors.grey, width: 3),
           color: Colors.white,
         ),
-        margin: EdgeInsets.all(10.0));
+        margin: const EdgeInsets.all(10.0));
   }
 }

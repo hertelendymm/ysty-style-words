@@ -8,7 +8,7 @@ import 'package:ysty_style_words/pages/settings_page.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import '../widgets/button_navigation.dart';
 
-enum NavigationStatus { flashcards_nav, matching_nav, derdiedas_nav }
+enum NavigationStatus { FlashcardsNav, MatchingNav, DerdiedasNav }
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -18,7 +18,7 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  NavigationStatus _navigationStatus = NavigationStatus.flashcards_nav;
+  NavigationStatus _navigationStatus = NavigationStatus.FlashcardsNav;
   String? _selectedCategory;
   bool _isLoading = true;
 
@@ -76,16 +76,16 @@ class _NavigationPageState extends State<NavigationPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.flashcards_nav,
-              onPressed: () => switchNav(NavigationStatus.flashcards_nav),
+              isActive: _navigationStatus == NavigationStatus.FlashcardsNav,
+              onPressed: () => switchNav(NavigationStatus.FlashcardsNav),
             ),
             ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.matching_nav,
-              onPressed: () => switchNav(NavigationStatus.matching_nav),
+              isActive: _navigationStatus == NavigationStatus.MatchingNav,
+              onPressed: () => switchNav(NavigationStatus.MatchingNav),
             ),
             ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.derdiedas_nav,
-              onPressed: () => switchNav(NavigationStatus.derdiedas_nav),
+              isActive: _navigationStatus == NavigationStatus.DerdiedasNav,
+              onPressed: () => switchNav(NavigationStatus.DerdiedasNav),
             ),
           ],
         ),
@@ -125,7 +125,7 @@ class _NavigationPageState extends State<NavigationPage> {
                       _isLoading
                           ? ""
                           : _selectedCategory ?? "Select a Category",
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                       textAlign: TextAlign.center,
                     )),
@@ -176,11 +176,11 @@ class _NavigationPageState extends State<NavigationPage> {
       );
     }else {
       switch (_navigationStatus) {
-        case NavigationStatus.flashcards_nav:
+        case NavigationStatus.FlashcardsNav:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
-        case NavigationStatus.matching_nav:
+        case NavigationStatus.MatchingNav:
           return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
-        case NavigationStatus.derdiedas_nav:
+        case NavigationStatus.DerdiedasNav:
           return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
         default:
           return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
