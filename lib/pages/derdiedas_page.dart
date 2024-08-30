@@ -17,12 +17,10 @@ class DerDieDasPage extends StatefulWidget {
 }
 
 class _DerDieDasPageState extends State<DerDieDasPage> {
-
   List<Word> wordData = [];
   int wordIndex = 0;
   bool isCorrectAnswerFound = false;
   String userAnswer = "";
-
   String? _selectedCategory;
 
   @override
@@ -30,18 +28,18 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     // TODO: implement initState
     super.initState();
     _selectedCategory = widget.selectedCategory;
-    _loadGameData();
+    _loadNewGameData();
   }
 
   _checkCategory() async {
     String? categoryName = await CategoryService.loadSelectedCategory();
     if (categoryName != _selectedCategory) {
         _selectedCategory = categoryName;
-        await _loadGameData();
+        await _loadNewGameData();
     }
   }
 
-  _loadGameData(){
+  _loadNewGameData(){
     setState(() {
       wordData = [];
       for(var n in flashcardContents[_selectedCategory!.toLowerCase()]!){
@@ -56,12 +54,11 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   }
 
   Future<Word> _getNextWord()async{
-
     await _checkCategory();
     setState(() {
       wordIndex += 1;
       if (wordIndex >= wordData.length){
-        _loadGameData();
+        _loadNewGameData();
         wordIndex = 0;
       }
       isCorrectAnswerFound = false;

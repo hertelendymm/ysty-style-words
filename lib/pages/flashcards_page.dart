@@ -5,7 +5,6 @@ import 'package:ysty_style_words/services/category_services.dart';
 
 
 class FlashcardsPage extends StatefulWidget {
-  // const FlashcardsPage({super.key});
   const FlashcardsPage({super.key, required this.selectedCategory});
 
   final String selectedCategory;
@@ -15,73 +14,33 @@ class FlashcardsPage extends StatefulWidget {
 }
 
 class _FlashcardsPageState extends State<FlashcardsPage> {
-
-  // String _selectedCategory = 'Animal';
-  //
-  // Future<String?> loadSelectedCategory() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString('selectedCategory');
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   loadSelectedCategory().then((categoryName) {
-  //     if (categoryName != null) {
-  //       setState(() {
-  //         _selectedCategory = categoryName;
-  //       });
-  //     }
-  //   });
-  // }
-
-  // String _selectedCategory = 'Select a category';
   String? _selectedCategory;
 
-  // getSelectedCategory() async {
-  //   String? selectedCategory = await CategoryService.loadSelectedCategory();
-  //   if (selectedCategory != null) {
-  //     setState(() {
-  //       _selectedCategory = _selectedCategory;
-  //     });
-  //   }
-  // }
-
-  // getSelectedCategory(){
-  //   CategoryService.loadSelectedCategory().then((categoryName) {
-  //     if (categoryName != null) {
-  //       // Use the categoryName to load relevant content
-  //       setState(() {
-  //         _selectedCategory = categoryName;
-  //       });
-  //     }
-  //   });
-  // }
-
-  Future<void> _loadSelectedCategory() async {
-    String? categoryName = await CategoryService.loadSelectedCategory();
-    setState(() {
-      _selectedCategory = categoryName;
-    });
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-      // getSelectedCategory();
-    _loadSelectedCategory();
+    _selectedCategory = widget.selectedCategory;
+    // _checkCategory();
   }
 
+  _checkCategory() async {
+    String? categoryName = await CategoryService.loadSelectedCategory();
+    if (categoryName != _selectedCategory) {
+      _selectedCategory = categoryName;
+      await _loadNewGameData();
+    }
+  }
+
+  _loadNewGameData(){
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: MainAppBar(),
-      // appBar: MainAppBar(selectedCategory: _selectedCategory ?? 'Select a category',),
-      // appBar: MainAppBar(selectedCategory: _selectedCategory),
-      // appBar: MainAppBar(selectedCategory: widget.selectedCategory),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
