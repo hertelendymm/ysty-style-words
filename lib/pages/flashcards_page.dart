@@ -21,10 +21,14 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   bool isCorrectAnswerFound = false;
   String? _selectedCategory;
   final CardSwiperController controller = CardSwiperController();
+  // bool isCardFlipped = false;
+  ValueNotifier<bool> _isCardFlippedNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
+    // isCardFlipped = false;
+    _isCardFlippedNotifier = ValueNotifier<bool>(false);
     _selectedCategory = widget.selectedCategory;
     _loadNewGameData();
     // _checkCategory();
@@ -56,18 +60,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     });
   }
 
-  // Future<Word> _getNextWord()async{
-  //   await _checkCategory();
-  //   setState(() {
-  //     // wordIndex += 1;
-  //     // if (wordIndex >= wordData.length){
-  //     //   _loadNewGameData();
-  //     //   // wordIndex = 0;
-  //     // }
-  //     // isCorrectAnswerFound = false;
-  //   });
-  //   return wordData[wordIndex];
-  // }
 
   bool _onSwipe(
     int previousIndex,
@@ -88,25 +80,42 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // SizedBox(height: 0),
+              // SizedBox(height: 20),
               Flexible(
                 child: CardSwiper(
                   cardsCount: wordData.length,
                   onSwipe: _onSwipe,
-                  allowedSwipeDirection: const AllowedSwipeDirection.only(left: true, right: true),
+                  allowedSwipeDirection:
+                      const AllowedSwipeDirection.only(left: true, right: true),
                   numberOfCardsDisplayed: 3,
+                  padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20.0),
                   controller: controller,
+                  backCardOffset: Offset(0, 35),
                   cardBuilder: (
                     context,
                     index,
                     horizontalThresholdPercentage,
                     verticalThresholdPercentage,
-                  ) =>
-                      flashcard(index),
+                  ) =>Flashcard(
+                    index: index,
+                    word: wordData[index],
+                    isCardFlippedNotifier: _isCardFlippedNotifier,
+                  ),
+                      // flashcard(index, isCardFlipped),
                 ),
               ),
+              SizedBox(height: 20),
+              Text(
+                'Tap to flip',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Colors.grey.shade300),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -132,206 +141,110 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     );
   }
 
-  Widget flashcard(int index) {
-    return GestureDetector(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
-        margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
-        width: MediaQuery.sizeOf(context).width,
-        height: 500.0,
-        // width: MediaQuery.sizeOf(context).width * 0.75,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0), color: Colors.black),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(wordData[index].article,
-                style: const TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 20.0,
-                    color: Colors.white)),
-            const SizedBox(height: 40.0),
-            Text(wordData[index].germanWord,
-                style:  TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: wordData[index].germanWord.length > 8 ? 30.0 : 50.0,
-                    color: Colors.white)),
-            const SizedBox(height: 40.0),
-            Text(
-              wordData[index].exampleSentence,
-              style: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20.0,
-                  color: Colors.grey),
-              textAlign: TextAlign.center,
+  // Widget flashcard(int index, bool isCardFlipped) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       setState(() {
+  //         isCardFlipped = !isCardFlipped;
+  //         print("click");
+  //       });
+  //     },
+  //     child: Container(
+  //       width: MediaQuery.sizeOf(context).width,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(20.0),
+  //         border: Border.all(color: Colors.grey.shade900, width: 3),
+  //         color: Colors.black,
+  //       ),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Text(isCardFlipped ? "" : wordData[index].article,
+  //               style: const TextStyle(
+  //                   fontWeight: FontWeight.normal,
+  //                   fontSize: 20.0,
+  //                   color: Colors.white)),
+  //           const SizedBox(height: 40.0),
+  //           Text(isCardFlipped ? wordData[index].englishMeaning : wordData[index].germanWord,
+  //               style: TextStyle(
+  //                   fontWeight: FontWeight.bold,
+  //                   fontSize:
+  //                       wordData[index].germanWord.length > 8 ? 30.0 : 50.0,
+  //                   color: Colors.white)),
+  //           const SizedBox(height: 40.0),
+  //           Text(wordData[index].exampleSentence,
+  //             style: const TextStyle(
+  //                 fontWeight: FontWeight.normal,
+  //                 fontSize: 20.0,
+  //                 color: Colors.grey),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+}
+
+class Flashcard extends StatelessWidget {
+  const Flashcard({super.key,
+    required this.index,
+    required this.word,
+    required this.isCardFlippedNotifier,
+  });
+
+  final int index;
+  final Word word;
+  final ValueNotifier<bool> isCardFlippedNotifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: isCardFlippedNotifier,
+      builder: (context, isCardFlipped, child) {
+        return GestureDetector(
+          onTap: () {
+            isCardFlippedNotifier.value = !isCardFlipped;
+          },
+          child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                border: Border.all(color: isCardFlipped ? Colors.grey.shade300 : Colors.grey.shade900, width: 3,),
+                color: isCardFlipped ? Colors.white : Colors.black,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                 Text(word.article,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20.0,
+                          color: Colors.white)),
+                  const SizedBox(height: 40.0),
+                  Text(isCardFlipped ? word.englishMeaning : word.germanWord,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              word.germanWord.length > 8 ? 30.0 : 50.0,
+                          color: isCardFlipped ? Colors.black : Colors.white)),
+                  const SizedBox(height: 40.0),
+                  Text(word.exampleSentence,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20.0,
+                        color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                  // isCardFlipped ? const SizedBox(height: 10.0,): const SizedBox(),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+
+        );
+      },
     );
   }
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     body: SafeArea(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           Flexible(
-//             child: CardSwiper(
-//                 controller: controller,
-//                 cardsCount: wordData.length,
-//                 onSwipe: _onSwipe,
-//                 onEnd: _loadNewGameData,
-//                 // onUndo: _onUndo,
-//                 numberOfCardsDisplayed: 3,
-//                 backCardOffset: const Offset(0, 40),
-//                 allowedSwipeDirection:
-//                     const AllowedSwipeDirection.symmetric(horizontal: true),
-//                 padding: const EdgeInsets.all(0.0),
-//                 cardBuilder: (
-//                   context,
-//                   index,
-//                   horizontalThresholdPercentage,
-//                   verticalThresholdPercentage,
-//                 ) =>
-//                     GestureDetector(
-//                       // onTap: ()=> _getNextWord(),
-//                       child: Container(
-//                         padding: const EdgeInsets.symmetric(
-//                             horizontal: 20.0, vertical: 100.0),
-//                         margin: const EdgeInsets.symmetric(
-//                             horizontal: 0.0, vertical: 20.0),
-//                         width: MediaQuery.sizeOf(context).width * 0.75,
-//                         decoration: BoxDecoration(
-//                             borderRadius: BorderRadius.circular(20.0),
-//                             color: Colors.black),
-//                         child: Column(
-//                           crossAxisAlignment: CrossAxisAlignment.center,
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Text(wordData[index].article,
-//                                 style: const TextStyle(
-//                                     fontWeight: FontWeight.normal,
-//                                     fontSize: 20.0,
-//                                     color: Colors.white)),
-//                             const SizedBox(height: 40.0),
-//                             Text(wordData[index].germanWord,
-//                                 style: const TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 50.0,
-//                                     color: Colors.white)),
-//                             const SizedBox(height: 40.0),
-//                             Text(
-//                               wordData[index].exampleSentence,
-//                               style: const TextStyle(
-//                                   fontWeight: FontWeight.normal,
-//                                   fontSize: 20.0,
-//                                   color: Colors.grey),
-//                               textAlign: TextAlign.center,
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     )
-//                 // Container(
-//                 //   decoration: BoxDecoration(
-//                 //     color: Colors.black
-//                 //   ),
-//                 //     child: Text(wordData[index].germanWord) ),
-//                 ),
-//           ),
-//           Text(
-//             'Tap to flip',
-//             style: TextStyle(
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 20.0,
-//                 color: Colors.grey.shade300),
-//             textAlign: TextAlign.center,
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               const Icon(FontAwesomeIcons.xmark,
-//                   color: Colors.red, size: 40.0),
-//               Icon(FontAwesomeIcons.arrowLeftLong,
-//                   color: Colors.grey.shade300, size: 40.0),
-//               const Text("Swipe",
-//                   style: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 20.0,
-//                       color: Colors.grey)),
-//               Icon(FontAwesomeIcons.arrowRightLong,
-//                   color: Colors.grey.shade300, size: 40.0),
-//               const Icon(FontAwesomeIcons.check,
-//                   color: Colors.green, size: 40.0),
-//             ],
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     backgroundColor: Colors.white,
-//     body: SafeArea(
-//       child: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             const SizedBox(height: 0.0),
-//             Column(
-//               children: [
-//                 GestureDetector(
-//                   onTap: ()=> _getNextWord(),
-//                   child: Container(
-//                     padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
-//                     margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
-//                     width: MediaQuery.sizeOf(context).width*0.75,
-//                     decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20.0),
-//                         color: Colors.black),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Text(wordData[wordIndex].article,
-//                             style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 20.0, color: Colors.white)),
-//                         const SizedBox(height: 40.0),
-//                         Text(wordData[wordIndex].germanWord,
-//                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50.0, color: Colors.white)),
-//                         const SizedBox(height: 40.0),
-//                         Text(wordData[wordIndex].exampleSentence,
-//                             style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 20.0, color: Colors.grey), textAlign: TextAlign.center,),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 Text('Tap to flip',
-//                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.grey.shade300), textAlign: TextAlign.center,),
-//               ],
-//             ),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 const Icon(FontAwesomeIcons.xmark, color: Colors.red, size: 40.0),
-//                 Icon(FontAwesomeIcons.arrowLeftLong, color: Colors.grey.shade300, size: 40.0),
-//                 const Text("Swipe",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.grey)),
-//                 Icon(FontAwesomeIcons.arrowRightLong, color: Colors.grey.shade300, size: 40.0),
-//                 const Icon(FontAwesomeIcons.check, color: Colors.green, size: 40.0),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     ),
-//   );
-// }
 }
