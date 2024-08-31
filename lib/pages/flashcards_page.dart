@@ -103,7 +103,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                     word: wordData[index],
                     isCardFlippedNotifier: _isCardFlippedNotifier,
                   ),
-                      // flashcard(index, isCardFlipped),
                 ),
               ),
               SizedBox(height: 20),
@@ -140,51 +139,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       ),
     );
   }
-
-  // Widget flashcard(int index, bool isCardFlipped) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       setState(() {
-  //         isCardFlipped = !isCardFlipped;
-  //         print("click");
-  //       });
-  //     },
-  //     child: Container(
-  //       width: MediaQuery.sizeOf(context).width,
-  //       decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.circular(20.0),
-  //         border: Border.all(color: Colors.grey.shade900, width: 3),
-  //         color: Colors.black,
-  //       ),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           Text(isCardFlipped ? "" : wordData[index].article,
-  //               style: const TextStyle(
-  //                   fontWeight: FontWeight.normal,
-  //                   fontSize: 20.0,
-  //                   color: Colors.white)),
-  //           const SizedBox(height: 40.0),
-  //           Text(isCardFlipped ? wordData[index].englishMeaning : wordData[index].germanWord,
-  //               style: TextStyle(
-  //                   fontWeight: FontWeight.bold,
-  //                   fontSize:
-  //                       wordData[index].germanWord.length > 8 ? 30.0 : 50.0,
-  //                   color: Colors.white)),
-  //           const SizedBox(height: 40.0),
-  //           Text(wordData[index].exampleSentence,
-  //             style: const TextStyle(
-  //                 fontWeight: FontWeight.normal,
-  //                 fontSize: 20.0,
-  //                 color: Colors.grey),
-  //             textAlign: TextAlign.center,
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }
 
 class Flashcard extends StatelessWidget {
