@@ -74,9 +74,6 @@ class _MainAppBarState extends State<MainAppBar> {
                           // padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Center(
                               child: Text(_selectedCategory!,
-                            // _isLoading
-                            //     ? ""
-                            //     : _selectedCategory ?? "Select a Category",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20.0),
                             textAlign: TextAlign.center,

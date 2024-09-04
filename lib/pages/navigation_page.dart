@@ -166,15 +166,6 @@ class _NavigationPageState extends State<NavigationPage> {
   // }
 
    _showNavPage() {
-    // if (_isLoading) {
-    //   return const Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     children: [
-    //       CircularProgressIndicator(),
-    //     ],
-    //   );
-    // }else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcardsNav:
           return FlashcardsPage();
@@ -189,6 +180,5 @@ class _NavigationPageState extends State<NavigationPage> {
           return FlashcardsPage();
           // return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
       }
-    // }
   }
 }

@@ -15,7 +15,6 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
 
-  // String _selectedCategory = 'Select a category';
   String? _selectedCategory;
 
   saveSelectedCategory(String category){

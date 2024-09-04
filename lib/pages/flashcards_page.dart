@@ -91,7 +91,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   ) {
     print(
         'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
-    // _checkCategory();
     return true;
   }
 

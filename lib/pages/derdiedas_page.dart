@@ -39,7 +39,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   void _refreshPage() {
     setState(() {
       print("refresh DerDieDas page =================================");
-      // _checkCategory();
       _isLoading = true;
       _loadSelectedCategory();
     });

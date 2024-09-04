@@ -33,7 +33,6 @@ class _MatchingPageState extends State<MatchingPage> {
     // TODO: implement initState
     super.initState();
     _refreshPage();
-    // getSelectedCategory();
   }
 
   void _refreshPage() {
