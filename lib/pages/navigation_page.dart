@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ysty_style_words/pages/categories_page.dart';
 import 'package:ysty_style_words/pages/derdiedas_page.dart';
 import 'package:ysty_style_words/pages/flashcards_page.dart';
 import 'package:ysty_style_words/pages/matching_page.dart';
-import 'package:ysty_style_words/pages/settings_page.dart';
-import 'package:ysty_style_words/services/category_services.dart';
 import '../widgets/button_navigation.dart';
 
 enum NavigationStatus { flashcardsNav, matchingNav, derdiedasNav }
