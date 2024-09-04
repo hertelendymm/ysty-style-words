@@ -30,18 +30,18 @@ class _NavigationPageState extends State<NavigationPage> {
 
 
 
-  void refreshPage() {
-    setState(() {
-      debugPrint("refressed nav page =================================");
-      _isLoading = true;
-      _loadSelectedCategory();
-    });
-  }
+  // void refreshPage() {
+  //   setState(() {
+  //     debugPrint("refressed nav page =================================");
+  //     _isLoading = true;
+  //     _loadSelectedCategory();
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    refreshPage();
+    // refreshPage();
   }
 
   Future<void> _loadSelectedCategory() async {
@@ -62,7 +62,7 @@ class _NavigationPageState extends State<NavigationPage> {
           padding: const EdgeInsets.only(bottom: 60.0),
           child: Column(
             children: [
-              _myAppBar(),
+              // _myAppBar(),
               Expanded(child: _showNavPage()),
             ],
           ),
@@ -93,98 +93,102 @@ class _NavigationPageState extends State<NavigationPage> {
     );
   }
 
-  Widget _myAppBar() {
-    return Column(
-      children: [
-        Container(
-          height: kToolbarHeight + 12,
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              CategoriesPage(onRefresh: refreshPage))),
-                  child: Container(
-                    // height: 40.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40.0),
-                      border: Border.all(color: Colors.grey.shade300, width: 3),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 0.0, vertical: 6.0),
-                    margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
-                    // padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Center(
-                        child: Text(
-                      _isLoading
-                          ? ""
-                          : _selectedCategory ?? "Select a Category",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20.0),
-                      textAlign: TextAlign.center,
-                    )),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20.0,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SettingsPage())),
-                child: Container(
-                  // color: Colors.red,
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                  // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        color: Colors.grey.shade200),
-                    child:
-                        const Icon(FontAwesomeIcons.gear, color: Colors.black),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          color: Colors.grey.shade200,
-          height: 2.0,
-        ),
-      ],
-    );
-  }
+  // Widget _myAppBar() {
+  //   return Column(
+  //     children: [
+  //       Container(
+  //         height: kToolbarHeight + 12,
+  //         margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           children: [
+  //             Expanded(
+  //               child: GestureDetector(
+  //                 onTap: () => Navigator.push(
+  //                     context,
+  //                     MaterialPageRoute(
+  //                         builder: (context) =>
+  //                             CategoriesPage(onRefresh: refreshPage))),
+  //                 child: Container(
+  //                   // height: 40.0,
+  //                   decoration: BoxDecoration(
+  //                     borderRadius: BorderRadius.circular(40.0),
+  //                     border: Border.all(color: Colors.grey.shade300, width: 3),
+  //                   ),
+  //                   padding: const EdgeInsets.symmetric(
+  //                       horizontal: 0.0, vertical: 6.0),
+  //                   margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+  //                   // padding: const EdgeInsets.symmetric(horizontal: 20.0),
+  //                   child: Center(
+  //                       child: Text(
+  //                     _isLoading
+  //                         ? ""
+  //                         : _selectedCategory ?? "Select a Category",
+  //                     style: const TextStyle(
+  //                         fontWeight: FontWeight.bold, fontSize: 20.0),
+  //                     textAlign: TextAlign.center,
+  //                   )),
+  //                 ),
+  //               ),
+  //             ),
+  //             const SizedBox(
+  //               width: 20.0,
+  //             ),
+  //             GestureDetector(
+  //               onTap: () => Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                       builder: (context) => const SettingsPage())),
+  //               child: Container(
+  //                 // color: Colors.red,
+  //                 padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+  //                 // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+  //                 child: Container(
+  //                   padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(25.0),
+  //                       color: Colors.grey.shade200),
+  //                   child:
+  //                       const Icon(FontAwesomeIcons.gear, color: Colors.black),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       Container(
+  //         color: Colors.grey.shade200,
+  //         height: 2.0,
+  //       ),
+  //     ],
+  //   );
+  // }
 
    _showNavPage() {
-    if (_isLoading) {
-      return const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-        ],
-      );
-    }else {
+    // if (_isLoading) {
+    //   return const Column(
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     children: [
+    //       CircularProgressIndicator(),
+    //     ],
+    //   );
+    // }else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcardsNav:
-          return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
+          return FlashcardsPage();
+          // return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
         case NavigationStatus.matchingNav:
-          return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
+          return MatchingPage();
+          // return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
         case NavigationStatus.derdiedasNav:
-          return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
+          return const DerDieDasPage();
+          // return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
         default:
-          return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
+          return FlashcardsPage();
+          // return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
       }
-    }
+    // }
   }
 }
