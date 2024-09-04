@@ -19,8 +19,6 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcardsNav;
-  String? _selectedCategory;
-  bool _isLoading = true;
 
   void switchNav(NavigationStatus newNavStatus) {
     setState(() {
@@ -28,157 +26,53 @@ class _NavigationPageState extends State<NavigationPage> {
     });
   }
 
-
-
-  // void refreshPage() {
-  //   setState(() {
-  //     debugPrint("refressed nav page =================================");
-  //     _isLoading = true;
-  //     _loadSelectedCategory();
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
-    // refreshPage();
-  }
-
-  Future<void> _loadSelectedCategory() async {
-    String? categoryName = await CategoryService.loadSelectedCategory();
-    setState(() {
-      _selectedCategory = categoryName;
-      _isLoading = false; // Update loading state after data is loaded
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      // appBar: const MainAppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 60.0),
-          child: Column(
-            children: [
-              // _myAppBar(),
-              Expanded(child: _showNavPage()),
-            ],
-          ),
-        ),
-      ),
-      bottomSheet: Container(
-        color: Colors.grey.shade200,
-        height: 60.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.flashcardsNav,
-              onPressed: () => switchNav(NavigationStatus.flashcardsNav),
-            ),
-            ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.matchingNav,
-              onPressed: () => switchNav(NavigationStatus.matchingNav),
-            ),
-            ButtonNavigation(
-              isActive: _navigationStatus == NavigationStatus.derdiedasNav,
-              onPressed: () => switchNav(NavigationStatus.derdiedasNav),
-            ),
-          ],
-        ),
-      ),
-    );
+        backgroundColor: Colors.white,
+        body: SafeArea(
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 60.0),
+                child: Expanded(child: _showNavPage()))),
+        bottomSheet: Container(
+            color: Colors.grey.shade200,
+            height: 60.0,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ButtonNavigation(
+                      isActive:
+                          _navigationStatus == NavigationStatus.flashcardsNav,
+                      onPressed: () =>
+                          switchNav(NavigationStatus.flashcardsNav)),
+                  ButtonNavigation(
+                      isActive:
+                          _navigationStatus == NavigationStatus.matchingNav,
+                      onPressed: () => switchNav(NavigationStatus.matchingNav)),
+                  ButtonNavigation(
+                      isActive:
+                          _navigationStatus == NavigationStatus.derdiedasNav,
+                      onPressed: () =>
+                          switchNav(NavigationStatus.derdiedasNav)),
+                ])));
   }
 
-  // Widget _myAppBar() {
-  //   return Column(
-  //     children: [
-  //       Container(
-  //         height: kToolbarHeight + 12,
-  //         margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: [
-  //             Expanded(
-  //               child: GestureDetector(
-  //                 onTap: () => Navigator.push(
-  //                     context,
-  //                     MaterialPageRoute(
-  //                         builder: (context) =>
-  //                             CategoriesPage(onRefresh: refreshPage))),
-  //                 child: Container(
-  //                   // height: 40.0,
-  //                   decoration: BoxDecoration(
-  //                     borderRadius: BorderRadius.circular(40.0),
-  //                     border: Border.all(color: Colors.grey.shade300, width: 3),
-  //                   ),
-  //                   padding: const EdgeInsets.symmetric(
-  //                       horizontal: 0.0, vertical: 6.0),
-  //                   margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
-  //                   // padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  //                   child: Center(
-  //                       child: Text(
-  //                     _isLoading
-  //                         ? ""
-  //                         : _selectedCategory ?? "Select a Category",
-  //                     style: const TextStyle(
-  //                         fontWeight: FontWeight.bold, fontSize: 20.0),
-  //                     textAlign: TextAlign.center,
-  //                   )),
-  //                 ),
-  //               ),
-  //             ),
-  //             const SizedBox(
-  //               width: 20.0,
-  //             ),
-  //             GestureDetector(
-  //               onTap: () => Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                       builder: (context) => const SettingsPage())),
-  //               child: Container(
-  //                 // color: Colors.red,
-  //                 padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-  //                 // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-  //                 child: Container(
-  //                   padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-  //                   decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(25.0),
-  //                       color: Colors.grey.shade200),
-  //                   child:
-  //                       const Icon(FontAwesomeIcons.gear, color: Colors.black),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //       Container(
-  //         color: Colors.grey.shade200,
-  //         height: 2.0,
-  //       ),
-  //     ],
-  //   );
-  // }
-
-   _showNavPage() {
-      switch (_navigationStatus) {
-        case NavigationStatus.flashcardsNav:
-          return FlashcardsPage();
-          // return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
-        case NavigationStatus.matchingNav:
-          return MatchingPage();
-          // return MatchingPage(selectedCategory: _selectedCategory ?? "Animal");
-        case NavigationStatus.derdiedasNav:
-          return const DerDieDasPage();
-          // return DerDieDasPage(selectedCategory: _selectedCategory ?? "Animal");
-        default:
-          return FlashcardsPage();
-          // return FlashcardsPage(selectedCategory: _selectedCategory ?? "Animal");
-      }
+  _showNavPage() {
+    switch (_navigationStatus) {
+      case NavigationStatus.flashcardsNav:
+        return const FlashcardsPage();
+      case NavigationStatus.matchingNav:
+        return const MatchingPage();
+      case NavigationStatus.derdiedasNav:
+        return const DerDieDasPage();
+      default:
+        return const FlashcardsPage();
+    }
   }
 }

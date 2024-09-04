@@ -7,38 +7,25 @@ import 'matching_game_page.dart';
 
 class MatchingPage extends StatefulWidget {
   const MatchingPage({super.key});
-  // const MatchingPage({super.key, required this.selectedCategory});
-
 
   @override
   State<MatchingPage> createState() => _MatchingPageState();
 }
 
 class _MatchingPageState extends State<MatchingPage> {
-  String? _selectedCategory;
   bool _isLoading = true;
+  String? _selectedCategory; /// I will need this to to the MatchingGame page
 
-  // getSelectedCategory(){
-  //   CategoryService.loadSelectedCategory().then((categoryName) {
-  //     if (categoryName != null) {
-  //       setState(() {
-  //         _selectedCategory = categoryName;
-  //         debugPrint(_selectedCategory);
-  //       });
-  //     }
-  //   });
-  // }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _refreshPage();
+    _loadSelectedCategory();
   }
 
   void _refreshPage() {
     setState(() {
-      debugPrint("refresh DerDieDas page =================================");
-      // _checkCategory();
+      debugPrint("refresh Matching page =================================");
       _isLoading = true;
       _loadSelectedCategory();
     });

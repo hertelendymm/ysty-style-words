@@ -8,31 +8,20 @@ class CategoriesPage extends StatefulWidget {
 
   final VoidCallback onRefresh;
 
-
   @override
   State<CategoriesPage> createState() => _CategoriesPageState();
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-
   String? _selectedCategory;
 
-  saveSelectedCategory(String category){
+  saveSelectedCategory(String category) {
     CategoryService.saveSelectedCategory(category);
     getSelectedCategory();
     closePage();
   }
 
-  // getSelectedCategory() async {
-  //   String? selectedCategory = await CategoryService.loadSelectedCategory();
-  //   if (selectedCategory != null) {
-  //     setState(() {
-  //       _selectedCategory = _selectedCategory;
-  //     });
-  //   }
-  // }
-
-  getSelectedCategory(){
+  getSelectedCategory() {
     CategoryService.loadSelectedCategory().then((categoryName) {
       if (categoryName != null) {
         // Use the categoryName to load relevant content
@@ -43,61 +32,33 @@ class _CategoriesPageState extends State<CategoriesPage> {
     });
   }
 
-  closePage(){
+  closePage() {
     Navigator.pop(context);
     widget.onRefresh();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getSelectedCategory();
   }
-
-  // Future<void> saveSelectedCategory(String categoryName) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString('selectedCategory', categoryName);
-  //
-  //   setState(() {
-  //     _selectedCategory = categoryName;
-  //   });
-  // }
-  //
-  // Future<String?> loadSelectedCategory() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString('selectedCategory');
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   loadSelectedCategory().then((categoryName) {
-  //     if (categoryName != null) {
-  //       setState(() {
-  //         _selectedCategory = categoryName;
-  //       });
-  //     }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: const SecondaryAppBar(title: 'Choose a category',),
       body: SafeArea(
         ///TODO: Replace this with a ListView builder
         child: Column(
           children: [
-          _showAppBar(),
+            _showAppBar(),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                children:  [
+                children: [
                   const TitleWSeparator(title: "A1-A2"),
-                  _categotyItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
-                  _categotyItem(title: "Animal", icon: FontAwesomeIcons.dog),
+                  _categoryItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
+                  _categoryItem(title: "Animal", icon: FontAwesomeIcons.dog),
                   // _categotyItem(title: "Transportation", icon: FontAwesomeIcons.car),
                   // _categotyItem(title: "Family", icon: FontAwesomeIcons.peopleGroup),
                   // _categotyItem(title: "Sport", icon: FontAwesomeIcons.personSkiing),
@@ -173,7 +134,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  Widget _showAppBar(){
+  Widget _showAppBar() {
     return Container(
       color: Colors.white,
       child: Column(
@@ -187,32 +148,29 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 GestureDetector(
                   onTap: () => closePage(),
                   child: Container(
-                    // color: Colors.red,
                     padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                         color: Colors.grey.shade200,
                       ),
-                      child:
-                      const Icon(FontAwesomeIcons.xmark, color: Colors.black),
+                      child: const Icon(FontAwesomeIcons.xmark,
+                          color: Colors.black),
                     ),
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    // height: 40.0,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 0.0, vertical: 6.0),
                     child: const Center(
                         child: Text(
-                          "Choose a Category",
-                          style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
-                          textAlign: TextAlign.center,
-                        )),
+                      "Choose a Category",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24.0),
+                      textAlign: TextAlign.center,
+                    )),
                   ),
                 ),
                 const SizedBox(width: 45.0),
@@ -220,19 +178,19 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
           ),
           const SizedBox(height: 20.0),
-          Container(
-            color: Colors.grey.shade200,
-            height: 2.0,
-          ),
+          Container(color: Colors.grey.shade200, height: 2.0),
         ],
       ),
     );
   }
 
-  Widget _categotyItem({required String title, IconData icon = FontAwesomeIcons.x}){
+  Widget _categoryItem({
+    required String title,
+    IconData icon = FontAwesomeIcons.x,
+  }) {
     bool isActive = title == _selectedCategory;
     return GestureDetector(
-      onTap: ()=> saveSelectedCategory(title),
+      onTap: () => saveSelectedCategory(title),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
@@ -246,9 +204,17 @@ class _CategoriesPageState extends State<CategoriesPage> {
           children: [
             Icon(icon, color: isActive ? Colors.white : Colors.black),
             const SizedBox(width: 20.0),
-            Text(title, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.black)),
+            Text(title,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: isActive ? Colors.white : Colors.black)),
             const Expanded(child: SizedBox()),
-            Text("0%", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.black)),
+            Text("0%",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: isActive ? Colors.white : Colors.black)),
           ],
         ),
       ),

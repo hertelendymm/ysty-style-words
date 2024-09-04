@@ -10,9 +10,6 @@ import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class DerDieDasPage extends StatefulWidget {
   const DerDieDasPage({super.key});
-  // const DerDieDasPage({super.key, required this.selectedCategory});
-
-  // final String selectedCategory;
 
   @override
   State<DerDieDasPage> createState() => _DerDieDasPageState();
@@ -30,10 +27,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _selectedCategory = widget.selectedCategory;
-    // _loadNewGameData();
     _loadSelectedCategory();
-    // _refreshPage();
   }
 
   void _refreshPage() {
@@ -43,14 +37,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
       _loadSelectedCategory();
     });
   }
-
-  // _checkCategory() async {
-  //   String? categoryName = await CategoryService.loadSelectedCategory();
-  //   if (categoryName != _selectedCategory) {
-  //       _selectedCategory = categoryName;
-  //       await _loadNewGameData();
-  //   }
-  // }
 
   Future<void> _loadSelectedCategory() async {
     String? categoryName = await CategoryService.loadSelectedCategory();
@@ -76,7 +62,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   }
 
   Future<Word> _getNextWord() async{
-    // await _checkCategory();
     setState(() {
       wordIndex += 1;
       if (wordIndex >= wordData.length){

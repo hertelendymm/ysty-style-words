@@ -16,9 +16,4 @@ class CategoryService {
     categoryName ??= 'Animal';
     return categoryName;
   }
-
-  // static Future<String?> loadSelectedCategory() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(_selectedCategoryKey);
-  // }
 }
