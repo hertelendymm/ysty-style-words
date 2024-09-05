@@ -34,7 +34,12 @@ class _NavigationPageState extends State<NavigationPage> {
         body: SafeArea(
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 60.0),
-                child: Expanded(child: _showNavPage()))),
+                child: Column(
+                  children: [
+                    Expanded(child: _showNavPage()),
+                  ],
+                ))),
+                // child: Expanded(child: _showNavPage()))),
         bottomSheet: Container(
             color: Colors.grey.shade200,
             height: 60.0,

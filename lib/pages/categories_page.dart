@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/services/category_services.dart';
-import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key, required this.onRefresh});
@@ -54,77 +53,38 @@ class _CategoriesPageState extends State<CategoriesPage> {
             _showAppBar(),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                 children: [
-                  const TitleWSeparator(title: "A1-A2"),
                   _categoryItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
                   _categoryItem(title: "Animal", icon: FontAwesomeIcons.dog),
-                  // _categotyItem(title: "Transportation", icon: FontAwesomeIcons.car),
-                  // _categotyItem(title: "Family", icon: FontAwesomeIcons.peopleGroup),
-                  // _categotyItem(title: "Sport", icon: FontAwesomeIcons.personSkiing),
-                  // _categotyItem(title: "Home", icon: FontAwesomeIcons.house),
-                  // _categotyItem(title: "Travel", icon: FontAwesomeIcons.plane),
-                  // _categotyItem(title: "Education", icon: FontAwesomeIcons.spellCheck),
-                  // _categotyItem(title: "Clothing", icon: FontAwesomeIcons.shirt),
-                  // _categotyItem(title: "Music", icon: FontAwesomeIcons.music),
-                  // _categotyItem(title: "School", icon: FontAwesomeIcons.graduationCap),
-                  // _categotyItem(title: "Space", icon: FontAwesomeIcons.rocket),
-                  // _categotyItem(title: "Nature", icon: FontAwesomeIcons.tree),
-                  // _categotyItem(title: "Fruits", icon: FontAwesomeIcons.lemon),
-                  // _categotyItem(title: "Vegetables", icon: FontAwesomeIcons.carrot),
-                  // _categotyItem(title: "Body", icon: FontAwesomeIcons.skull),
-                  // _categotyItem(title: "Hospital", icon: FontAwesomeIcons.hospital),
-                  // _categotyItem(title: "Office", icon: FontAwesomeIcons.briefcase),
-                  // _categotyItem(title: "Jobs", icon: FontAwesomeIcons.hammer),
-                  // _categotyItem(title: "Dinig", icon: FontAwesomeIcons.utensils),
-                  // _categotyItem(title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
-                  // _categotyItem(title: "Verbs", icon: FontAwesomeIcons.comment),
-                  // TitleWSeparator(level: "B1-B2"),
-                  // _categotyItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
-                  // _categotyItem(title: "Animal", icon: FontAwesomeIcons.dog),
-                  // _categotyItem(title: "Transportation", icon: FontAwesomeIcons.car),
-                  // _categotyItem(title: "Family", icon: FontAwesomeIcons.peopleGroup),
-                  // _categotyItem(title: "Sport", icon: FontAwesomeIcons.personSkiing),
-                  // _categotyItem(title: "Home", icon: FontAwesomeIcons.house),
-                  // _categotyItem(title: "Travel", icon: FontAwesomeIcons.plane),
-                  // _categotyItem(title: "Education", icon: FontAwesomeIcons.spellCheck),
-                  // _categotyItem(title: "Clothing", icon: FontAwesomeIcons.shirt),
-                  // _categotyItem(title: "Music", icon: FontAwesomeIcons.music),
-                  // _categotyItem(title: "School", icon: FontAwesomeIcons.graduationCap),
-                  // _categotyItem(title: "Space", icon: FontAwesomeIcons.rocket),
-                  // _categotyItem(title: "Nature", icon: FontAwesomeIcons.tree),
-                  // _categotyItem(title: "Fruits", icon: FontAwesomeIcons.lemon),
-                  // _categotyItem(title: "Vegetables", icon: FontAwesomeIcons.carrot),
-                  // _categotyItem(title: "Body", icon: FontAwesomeIcons.skull),
-                  // _categotyItem(title: "Hospital", icon: FontAwesomeIcons.hospital),
-                  // _categotyItem(title: "Office", icon: FontAwesomeIcons.briefcase),
-                  // _categotyItem(title: "Jobs", icon: FontAwesomeIcons.hammer),
-                  // _categotyItem(title: "Dinig", icon: FontAwesomeIcons.utensils),
-                  // _categotyItem(title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
-                  // _categotyItem(title: "Verbs", icon: FontAwesomeIcons.comment),
-                  // TitleWSeparator(level: "C1-C2"),
-                  // _categotyItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
-                  // _categotyItem(title: "Animal", icon: FontAwesomeIcons.dog),
-                  // _categotyItem(title: "Transportation", icon: FontAwesomeIcons.car),
-                  // _categotyItem(title: "Family", icon: FontAwesomeIcons.peopleGroup),
-                  // _categotyItem(title: "Sport", icon: FontAwesomeIcons.personSkiing),
-                  // _categotyItem(title: "Home", icon: FontAwesomeIcons.house),
-                  // _categotyItem(title: "Travel", icon: FontAwesomeIcons.plane),
-                  // _categotyItem(title: "Education", icon: FontAwesomeIcons.spellCheck),
-                  // _categotyItem(title: "Clothing", icon: FontAwesomeIcons.shirt),
-                  // _categotyItem(title: "Music", icon: FontAwesomeIcons.music),
-                  // _categotyItem(title: "School", icon: FontAwesomeIcons.graduationCap),
-                  // _categotyItem(title: "Space", icon: FontAwesomeIcons.rocket),
-                  // _categotyItem(title: "Nature", icon: FontAwesomeIcons.tree),
-                  // _categotyItem(title: "Fruits", icon: FontAwesomeIcons.lemon),
-                  // _categotyItem(title: "Vegetables", icon: FontAwesomeIcons.carrot),
-                  // _categotyItem(title: "Body", icon: FontAwesomeIcons.skull),
-                  // _categotyItem(title: "Hospital", icon: FontAwesomeIcons.hospital),
-                  // _categotyItem(title: "Office", icon: FontAwesomeIcons.briefcase),
-                  // _categotyItem(title: "Jobs", icon: FontAwesomeIcons.hammer),
-                  // _categotyItem(title: "Dinig", icon: FontAwesomeIcons.utensils),
-                  // _categotyItem(title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
-                  // _categotyItem(title: "Verbs", icon: FontAwesomeIcons.comment),
+                  _categoryItem(title: "Transportation", icon: FontAwesomeIcons.car),
+                  _categoryItem(title: "Family", icon: FontAwesomeIcons.peopleGroup),
+                  _categoryItem(title: "Sport", icon: FontAwesomeIcons.personSkiing),
+                  _categoryItem(title: "Home", icon: FontAwesomeIcons.house),
+                  _categoryItem(title: "Travel", icon: FontAwesomeIcons.plane),
+                  _categoryItem(title: "Education", icon: FontAwesomeIcons.spellCheck),
+                  _categoryItem(title: "Clothing", icon: FontAwesomeIcons.shirt),
+                  _categoryItem(title: "Music", icon: FontAwesomeIcons.music),
+                  _categoryItem(title: "School", icon: FontAwesomeIcons.graduationCap),
+                  _categoryItem(title: "Space", icon: FontAwesomeIcons.rocket),
+                  _categoryItem(title: "Nature", icon: FontAwesomeIcons.tree),
+                  _categoryItem(title: "Fruits", icon: FontAwesomeIcons.lemon),
+                  _categoryItem(title: "Vegetables", icon: FontAwesomeIcons.carrot),
+                  _categoryItem(title: "Body", icon: FontAwesomeIcons.skull),
+                  _categoryItem(title: "Hospital", icon: FontAwesomeIcons.hospital),
+                  _categoryItem(title: "Office", icon: FontAwesomeIcons.briefcase),
+                  _categoryItem(title: "Jobs", icon: FontAwesomeIcons.hammer),
+                  _categoryItem(title: "Dining", icon: FontAwesomeIcons.utensils),
+                  _categoryItem(title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
+                  _categoryItem(title: "Verbs", icon: FontAwesomeIcons.comment),
+                  _categoryItem(title: "Technology", icon: FontAwesomeIcons.microchip),
+                  _categoryItem(title: "Hobbies", icon: FontAwesomeIcons.gamepad),
+                  _categoryItem(title: "Colors", icon: FontAwesomeIcons.palette),
+                  _categoryItem(title: "Time", icon: FontAwesomeIcons.hourglassHalf),
+                  _categoryItem(title: "Numbers", icon: FontAwesomeIcons.listOl),
+                  _categoryItem(title: "Emotions", icon: FontAwesomeIcons.faceGrinTears),
+                  _categoryItem(title: "Seasons", icon: FontAwesomeIcons.snowflake),
+                  _categoryItem(title: "Countries and Cities", icon: FontAwesomeIcons.earthAmericas),
                 ],
               ),
             ),
@@ -221,3 +181,27 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 }
+
+
+// "Food"
+// "Animal"
+// "Transportation"
+// "Family"
+// "Sport"
+// "Home"
+// "Travel"
+// "Education"
+// "Clothing"
+// "Music"
+// "School
+// "Space"
+// "Nature"
+// "Fruits"
+// "Vegetables"
+// "Body"
+// "Hospital"
+// "Office"
+// "Jobs"
+// "Dinig"
+// "Weather"
+// "Verbs"
