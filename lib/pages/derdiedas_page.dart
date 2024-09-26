@@ -4,6 +4,7 @@ import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/widgets/loading_screen.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
@@ -87,10 +88,12 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: _isLoading ? const CircularProgressIndicator() : Column(
+        child: _isLoading ? const LoadingScreen() : Column(
+        // child: _isLoading ? const CircularProgressIndicator() : Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
+            MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+            // MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
@@ -128,6 +131,10 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   Text(wordData[wordIndex].germanWord,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 40.0)),
+                  const SizedBox(height: 14.0),
+                  Text(wordData[wordIndex].englishMeaning,
+                      style: const TextStyle(color: Colors.grey,
+                          fontWeight: FontWeight.bold, fontSize: 24.0)),
                 ],
               ),
             ),

@@ -19,21 +19,21 @@ class MainAppBar extends StatefulWidget {
 }
 
 class _MainAppBarState extends State<MainAppBar> {
-  String? _selectedCategory = 'Loading';
+  // String? _selectedCategory = '';
 
-  _checkCategory() async {
-    String? categoryName = await CategoryService.loadSelectedCategory();
-    if (categoryName != widget.selectedCategory) {
-      setState(() {
-        _selectedCategory = categoryName;
-      });
-    }
-  }
+  // _checkCategory() async {
+  //   String? categoryName = await CategoryService.loadSelectedCategory();
+  //   if (categoryName != widget.selectedCategory) {
+  //     setState(() {
+  //       _selectedCategory = categoryName;
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    _checkCategory();
+    // _checkCategory();
   }
 
   @override
@@ -54,7 +54,7 @@ class _MainAppBarState extends State<MainAppBar> {
                       MaterialPageRoute(
                           builder: (context) => CategoriesPage(onRefresh: () {
                                 widget.updateParent();
-                                _checkCategory();
+                                // _checkCategory();
                               }))),
                   child: Container(
                     decoration: BoxDecoration(
@@ -66,7 +66,8 @@ class _MainAppBarState extends State<MainAppBar> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 0.0, vertical: 12.0),
                     child: Center(
-                        child: Text(_selectedCategory!,
+                        child: Text(widget.selectedCategory,
+                        // child: Text(_selectedCategory!,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20.0),
                             textAlign: TextAlign.center)),

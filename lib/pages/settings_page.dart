@@ -231,8 +231,8 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             Image.asset(
               isActive
-                  ? 'images/uk_flag_icon.png'
-                  : 'images/magyar_flag_icon.png',
+                  ? 'assets/images/uk_flag_icon.png'
+                  : 'assets/images/magyar_flag_icon.png',
               width: 36.0,
               height: 36.0,
             ),

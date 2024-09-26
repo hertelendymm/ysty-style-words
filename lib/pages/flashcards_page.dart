@@ -3,6 +3,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/services/category_services.dart';
+import 'package:ysty_style_words/widgets/loading_screen.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
@@ -77,11 +78,13 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: _isLoading
-            ? const CircularProgressIndicator()
+            ? const LoadingScreen()
+            // ? Expanded(child: Center(child: const CircularProgressIndicator()))
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MainAppBar(updateParent: _refreshPage, selectedCategory: ''),
+                  MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+                  // MainAppBar(updateParent: _refreshPage, selectedCategory: ''),
                   Flexible(
                       child: CardSwiper(
                           cardsCount: wordData.length,
@@ -169,8 +172,10 @@ class Flashcard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
               border: Border.all(
                 color:
-                    isCardFlipped ? Colors.grey.shade400 : Colors.grey.shade900,
-                width: 3,
+                    isCardFlipped ? Colors.black : Colors.grey.shade900,
+                    // isCardFlipped ? Colors.grey.shade400 : Colors.grey.shade900,
+                width: 6,
+                // width: 3,
               ),
               color: isCardFlipped ? Colors.white : Colors.black,
             ),

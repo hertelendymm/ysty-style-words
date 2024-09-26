@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/widgets/loading_screen.dart';
 import 'package:ysty_style_words/widgets/main_app_bar.dart';
 
 import 'matching_game_page.dart';
@@ -44,10 +45,12 @@ class _MatchingPageState extends State<MatchingPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: _isLoading ? const CircularProgressIndicator() : Column(
+        child: _isLoading ? const LoadingScreen() : Column(
+        // child: _isLoading ? const CircularProgressIndicator() : Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
+            MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+            // MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
             const Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
