@@ -35,31 +35,35 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     super.dispose();
   }
 
-  void _refreshPage() {
-    setState(() {
-      debugPrint("refresh Flashcards page =================================");
-      _isLoading = true;
-      _loadSelectedCategory();
-    });
-  }
+
+  // void _refreshPage() {
+  //   setState(() {
+  //     debugPrint("refresh Flashcards page =================================");
+  //     _isLoading = true;
+  //     _loadSelectedCategory();
+  //   });
+  // }
 
   Future<void> _loadSelectedCategory() async {
+    _isLoading = true;
     String? categoryName = await CategoryService.loadSelectedCategory();
     setState(() {
       _selectedCategory = categoryName;
-      _isLoading = false; // Update loading state after data is loaded
+      // _isLoading = false; // Update loading state after data is loaded
     });
     await _loadNewGameData();
   }
 
   _loadNewGameData() {
-    setState(() {
+    setState(() async {
       wordData = [];
       for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
         wordData.add(newWord);
       }
       wordData.shuffle();
+      // await Future.delayed(Duration(milliseconds: 500));
+      _isLoading = false; // Update loading state after data is loaded
     });
   }
 
@@ -68,30 +72,105 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     int? currentIndex,
     CardSwiperDirection direction,
   ) {
-    print('The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
+    print(
+        'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
     return true;
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     body: SafeArea(
+  //       child: _isLoading
+  //           // ? Container()
+  //           // ? const LoadingScreen()
+  //           ? const Center(child: CircularProgressIndicator())
+  //           : Column(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+  //                 // MainAppBar(updateParent: _refreshPage, selectedCategory: ''),
+  //                 Flexible(
+  //                     child: CardSwiper(
+  //                         cardsCount: wordData.length,
+  //                         onSwipe: _onSwipe,
+  //                         allowedSwipeDirection:
+  //                             const AllowedSwipeDirection.only(
+  //                                 left: true, right: true),
+  //                         numberOfCardsDisplayed: 3,
+  //                         padding: const EdgeInsets.symmetric(
+  //                             vertical: 60, horizontal: 40.0),
+  //                         controller: controller,
+  //                         backCardOffset: const Offset(0, 35),
+  //                         cardBuilder: (
+  //                           context,
+  //                           index,
+  //                           horizontalThresholdPercentage,
+  //                           verticalThresholdPercentage,
+  //                         ) =>
+  //                             Flashcard(
+  //                               index: index,
+  //                               word: wordData[index],
+  //                               isCardFlippedNotifier: _isCardFlippedNotifier,
+  //                             ))),
+  //                 const SizedBox(height: 0),
+  //                 Padding(
+  //                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+  //                     child: Text('Tap to flip',
+  //                         style: TextStyle(
+  //                             fontWeight: FontWeight.bold,
+  //                             fontSize: 20.0,
+  //                             color: Colors.grey.shade300),
+  //                         textAlign: TextAlign.center)),
+  //                 const SizedBox(height: 40),
+  //                 Padding(
+  //                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+  //                     child: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                         children: [
+  //                           const Icon(FontAwesomeIcons.xmark,
+  //                               color: Colors.red, size: 40.0),
+  //                           Icon(FontAwesomeIcons.arrowLeftLong,
+  //                               color: Colors.grey.shade300, size: 40.0),
+  //                           const Text("Swipe",
+  //                               style: TextStyle(
+  //                                   fontWeight: FontWeight.bold,
+  //                                   fontSize: 20.0,
+  //                                   color: Colors.grey)),
+  //                           Icon(FontAwesomeIcons.arrowRightLong,
+  //                               color: Colors.grey.shade300, size: 40.0),
+  //                           const Icon(FontAwesomeIcons.check,
+  //                               color: Colors.green, size: 40.0)
+  //                         ])),
+  //                 const SizedBox(height: 40.0),
+  //               ],
+  //             ),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: _isLoading
-            ? const LoadingScreen()
-            // ? Expanded(child: Center(child: const CircularProgressIndicator()))
+            // ? const LoadingScreen() :
+            ? const CircularProgressIndicator(color: Colors.blue)
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+                  MainAppBar(
+                      updateParent: _loadSelectedCategory,
+                      selectedCategory: _selectedCategory.toString()),
+                  // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
                   // MainAppBar(updateParent: _refreshPage, selectedCategory: ''),
                   Flexible(
                       child: CardSwiper(
                           cardsCount: wordData.length,
                           onSwipe: _onSwipe,
-                          allowedSwipeDirection:
-                              const AllowedSwipeDirection.only(
-                                  left: true, right: true),
+                          allowedSwipeDirection: const AllowedSwipeDirection.only(
+                              left: true, right: true),
                           numberOfCardsDisplayed: 3,
                           padding: const EdgeInsets.symmetric(
                               vertical: 60, horizontal: 40.0),
@@ -172,10 +251,10 @@ class Flashcard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
               border: Border.all(
                 color:
-                    isCardFlipped ? Colors.black : Colors.grey.shade900,
-                    // isCardFlipped ? Colors.grey.shade400 : Colors.grey.shade900,
-                width: 6,
-                // width: 3,
+                    // isCardFlipped ? Colors.black : Colors.grey.shade900,
+                    isCardFlipped ? Colors.grey.shade400 : Colors.grey.shade900,
+                // width: 6,
+                width: 3,
               ),
               color: isCardFlipped ? Colors.white : Colors.black,
             ),

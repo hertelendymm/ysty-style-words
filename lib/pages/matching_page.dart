@@ -24,15 +24,16 @@ class _MatchingPageState extends State<MatchingPage> {
     _loadSelectedCategory();
   }
 
-  void _refreshPage() {
-    setState(() {
-      debugPrint("refresh Matching page =================================");
-      _isLoading = true;
-      _loadSelectedCategory();
-    });
-  }
+  // void _refreshPage() {
+  //   setState(() {
+  //     debugPrint("refresh Matching page =================================");
+  //     _isLoading = true;
+  //     _loadSelectedCategory();
+  //   });
+  // }
 
   Future<void> _loadSelectedCategory() async {
+    _isLoading = true;
     String? categoryName = await CategoryService.loadSelectedCategory();
     setState(() {
       _selectedCategory = categoryName;
@@ -45,11 +46,13 @@ class _MatchingPageState extends State<MatchingPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: _isLoading ? const LoadingScreen() : Column(
-        // child: _isLoading ? const CircularProgressIndicator() : Column(
+        // child: _isLoading ? const LoadingScreen() : Column(
+        // child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+            MainAppBar(updateParent: _loadSelectedCategory, selectedCategory: _selectedCategory.toString()),
+            // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
             // MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
             const Padding(
               padding: EdgeInsets.all(20.0),

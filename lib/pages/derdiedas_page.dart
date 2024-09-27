@@ -88,7 +88,8 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: _isLoading ? const LoadingScreen() : Column(
+        child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : Column(
+        // child: _isLoading ? const LoadingScreen() : Column(
         // child: _isLoading ? const CircularProgressIndicator() : Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
