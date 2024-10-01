@@ -21,7 +21,7 @@ class _NavigationPageState extends State<NavigationPage> {
   /// TODO: 1. load the category here when the user opens the app and pass it to gamePage
   /// TODO: 2. check sharedPref in each gamePage (FlashcardsPage, MatchingPage, DerDieDasPage)
   /// TODO:     if it's not the same as the one navigationPage passed call voidcallback to update it in navPage
-  /// TODO: 3. after a categoryPage redirect send a voidcallback to gamePage to check again
+  /// TODO: 3. after a categoryPage redirect send a voidcallback to gamePage to check again   
 
 
   void switchNav(NavigationStatus newNavStatus) {
