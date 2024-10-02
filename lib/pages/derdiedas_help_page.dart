@@ -19,45 +19,29 @@ class DerDieDasHelpPage extends StatelessWidget {
                 /// padding: const EdgeInsets.all(40.0), <-- The bigger padding looks better
                 children: const [
                   Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+                      "German, unlike English, has grammatical gender for nouns. This means that each noun is classified as masculine, feminine, or neuter. Unfortunately, there's no hard-and-fast rule for determining a noun's gender. However, here are some general guidelines and tips:", style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: "Der"),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Automarken"),
-                      Text("\"Kalendar\""),
-                      Text("\"Wetter\""),
-                      Text("Alkoholsorten"),
-                    ],
-                  ),
+                  TitleWSeparator(title: 'Common Gender Endings'),
+                  Text("While not foolproof, certain word endings can often indicate gender:\n\n • Masculine: -er, -el, -or, -ling (e.g., der Vater - father, der Apfel - apple), Automarken, \"Kalendar\", \"Wetter\", Alkoholsorten\n • Feminine: -ung, -heit, -keit, -schaft (e.g., die Zeitung - newspaper, die Freiheit - freedom)\n • Neuter: -chen, -lein, -tum (e.g., das Mädchen - girl, das Häuschen - little house), Chemische Elemente", style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: "Die"),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("-ung"),
-                      Text("-heit"),
-                      Text("-keit"),
-                      Text("-schaft"),
-                    ],
-                  ),
+                  TitleWSeparator(title: 'Noun Pairs'),
+                  Text("Some nouns have gendered pairs:\n\n • Masculine and Feminine: der Mann (man) - die Frau (woman), der Junge (boy) - das Mädchen (girl)\n • Masculine and Neuter: der Tag (day) - das Jahr (year), der Berg (mountain) - das Tal (valley)", style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: "Das"),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("-um"),
-                      Text("-chen"),
-                      Text("-lein"),
-                      Text("Chemische Elemente"),
-                    ],
+                  TitleWSeparator(title: 'Cognates'),
+                  Text("If a German noun is a cognate with an English word, the gender often matches:\n\n • Masculine: der Vater (father), der Bruder (brother), der Garten (garden)\n • Feminine: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n • Neuter: das Haus (house), das Buch (book), das Auto (car)", style: TextStyle(fontSize: 16.0),),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  TitleWSeparator(title: 'Practice and Exposure'),
+                  Text("The best way to learn German word genders is through consistent practice and exposure to the language. Read books, watch movies, and listen to music in German to familiarize yourself with the patterns and exceptions.", style: TextStyle(fontSize: 16.0),),
+                  SizedBox(
+                    height: 20.0,
                   ),
                 ],
               ),
