@@ -8,7 +8,9 @@ import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class FlashcardsPage extends StatefulWidget {
-  const FlashcardsPage({super.key});
+  const FlashcardsPage({super.key, required this.category});
+
+  final String category;
 
   @override
   State<FlashcardsPage> createState() => _FlashcardsPageState();
@@ -19,14 +21,18 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   bool isCorrectAnswerFound = false;
   final CardSwiperController controller = CardSwiperController();
   ValueNotifier<bool> _isCardFlippedNotifier = ValueNotifier<bool>(false);
+  // String? _selectedCategory;
   String? _selectedCategory;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _selectedCategory = widget.category;
     _isCardFlippedNotifier = ValueNotifier<bool>(false);
-    _loadSelectedCategory();
+    // _loadSelectedCategory();
+    print("${widget.category} - ${_selectedCategory}");
+    _loadNewGameData();
   }
 
   @override
@@ -44,20 +50,22 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   //   });
   // }
 
-  Future<void> _loadSelectedCategory() async {
-    _isLoading = true;
-    String? categoryName = await CategoryService.loadSelectedCategory();
-    setState(() {
-      _selectedCategory = categoryName;
-      // _isLoading = false; // Update loading state after data is loaded
-    });
-    await _loadNewGameData();
-  }
+  // Future<void> _loadSelectedCategory() async {
+  //   _isLoading = true;
+  //   String? categoryName = await CategoryService.loadSelectedCategory();
+  //   setState(() {
+  //     _selectedCategory = categoryName;
+  //     // _isLoading = false; // Update loading state after data is loaded
+  //   });
+  //   await _loadNewGameData();
+  // }
 
   _loadNewGameData() {
-    setState(() async {
+    setState(()  {
+      _selectedCategory = widget.category;
       wordData = [];
-      for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
+      for (var n in flashcardContents[widget.category.toLowerCase()]!) {
+      // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
         wordData.add(newWord);
       }
@@ -77,116 +85,17 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     return true;
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.white,
-  //     body: SafeArea(
-  //       child: _isLoading
-  //           // ? Container()
-  //           // ? const LoadingScreen()
-  //           ? const Center(child: CircularProgressIndicator())
-  //           : Column(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
-  //                 // MainAppBar(updateParent: _refreshPage, selectedCategory: ''),
-  //                 Flexible(
-  //                     child: CardSwiper(
-  //                         cardsCount: wordData.length,
-  //                         onSwipe: _onSwipe,
-  //                         allowedSwipeDirection:
-  //                             const AllowedSwipeDirection.only(
-  //                                 left: true, right: true),
-  //                         numberOfCardsDisplayed: 3,
-  //                         padding: const EdgeInsets.symmetric(
-  //                             vertical: 60, horizontal: 40.0),
-  //                         controller: controller,
-  //                         backCardOffset: const Offset(0, 35),
-  //                         cardBuilder: (
-  //                           context,
-  //                           index,
-  //                           horizontalThresholdPercentage,
-  //                           verticalThresholdPercentage,
-  //                         ) =>
-  //                             Flashcard(
-  //                               index: index,
-  //                               word: wordData[index],
-  //                               isCardFlippedNotifier: _isCardFlippedNotifier,
-  //                             ))),
-  //                 const SizedBox(height: 0),
-  //                 Padding(
-  //                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  //                     child: Text('Tap to flip',
-  //                         style: TextStyle(
-  //                             fontWeight: FontWeight.bold,
-  //                             fontSize: 20.0,
-  //                             color: Colors.grey.shade300),
-  //                         textAlign: TextAlign.center)),
-  //                 const SizedBox(height: 40),
-  //                 Padding(
-  //                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  //                     child: Row(
-  //                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                         children: [
-  //                           const Icon(FontAwesomeIcons.xmark,
-  //                               color: Colors.red, size: 40.0),
-  //                           Icon(FontAwesomeIcons.arrowLeftLong,
-  //                               color: Colors.grey.shade300, size: 40.0),
-  //                           const Text("Swipe",
-  //                               style: TextStyle(
-  //                                   fontWeight: FontWeight.bold,
-  //                                   fontSize: 20.0,
-  //                                   color: Colors.grey)),
-  //                           Icon(FontAwesomeIcons.arrowRightLong,
-  //                               color: Colors.grey.shade300, size: 40.0),
-  //                           const Icon(FontAwesomeIcons.check,
-  //                               color: Colors.green, size: 40.0)
-  //                         ])),
-  //                 const SizedBox(height: 40.0),
-  //               ],
-  //             ),
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: _isLoading
-            // ? const LoadingScreen() :
             ? const CircularProgressIndicator(color: Colors.blue)
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MainAppBar(
-                      updateParent: _loadSelectedCategory,
-                      selectedCategory: _selectedCategory.toString()),
-                  // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
-                  // MainAppBar(updateParent: _refreshPage, selectedCategory: ''),
-                  Flexible(
-                      child: CardSwiper(
-                          cardsCount: wordData.length,
-                          onSwipe: _onSwipe,
-                          allowedSwipeDirection: const AllowedSwipeDirection.only(
-                              left: true, right: true),
-                          numberOfCardsDisplayed: 3,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 60, horizontal: 40.0),
-                          controller: controller,
-                          backCardOffset: const Offset(0, 35),
-                          cardBuilder: (
-                            context,
-                            index,
-                            horizontalThresholdPercentage,
-                            verticalThresholdPercentage,
-                          ) =>
-                              Flashcard(
-                                index: index,
-                                word: wordData[index],
-                                isCardFlippedNotifier: _isCardFlippedNotifier,
-                              ))),
+                  _showCards(),
                   const SizedBox(height: 0),
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -221,6 +130,34 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
               ),
       ),
     );
+  }
+
+  Widget _showCards(){
+    if(_selectedCategory != widget.category){
+      _loadNewGameData();
+    }
+    return Flexible(
+        child: CardSwiper(
+            cardsCount: wordData.length,
+            onSwipe: _onSwipe,
+            allowedSwipeDirection: const AllowedSwipeDirection.only(
+                left: true, right: true),
+            numberOfCardsDisplayed: 3,
+            padding: const EdgeInsets.symmetric(
+                vertical: 60, horizontal: 40.0),
+            controller: controller,
+            backCardOffset: const Offset(0, 35),
+            cardBuilder: (
+                context,
+                index,
+                horizontalThresholdPercentage,
+                verticalThresholdPercentage,
+                ) =>
+                Flashcard(
+                  index: index,
+                  word: wordData[index],
+                  isCardFlippedNotifier: _isCardFlippedNotifier,
+                )));
   }
 }
 
@@ -274,13 +211,16 @@ class Flashcard extends StatelessWidget {
                         fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
                         color: isCardFlipped ? Colors.black : Colors.white)),
                 const SizedBox(height: 40.0),
-                Text(
-                  word.exampleSentence,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 20.0,
-                      color: Colors.grey),
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    word.exampleSentence,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20.0,
+                        color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),

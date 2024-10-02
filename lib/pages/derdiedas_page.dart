@@ -10,7 +10,9 @@ import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 
 class DerDieDasPage extends StatefulWidget {
-  const DerDieDasPage({super.key});
+  const DerDieDasPage({super.key, required this.category});
+
+  final String category;
 
   @override
   State<DerDieDasPage> createState() => _DerDieDasPageState();
@@ -28,36 +30,42 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadSelectedCategory();
+    _selectedCategory =  widget.category;
+    // _selectedCategory = widget.category;
+    _loadNewGameData();
+    // _loadSelectedCategory();
   }
 
-  void _refreshPage() {
-    setState(() {
-      print("refresh DerDieDas page =================================");
-      _isLoading = true;
-      _loadSelectedCategory();
-    });
-  }
+  // void _refreshPage() {
+  //   setState(() {
+  //     print("refresh DerDieDas page =================================");
+  //     _isLoading = true;
+  //     _loadSelectedCategory();
+  //   });
+  // }
 
-  Future<void> _loadSelectedCategory() async {
-    String? categoryName = await CategoryService.loadSelectedCategory();
-    setState(() {
-      _selectedCategory = categoryName;
-      _isLoading = false; // Update loading state after data is loaded
-    });
-    await _loadNewGameData();
-  }
+  // Future<void> _loadSelectedCategory() async {
+  //   String? categoryName = await CategoryService.loadSelectedCategory();
+  //   setState(() {
+  //     _selectedCategory = categoryName;
+  //     _isLoading = false; // Update loading state after data is loaded
+  //   });
+  //   await _loadNewGameData();
+  // }
 
   _loadNewGameData(){
     setState(() {
+      _selectedCategory = widget.category;
       wordData = [];
-      for(var n in flashcardContents[_selectedCategory!.toLowerCase()]!){
+      // for(var n in flashcardContents[_selectedCategory!.toLowerCase()]!){
+      for(var n in flashcardContents[widget.category.toLowerCase()]!){
         Word newWord = Word.fromJson(n);
         wordData.add(newWord);
       }
       wordData.shuffle();
       wordIndex = 0;
       userAnswer = "";
+      _isLoading = false;
     });
 
   }
@@ -88,82 +96,91 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : Column(
-        // child: _isLoading ? const LoadingScreen() : Column(
-        // child: _isLoading ? const CircularProgressIndicator() : Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
-            // MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(child: ButtonRounded(text: "Skip", onPressed: ()=>_getNextWord(), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.shuffle,)),
-                  const SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "Help", onPressed: () =>Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DerDieDasHelpPage())), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.lightbulb,)),
-                ],
+        child: _isLoading ? const CircularProgressIndicator(color: Colors.red) : Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: ["Verbs", "Numbers"].contains(widget.category) ? _showNotAvailableForVerbs(widget.category) : Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: ButtonRounded(text: "Skip", onPressed: ()=>_getNextWord(), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.shuffle,)),
+                    const SizedBox(width: 20.0),
+                    Expanded(child: ButtonRounded(text: "Help", onPressed: () =>Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DerDieDasHelpPage())), backgroundColor: Colors.grey.shade100, textColor: Colors.black, isIconWText: true, iconData: FontAwesomeIcons.lightbulb,)),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(color: Colors.grey.shade300, width: 3),
-                  color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(userAnswer,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40.0, color: isCorrectAnswerFound? Colors.green:Colors.red)),
-                  const Text('------',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40.0)),
-                  Text(wordData[wordIndex].germanWord,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40.0)),
-                  const SizedBox(height: 14.0),
-                  Text(wordData[wordIndex].englishMeaning,
-                      style: const TextStyle(color: Colors.grey,
-                          fontWeight: FontWeight.bold, fontSize: 24.0)),
-                ],
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+                width: MediaQuery.sizeOf(context).width,
+                height: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: Colors.grey.shade300, width: 3),
+                    color: Colors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(userAnswer,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 40.0, color: isCorrectAnswerFound? Colors.green:Colors.red)),
+                    const Text('------',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 40.0)),
+                    Text(wordData[wordIndex].germanWord,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 40.0)),
+                    const SizedBox(height: 14.0),
+                    Text(wordData[wordIndex].englishMeaning,
+                        style: const TextStyle(color: Colors.grey,
+                            fontWeight: FontWeight.bold, fontSize: 24.0)),
+                  ],
+                ),
               ),
-            ),
-            isCorrectAnswerFound ?
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: ButtonRounded(text: "Next", backgroundColor: Colors.black, textColor: Colors.white, onPressed: ()=>_getNextWord()),
-            ):
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: ButtonRounded(
-                    text: "der",
-                    onPressed: ()=>_checkAnswer("der")
-                  )),
-                  const SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "die", onPressed: ()=>_checkAnswer("die"))),
-                  const SizedBox(width: 20.0),
-                  Expanded(child: ButtonRounded(text: "das", onPressed: ()=>_checkAnswer("das"))),
-                ],
+              isCorrectAnswerFound ?
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: ButtonRounded(text: "Next", backgroundColor: Colors.green.shade800, textColor: Colors.white, onPressed: ()=>_getNextWord()),
+              ):
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: ButtonRounded(
+                      text: "der",
+                      onPressed: ()=>_checkAnswer("der")
+                    )),
+                    const SizedBox(width: 20.0),
+                    Expanded(child: ButtonRounded(text: "die", onPressed: ()=>_checkAnswer("die"))),
+                    const SizedBox(width: 20.0),
+                    Expanded(child: ButtonRounded(text: "das", onPressed: ()=>_checkAnswer("das"))),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(),
-          ],
+              // const SizedBox(),
+            ],
+          ),
         ),
       ),
     );
   }
+  Widget _showNotAvailableForVerbs(String category){
+    return  Column(
+      children: [
+        const Text("Not Available"),
+        Text("Sorry, this mode is not available for this because '$category' don't have articles (der/die/das)"),
+      ],
+    );
+  }
+
 }

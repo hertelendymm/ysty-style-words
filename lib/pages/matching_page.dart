@@ -7,7 +7,9 @@ import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'matching_game_page.dart';
 
 class MatchingPage extends StatefulWidget {
-  const MatchingPage({super.key});
+  const MatchingPage({super.key, required this.category});
+
+  final String category;
 
   @override
   State<MatchingPage> createState() => _MatchingPageState();
@@ -21,7 +23,8 @@ class _MatchingPageState extends State<MatchingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadSelectedCategory();
+    // _loadSelectedCategory();
+    _selectedCategory = widget.category;
   }
 
   // void _refreshPage() {
@@ -32,14 +35,14 @@ class _MatchingPageState extends State<MatchingPage> {
   //   });
   // }
 
-  Future<void> _loadSelectedCategory() async {
-    _isLoading = true;
-    String? categoryName = await CategoryService.loadSelectedCategory();
-    setState(() {
-      _selectedCategory = categoryName;
-      _isLoading = false; // Update loading state after data is loaded
-    });
-  }
+  // Future<void> _loadSelectedCategory() async {
+  //   _isLoading = true;
+  //   String? categoryName = await CategoryService.loadSelectedCategory();
+  //   setState(() {
+  //     _selectedCategory = categoryName;
+  //     _isLoading = false; // Update loading state after data is loaded
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +54,7 @@ class _MatchingPageState extends State<MatchingPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MainAppBar(updateParent: _loadSelectedCategory, selectedCategory: _selectedCategory.toString()),
-            // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
-            // MainAppBar(updateParent: _refreshPage, selectedCategory: '',),
+            // MainAppBar(updateParent: _loadSelectedCategory, selectedCategory: _selectedCategory.toString()),
             const Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(

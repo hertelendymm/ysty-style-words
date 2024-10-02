@@ -4,6 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/pages/derdiedas_page.dart';
 import 'package:ysty_style_words/pages/flashcards_page.dart';
 import 'package:ysty_style_words/pages/matching_page.dart';
+import 'package:ysty_style_words/services/category_services.dart';
+import 'package:ysty_style_words/widgets/loading_screen.dart';
+import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import '../widgets/button_navigation.dart';
 
 enum NavigationStatus { flashcardsNav, matchingNav, derdiedasNav }
@@ -17,12 +20,8 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcardsNav;
-
-  /// TODO: 1. load the category here when the user opens the app and pass it to gamePage
-  /// TODO: 2. check sharedPref in each gamePage (FlashcardsPage, MatchingPage, DerDieDasPage)
-  /// TODO:     if it's not the same as the one navigationPage passed call voidcallback to update it in navPage
-  /// TODO: 3. after a categoryPage redirect send a voidcallback to gamePage to check again   
-
+  bool _isLoading = true;
+  String? _selectedCategory;
 
   void switchNav(NavigationStatus newNavStatus) {
     setState(() {
@@ -33,6 +32,17 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   void initState() {
     super.initState();
+    _loadSelectedCategory();
+  }
+
+  Future<void> _loadSelectedCategory() async {
+    _isLoading = true;
+    print("=+=+===+==++===+==");
+    String? categoryName = await CategoryService.loadSelectedCategory();
+    setState(() {
+      _selectedCategory = categoryName;
+    });
+    _isLoading = false; // Update loading state after data is loaded
   }
 
   @override
@@ -40,25 +50,27 @@ class _NavigationPageState extends State<NavigationPage> {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
-        // backgroundColor: Colors.grey.shade100,
-        // backgroundColor: Colors.black,
         backgroundColor: Colors.white,
         body: SafeArea(
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 60.0),
                 child: Column(
                   children: [
-                    Expanded(child: _showNavPage()),
+                    MainAppBar(
+                        updateParent: _loadSelectedCategory,
+                        selectedCategory: _selectedCategory.toString()),
+                   Expanded(child: _showNavPage()),
                   ],
                 ))),
         // child: Expanded(child: _showNavPage()))),
         bottomSheet: Container(
             color: Colors.grey.shade100,
             // color: Colors.grey.shade200,
-            height: 62.0,
+            // height: 62.0,
+            height: 60.0,
             child: Column(
               children: [
-                Container(color: Colors.grey.shade200, height: 2.0),
+                // Container(color: Colors.grey.shade200, height: 2.0),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,18 +78,22 @@ class _NavigationPageState extends State<NavigationPage> {
                       ButtonNavigation(
                         isActive:
                             _navigationStatus == NavigationStatus.flashcardsNav,
-                        onPressed: () => switchNav(NavigationStatus.flashcardsNav),
+                        onPressed: () =>
+                            switchNav(NavigationStatus.flashcardsNav),
                         iconData: FontAwesomeIcons.house,
                       ),
                       ButtonNavigation(
-                        isActive: _navigationStatus == NavigationStatus.matchingNav,
-                        onPressed: () => switchNav(NavigationStatus.matchingNav),
+                        isActive:
+                            _navigationStatus == NavigationStatus.matchingNav,
+                        onPressed: () =>
+                            switchNav(NavigationStatus.matchingNav),
                         iconData: FontAwesomeIcons.hourglassHalf,
                       ),
                       ButtonNavigation(
                         isActive:
                             _navigationStatus == NavigationStatus.derdiedasNav,
-                        onPressed: () => switchNav(NavigationStatus.derdiedasNav),
+                        onPressed: () =>
+                            switchNav(NavigationStatus.derdiedasNav),
                         iconData: FontAwesomeIcons.language,
                       ),
                     ]),
@@ -86,15 +102,22 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   _showNavPage() {
-    switch (_navigationStatus) {
-      case NavigationStatus.flashcardsNav:
-        return const FlashcardsPage();
-      case NavigationStatus.matchingNav:
-        return const MatchingPage();
-      case NavigationStatus.derdiedasNav:
-        return const DerDieDasPage();
-      default:
-        return const FlashcardsPage();
+    print("_showNavPage");
+    if (_isLoading) {
+      print('loading');
+      return LoadingScreen();
+    } else {
+      switch (_navigationStatus) {
+        case NavigationStatus.flashcardsNav:
+          return FlashcardsPage(category: _selectedCategory!);
+        case NavigationStatus.matchingNav:
+          return MatchingPage(category: _selectedCategory!);
+        case NavigationStatus.derdiedasNav:
+          return DerDieDasPage(category: _selectedCategory!);
+        default:
+          return LoadingScreen();
+          // return FlashcardsPage(category: _selectedCategory!);
+      }
     }
   }
 }
