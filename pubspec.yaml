@@ -39,6 +39,7 @@ dependencies:
   shared_preferences: ^2.3.2
   flutter_card_swiper: ^7.0.1
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,9 @@ flutter_launcher_icons:
   image_path: "assets/images/ic_launcher.png"
   remove_alpha_ios: true
 
+flutter_native_splash:
+  color: "#42a5f5"
+  #background_image: "assets/background.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
