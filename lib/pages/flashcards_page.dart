@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/model/word_model.dart';
-import 'package:ysty_style_words/services/category_services.dart';
-import 'package:ysty_style_words/widgets/loading_screen.dart';
-import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class FlashcardsPage extends StatefulWidget {
@@ -31,7 +28,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     _selectedCategory = widget.category;
     _isCardFlippedNotifier = ValueNotifier<bool>(false);
     // _loadSelectedCategory();
-    print("${widget.category} - ${_selectedCategory}");
+    print("${widget.category} - $_selectedCategory");
     _loadNewGameData();
   }
 
@@ -40,25 +37,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     controller.dispose();
     super.dispose();
   }
-
-
-  // void _refreshPage() {
-  //   setState(() {
-  //     debugPrint("refresh Flashcards page =================================");
-  //     _isLoading = true;
-  //     _loadSelectedCategory();
-  //   });
-  // }
-
-  // Future<void> _loadSelectedCategory() async {
-  //   _isLoading = true;
-  //   String? categoryName = await CategoryService.loadSelectedCategory();
-  //   setState(() {
-  //     _selectedCategory = categoryName;
-  //     // _isLoading = false; // Update loading state after data is loaded
-  //   });
-  //   await _loadNewGameData();
-  // }
 
   _loadNewGameData() {
     setState(()  {

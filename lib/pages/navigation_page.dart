@@ -105,7 +105,7 @@ class _NavigationPageState extends State<NavigationPage> {
     print("_showNavPage");
     if (_isLoading) {
       print('loading');
-      return LoadingScreen();
+      return const LoadingScreen();
     } else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcardsNav:
@@ -115,7 +115,7 @@ class _NavigationPageState extends State<NavigationPage> {
         case NavigationStatus.derdiedasNav:
           return DerDieDasPage(category: _selectedCategory!);
         default:
-          return LoadingScreen();
+          return const LoadingScreen();
           // return FlashcardsPage(category: _selectedCategory!);
       }
     }

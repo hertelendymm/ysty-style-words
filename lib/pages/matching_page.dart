@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
-import 'package:ysty_style_words/widgets/loading_screen.dart';
-import 'package:ysty_style_words/widgets/main_app_bar.dart';
 
 import 'matching_game_page.dart';
 
@@ -26,23 +23,6 @@ class _MatchingPageState extends State<MatchingPage> {
     // _loadSelectedCategory();
     _selectedCategory = widget.category;
   }
-
-  // void _refreshPage() {
-  //   setState(() {
-  //     debugPrint("refresh Matching page =================================");
-  //     _isLoading = true;
-  //     _loadSelectedCategory();
-  //   });
-  // }
-
-  // Future<void> _loadSelectedCategory() async {
-  //   _isLoading = true;
-  //   String? categoryName = await CategoryService.loadSelectedCategory();
-  //   setState(() {
-  //     _selectedCategory = categoryName;
-  //     _isLoading = false; // Update loading state after data is loaded
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

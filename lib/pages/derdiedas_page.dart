@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
-import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
-import 'package:ysty_style_words/widgets/loading_screen.dart';
-import 'package:ysty_style_words/widgets/main_app_bar.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class DerDieDasPage extends StatefulWidget {
@@ -35,22 +32,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     // _loadSelectedCategory();
   }
 
-  // void _refreshPage() {
-  //   setState(() {
-  //     print("refresh DerDieDas page =================================");
-  //     _isLoading = true;
-  //     _loadSelectedCategory();
-  //   });
-  // }
-
-  // Future<void> _loadSelectedCategory() async {
-  //   String? categoryName = await CategoryService.loadSelectedCategory();
-  //   setState(() {
-  //     _selectedCategory = categoryName;
-  //     _isLoading = false; // Update loading state after data is loaded
-  //   });
-  //   await _loadNewGameData();
-  // }
 
   _loadNewGameData() {
     setState(() {
