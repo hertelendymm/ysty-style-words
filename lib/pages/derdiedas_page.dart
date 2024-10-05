@@ -220,7 +220,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
               const SizedBox(height: 30.0),
               Container(width: MediaQuery.sizeOf(context).width*0.3, height: 4, color: Colors.white),
               const SizedBox(height: 30.0),
-              Text("This feature is not available for the '$category' category. Please choose a different category to use this feature.",
+              Text("This feature is not available for the '$category' category, as words in this category typically do not have a gender in German. \n\nPlease choose a different category to use this feature.",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.white),
                   textAlign: TextAlign.justify)
