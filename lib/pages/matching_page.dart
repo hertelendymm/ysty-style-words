@@ -61,7 +61,7 @@ class _MatchingPageState extends State<MatchingPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: ButtonRounded(text: "Start Game", onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => const MatchingGamePage()))),
+              child: ButtonRounded(text: "Start Game", onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingGamePage(category: _selectedCategory!,)))),
             ),
           ],
         ),
