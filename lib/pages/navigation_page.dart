@@ -6,7 +6,7 @@ import 'package:ysty_style_words/pages/flashcards_page.dart';
 import 'package:ysty_style_words/pages/matching_page.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/loading_screen.dart';
-import 'package:ysty_style_words/widgets/main_app_bar.dart';
+import 'package:ysty_style_words/widgets/appbar_main.dart';
 import '../widgets/button_navigation.dart';
 
 enum NavigationStatus { flashcardsNav, matchingNav, derdiedasNav }
@@ -56,7 +56,7 @@ class _NavigationPageState extends State<NavigationPage> {
                 padding: const EdgeInsets.only(bottom: 60.0),
                 child: Column(
                   children: [
-                    MainAppBar(
+                    AppBarMain(
                         updateParent: _loadSelectedCategory,
                         selectedCategory: _selectedCategory.toString()),
                    Expanded(child: _showNavPage()),

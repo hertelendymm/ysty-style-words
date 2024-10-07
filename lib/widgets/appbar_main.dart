@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/pages/categories_page.dart';
 import 'package:ysty_style_words/pages/settings_page.dart';
 
-class MainAppBar extends StatefulWidget {
-  const MainAppBar({
+class AppBarMain extends StatefulWidget {
+  const AppBarMain({
     super.key,
     required this.updateParent,
     required this.selectedCategory,
@@ -14,10 +14,10 @@ class MainAppBar extends StatefulWidget {
   final String selectedCategory;
 
   @override
-  State<MainAppBar> createState() => _MainAppBarState();
+  State<AppBarMain> createState() => _AppBarMainState();
 }
 
-class _MainAppBarState extends State<MainAppBar> {
+class _AppBarMainState extends State<AppBarMain> {
   // String? _selectedCategory = '';
 
   // _checkCategory() async {

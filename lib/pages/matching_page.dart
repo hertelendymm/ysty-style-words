@@ -14,7 +14,9 @@ class MatchingPage extends StatefulWidget {
 
 class _MatchingPageState extends State<MatchingPage> {
   bool _isLoading = true;
-  String? _selectedCategory; /// I will need this to to the MatchingGame page
+  String? _selectedCategory;
+
+  /// I will need this to to the MatchingGame page
 
   @override
   void initState() {
@@ -22,6 +24,7 @@ class _MatchingPageState extends State<MatchingPage> {
     super.initState();
     // _loadSelectedCategory();
     _selectedCategory = widget.category;
+    print("||||||||||||||||||$_selectedCategory");
   }
 
   @override
@@ -36,17 +39,25 @@ class _MatchingPageState extends State<MatchingPage> {
           children: [
             // MainAppBar(updateParent: _loadSelectedCategory, selectedCategory: _selectedCategory.toString()),
             const Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.fromLTRB(20, 40, 20, 20.0),
               child: Column(
                 children: [
                   Text('Time Trial',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0), textAlign: TextAlign.center,),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 40.0),
+                      textAlign: TextAlign.center),
                   SizedBox(height: 20.0),
-                  Text('How many matches can you make in two minutes? Let\'s find out!',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0), textAlign: TextAlign.center,),
+                  Text(
+                      'How many matches can you make in two minutes? Let\'s find out!',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                      textAlign: TextAlign.center),
                   SizedBox(height: 20.0),
                   Text('High Score: 75',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.grey)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Colors.grey)),
                 ],
               ),
             ),
@@ -55,13 +66,31 @@ class _MatchingPageState extends State<MatchingPage> {
               width: 200,
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(250.0), // Half the height for a circular shape
+                borderRadius: BorderRadius.circular(250.0),
+                // Half the height for a circular shape
                 color: Colors.grey,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: ButtonRounded(text: "Start Game", onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingGamePage(category: _selectedCategory!,)))),
+              child: ButtonRounded(
+                  text: "Start Game",
+                  onPressed: (){
+                    _selectedCategory = widget.category;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MatchingGamePage(
+                              category: _selectedCategory!,
+                            )));
+                  },
+                  // onPressed: () => Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => MatchingGamePage(
+                  //               category: _selectedCategory!,
+                  //             ))),
+              ),
             ),
           ],
         ),

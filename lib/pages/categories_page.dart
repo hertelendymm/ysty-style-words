@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/services/category_services.dart';
+import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key, required this.onRefresh});
@@ -50,7 +51,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ///TODO: Replace this with a ListView builder
         child: Column(
           children: [
-            _showAppBar(),
+            AppBarSecondary(onPressed: ()=> closePage(), title: 'Choose a category'),
+            // _showAppBar(),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
@@ -94,55 +96,55 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  Widget _showAppBar() {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () => closePage(),
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        color: Colors.grey.shade200,
-                      ),
-                      child: const Icon(FontAwesomeIcons.xmark,
-                          color: Colors.black),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 0.0, vertical: 6.0),
-                    child: const Center(
-                        child: Text(
-                      "Choose a Category",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24.0),
-                      textAlign: TextAlign.center,
-                    )),
-                  ),
-                ),
-                const SizedBox(width: 45.0),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20.0),
-          Container(color: Colors.grey.shade200, height: 2.0),
-        ],
-      ),
-    );
-  }
+  // Widget _showAppBar() {
+  //   return Container(
+  //     color: Colors.white,
+  //     child: Column(
+  //       children: [
+  //         Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             crossAxisAlignment: CrossAxisAlignment.center,
+  //             children: [
+  //               GestureDetector(
+  //                 onTap: () => closePage(),
+  //                 child: Container(
+  //                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+  //                   child: Container(
+  //                     padding: const EdgeInsets.all(10.0),
+  //                     decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(25.0),
+  //                       color: Colors.grey.shade200,
+  //                     ),
+  //                     child: const Icon(FontAwesomeIcons.xmark,
+  //                         color: Colors.black),
+  //                   ),
+  //                 ),
+  //               ),
+  //               Expanded(
+  //                 child: Container(
+  //                   padding: const EdgeInsets.symmetric(
+  //                       horizontal: 0.0, vertical: 6.0),
+  //                   child: const Center(
+  //                       child: Text(
+  //                     "Choose a Category",
+  //                     style: TextStyle(
+  //                         fontWeight: FontWeight.bold, fontSize: 24.0),
+  //                     textAlign: TextAlign.center,
+  //                   )),
+  //                 ),
+  //               ),
+  //               const SizedBox(width: 45.0),
+  //             ],
+  //           ),
+  //         ),
+  //         const SizedBox(height: 20.0),
+  //         Container(color: Colors.grey.shade200, height: 2.0),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _categoryItem({
     required String title,
