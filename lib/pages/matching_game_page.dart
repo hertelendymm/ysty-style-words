@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
@@ -15,13 +15,16 @@ class MatchingGamePage extends StatefulWidget {
 }
 
 class _FlashcardsPageState extends State<MatchingGamePage> {
-  final int _countdownDuration = 120; ///120
+  final int _countdownDuration = 120;
+
+  ///120
   final CountDownController _countdownController = CountDownController();
   List _current5Word = [];
   List _current5Meaning = [];
   List _next5Word = [];
   List _next5Meaning = [];
   bool _isResultsPageOn = false;
+  List _matchStreaks = [];  /// Find longest for an current(the last one) from this list
 
   @override
   void initState() {
@@ -30,10 +33,14 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     _loadNext5Word();
   }
 
-  _loadNext5Word(){
+  _loadNext5Word() {
     for (int i = 0; i < 5; i++) {
-      _next5Word.add(flashcardContents[widget.category.toLowerCase()]![i]["germanWord"]);
-      _next5Meaning.add(flashcardContents[widget.category.toLowerCase()]![i]["englishMeaning"]); /// TODO: Use the chosen language
+      _next5Word.add(
+          flashcardContents[widget.category.toLowerCase()]![i]["germanWord"]);
+      _next5Meaning.add(flashcardContents[widget.category.toLowerCase()]![i]
+          ["englishMeaning"]);
+
+      /// TODO: Use the chosen language
     }
     _next5Word.shuffle();
     _next5Meaning.shuffle();
@@ -45,6 +52,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   @override
   Widget build(BuildContext context) {
+    return _isResultsPageOn ? _showResultsScreen() : _showGameScreen();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -53,113 +61,101 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     );
   }
 
-
   /// ResultsScreen ============================================================
-  Widget _showResultsScreen(){
-    return Container(
-      // height: ,
-      color: Colors.orange,
-      child: Column(
-        children: [
-            Text('Good job!')
-        ],
+  Widget _showResultsScreen() {
+    return Scaffold(
+      backgroundColor: Colors.orange,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // AppBarSecondary(
+            //     onPressed: () => Navigator.pop(context),
+            //     title: "Time Trial: ${widget.category}"),
+            Row(
+              children: [
+                Icon(FontAwesomeIcons.xmark, size: 40, color: Colors.white),
+              ],
+            ),
+            const Column(
+              children: [
+                Text('Good job!', style: TextStyle(fontSize: 38.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                Text('Keep up the good work', style: TextStyle(fontSize: 38.0, color:Colors.white, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const Column(
+              children: [
+                Text('High Score: 38', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                Text('Current Score: 41', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(),
+          ],
+        ),
       ),
     );
   }
 
-
   /// GameScreen ===============================================================
-  Widget _showGameScreen(){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          children: [
-            AppBarSecondary(onPressed: () => Navigator.pop(context), title: "Time Trial: ${widget.category}")
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-                  // GestureDetector(
-                  //   onTap: () => Navigator.pop(context),
-                  //   child: Container(
-                  //       padding:
-                  //       const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                  //       child: Container(
-                  //         padding: const EdgeInsets.fromLTRB(
-                  //             10.0, 10.0, 10.0, 10.0),
-                  //         decoration: BoxDecoration(
-                  //             borderRadius: BorderRadius.circular(25.0),
-                  //             color: Colors.grey.shade200),
-                  //         child: const Icon(FontAwesomeIcons.xmark,
-                  //             color: Colors.black),
-                  //       )),
-                  // ),
-                  // // child: const Icon(FontAwesomeIcons.xmark, size: 30.0,)),
-                  // const SizedBox(
-                  //   width: 10.0,
-                  // ),
-                  //
-                  // Expanded(
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.grey,
-                  //         borderRadius: BorderRadius.circular(40.0),
-                  //         border: Border.all(
-                  //             color: Colors.grey, width: 3)),
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 0.0, vertical: 6.0),
-                  //     margin: const EdgeInsets.symmetric(
-                  //         horizontal: 0.0, vertical: 12.0),
-                  //     child: Center(
-                  //         child: Text(widget.category,
-                  //             // child: Text(_selectedCategory!,
-                  //             style: const TextStyle(
-                  //                 fontWeight: FontWeight.bold,
-                  //                 color: Colors.black,
-                  //                 fontSize: 26.0),
-                  //             textAlign: TextAlign.center)),
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   width: 10.0,
-                  // ),
-                  // const Text("10XP", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                  // //Score counter
-            //     ],
-            //   ),
-            // ),
-            // Container(color: Colors.grey.shade200, height: 2.0),
-          ],
-        ),
-        _showCountdown(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+  Widget _showGameScreen() {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
-                _gameCard(),
-                _gameCard(),
-                _gameCard(),
-                _gameCard(),
-                _gameCard(),
+                AppBarSecondary(
+                    onPressed: () => Navigator.pop(context),
+                    title: "Time Trial: ${widget.category}")
               ],
             ),
-            Column(
-              children: [
-                _gameCard(),
-                _gameCard(),
-                _gameCard(),
-                _gameCard(),
-                _gameCard(),
-              ],
+            _showCountdown(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text('Race against the clock to match the words',
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
+              // padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        _gameCard(_next5Word[0]),
+                        _gameCard(_next5Word[1]),
+                        _gameCard(_next5Word[2]),
+                        _gameCard(_next5Word[3]),
+                        _gameCard(_next5Word[4]),
+                      ],
+                    ),
+                  ),
+                  // const SizedBox(width: 30.0),
+                  Flexible(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        _gameCard(_next5Meaning[0]),
+                        _gameCard(_next5Meaning[1]),
+                        _gameCard(_next5Meaning[2]),
+                        _gameCard(_next5Meaning[3]),
+                        _gameCard(_next5Meaning[4]),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 0),
           ],
         ),
-        const SizedBox(height: 0),
-      ],
+      ),
     );
   }
 
@@ -169,8 +165,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       duration: _countdownDuration,
       initialDuration: 0,
       controller: _countdownController,
-      width: MediaQuery.of(context).size.height * 0.08,
-      height: MediaQuery.of(context).size.height * 0.08,
+      width: MediaQuery.of(context).size.height * 0.05,
+      height: MediaQuery.of(context).size.height * 0.05,
+      // width: MediaQuery.of(context).size.height * 0.08,
+      // height: MediaQuery.of(context).size.height * 0.08,
       // width: 60.0,
       // height: 60.0,
       ringColor: Colors.grey.shade200,
@@ -183,7 +181,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       strokeCap: StrokeCap.butt,
       // strokeCap: StrokeCap.round,
       textStyle: TextStyle(
-          fontSize: MediaQuery.of(context).size.height * 0.03,
+          fontSize: MediaQuery.of(context).size.height * 0.02,
+          // fontSize: MediaQuery.of(context).size.height * 0.03,
           color: Colors.black,
           fontWeight: FontWeight.bold),
       // fontSize: 24.0, color: Colors.white, fontWeight: FontWeight.bold),
@@ -204,16 +203,23 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     );
   }
 
-  Widget _gameCard() {
+  Widget _gameCard(String text) {
     return Container(
-      width: 160.0,
-      height: 80.0,
+      // width: double.infinity,
+      // width: 460.0,
+      // width: MediaQuery.sizeOf(context).width*0.4,
+      height: 70.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(color: Colors.grey.shade200, width: 3),
         color: Colors.white,
       ),
-      margin: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+      child: Center(
+          child: Text(
+        text,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      )),
     );
   }
 }
