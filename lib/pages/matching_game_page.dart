@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
@@ -25,7 +25,9 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   List _next5Word = [];
   List _next5Meaning = [];
   bool _isResultsPageOn = false;
-  List _matchStreaks = [];  /// Find longest for an current(the last one) from this list
+  List _matchStreaks = [];
+
+  /// Find longest for an current(the last one) from this list
 
   @override
   void initState() {
@@ -64,38 +66,75 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Container(
-            color: Colors.orange,
+            color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppBarSecondary(onPressed: (){}, title: 'Results'),
+                AppBarSecondary(onPressed: ()=> Navigator.pop(context), title: 'Results'),
                 // const Row(
                 //   children: [
                 //     Icon(FontAwesomeIcons.xmark, size: 40, color: Colors.white),
                 //   ],
                 // ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width*0.4,
+                  height: MediaQuery.sizeOf(context).width*0.4,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(2000),
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Good job!', style: TextStyle(fontSize: 38.0, color:Colors.white, fontWeight: FontWeight.bold)),
-                      Text('Keep up the good work', style: TextStyle(fontSize: 28.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                      Text('Good job!',
+                          style: TextStyle(
+                              fontSize: 38.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
+                      Text('Keep up the good work',
+                          style: TextStyle(
+                              fontSize: 28.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      Text('High Score: 38', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
-                      Text('Current Score: 41', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                      _resultsCard(text: 'High Score: 38', iconData: FontAwesomeIcons.star),
+                      _resultsCard(text: 'Current Score: 41', iconData: FontAwesomeIcons.star),
+                      _resultsCard(text: 'Longest streak: 17', iconData: FontAwesomeIcons.star),
+                      // Text('High Score: 38',
+                      //     style: TextStyle(
+                      //         fontSize: 22.0,
+                      //         color: Colors.black,
+                      //         fontWeight: FontWeight.bold)),
+                      // Text('Current Score: 41',
+                      //     style: TextStyle(
+                      //         fontSize: 22.0,
+                      //         color: Colors.black,
+                      //         fontWeight: FontWeight.bold)),
+                      // Text('Longest streak: 17',
+                      //     style: TextStyle(
+                      //         fontSize: 22.0,
+                      //         color: Colors.black,
+                      //         fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: ButtonRounded(onPressed: ()=> Navigator.pop(context), backgroundColor: Colors.white, textColor: Colors.orange, text: 'Continue',),
+                  child: ButtonRounded(
+                    onPressed: () => Navigator.pop(context),
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                    text: 'Continue',
+                  ),
                 ),
               ],
             ),
@@ -124,7 +163,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text('Race against the clock to match the words',
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                  style:
+                      TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -222,6 +262,24 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         text,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       )),
+    );
+  }
+
+  Widget _resultsCard({required IconData iconData, required String text}){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 5.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300, width: 3)
+      ),
+      child: Row(
+        children: [
+          Icon(iconData, color: Colors.grey.shade700),
+          SizedBox(width: 20.0),
+          Text(text, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Colors.grey.shade700),)
+        ],
+      ),
     );
   }
 }
