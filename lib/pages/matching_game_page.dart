@@ -79,12 +79,12 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                     borderRadius: BorderRadius.circular(2000),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Good job!',
+                      const Text('Good job!',
                           style: TextStyle(
                               fontSize: 38.0,
                               color: Colors.black,
@@ -92,7 +92,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                       Text('Keep up the good work',
                           style: TextStyle(
                               fontSize: 28.0,
-                              color: Colors.black,
+                              color: Colors.grey.shade500,
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
@@ -103,13 +103,13 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                     children: [
                       _resultsCard(
                           text: 'High Score: 38',
-                          iconData: FontAwesomeIcons.star),
+                          iconData: FontAwesomeIcons.medal),
                       _resultsCard(
                           text: 'Current Score: 41',
-                          iconData: FontAwesomeIcons.star),
+                          iconData: FontAwesomeIcons.solidStar),
                       _resultsCard(
                           text: 'Longest streak: 17',
-                          iconData: FontAwesomeIcons.star),
+                          iconData: FontAwesomeIcons.link),
                     ],
                   ),
                 ),
@@ -254,14 +254,14 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           border: Border.all(color: Colors.grey.shade300, width: 3)),
       child: Row(
         children: [
-          Icon(iconData, color: Colors.grey.shade700),
+          Icon(iconData, color: Colors.black),
           const SizedBox(width: 20.0),
           Text(
             text,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
-                color: Colors.grey.shade700),
+                color: Colors.grey.shade500),
           )
         ],
       ),
