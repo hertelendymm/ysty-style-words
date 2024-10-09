@@ -71,11 +71,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
               children: [
                 AppBarSecondary(
                     onPressed: () => Navigator.pop(context), title: 'Results'),
-                // const Row(
-                //   children: [
-                //     Icon(FontAwesomeIcons.xmark, size: 40, color: Colors.white),
-                //   ],
-                // ),
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.4,
                   height: MediaQuery.sizeOf(context).width * 0.4,
@@ -156,40 +151,35 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   style:
                       TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0),
-              // padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        _gameCard(_next5Word[0]),
-                        _gameCard(_next5Word[1]),
-                        _gameCard(_next5Word[2]),
-                        _gameCard(_next5Word[3]),
-                        _gameCard(_next5Word[4]),
-                      ],
-                    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      _gameCard(_next5Word[0]),
+                      _gameCard(_next5Word[1]),
+                      _gameCard(_next5Word[2]),
+                      _gameCard(_next5Word[3]),
+                      _gameCard(_next5Word[4]),
+                    ],
                   ),
-                  // const SizedBox(width: 30.0),
-                  Flexible(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        _gameCard(_next5Meaning[0]),
-                        _gameCard(_next5Meaning[1]),
-                        _gameCard(_next5Meaning[2]),
-                        _gameCard(_next5Meaning[3]),
-                        _gameCard(_next5Meaning[4]),
-                      ],
-                    ),
+                ),
+                // const SizedBox(width: 30.0),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      _gameCard(_next5Meaning[0]),
+                      _gameCard(_next5Meaning[1]),
+                      _gameCard(_next5Meaning[2]),
+                      _gameCard(_next5Meaning[3]),
+                      _gameCard(_next5Meaning[4]),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 0),
           ],
@@ -270,7 +260,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             text,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22.0,
+                fontSize: 20.0,
                 color: Colors.grey.shade700),
           )
         ],
