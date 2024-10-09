@@ -2,6 +2,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
+import 'package:ysty_style_words/widgets/button_rounded.dart';
 
 import '../word_lists/flashcard_content.dart';
 
@@ -53,44 +54,52 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   @override
   Widget build(BuildContext context) {
     return _isResultsPageOn ? _showResultsScreen() : _showGameScreen();
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: _isResultsPageOn ? _showResultsScreen() : _showGameScreen(),
-      ),
-    );
   }
 
   /// ResultsScreen ============================================================
   Widget _showResultsScreen() {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // AppBarSecondary(
-            //     onPressed: () => Navigator.pop(context),
-            //     title: "Time Trial: ${widget.category}"),
-            Row(
+        child: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Container(
+            color: Colors.orange,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(FontAwesomeIcons.xmark, size: 40, color: Colors.white),
+                AppBarSecondary(onPressed: (){}, title: 'Results'),
+                // const Row(
+                //   children: [
+                //     Icon(FontAwesomeIcons.xmark, size: 40, color: Colors.white),
+                //   ],
+                // ),
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Good job!', style: TextStyle(fontSize: 38.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                      Text('Keep up the good work', style: TextStyle(fontSize: 28.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Text('High Score: 38', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                      Text('Current Score: 41', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ButtonRounded(onPressed: ()=> Navigator.pop(context), backgroundColor: Colors.white, textColor: Colors.orange, text: 'Continue',),
+                ),
               ],
             ),
-            const Column(
-              children: [
-                Text('Good job!', style: TextStyle(fontSize: 38.0, color:Colors.white, fontWeight: FontWeight.bold)),
-                Text('Keep up the good work', style: TextStyle(fontSize: 38.0, color:Colors.white, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            const Column(
-              children: [
-                Text('High Score: 38', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
-                Text('Current Score: 41', style: TextStyle(fontSize: 22.0, color:Colors.white, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            const SizedBox(),
-          ],
+          ),
         ),
       ),
     );
@@ -167,10 +176,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       controller: _countdownController,
       width: MediaQuery.of(context).size.height * 0.05,
       height: MediaQuery.of(context).size.height * 0.05,
-      // width: MediaQuery.of(context).size.height * 0.08,
-      // height: MediaQuery.of(context).size.height * 0.08,
-      // width: 60.0,
-      // height: 60.0,
       ringColor: Colors.grey.shade200,
       ringGradient: null,
       fillColor: Colors.black,
@@ -205,9 +210,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   Widget _gameCard(String text) {
     return Container(
-      // width: double.infinity,
-      // width: 460.0,
-      // width: MediaQuery.sizeOf(context).width*0.4,
       height: 70.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
