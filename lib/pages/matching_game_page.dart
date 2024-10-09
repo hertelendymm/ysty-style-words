@@ -70,15 +70,16 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppBarSecondary(onPressed: ()=> Navigator.pop(context), title: 'Results'),
+                AppBarSecondary(
+                    onPressed: () => Navigator.pop(context), title: 'Results'),
                 // const Row(
                 //   children: [
                 //     Icon(FontAwesomeIcons.xmark, size: 40, color: Colors.white),
                 //   ],
                 // ),
                 Container(
-                  width: MediaQuery.sizeOf(context).width*0.4,
-                  height: MediaQuery.sizeOf(context).width*0.4,
+                  width: MediaQuery.sizeOf(context).width * 0.4,
+                  height: MediaQuery.sizeOf(context).width * 0.4,
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(2000),
@@ -103,38 +104,28 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      _resultsCard(text: 'High Score: 38', iconData: FontAwesomeIcons.star),
-                      _resultsCard(text: 'Current Score: 41', iconData: FontAwesomeIcons.star),
-                      _resultsCard(text: 'Longest streak: 17', iconData: FontAwesomeIcons.star),
-                      // Text('High Score: 38',
-                      //     style: TextStyle(
-                      //         fontSize: 22.0,
-                      //         color: Colors.black,
-                      //         fontWeight: FontWeight.bold)),
-                      // Text('Current Score: 41',
-                      //     style: TextStyle(
-                      //         fontSize: 22.0,
-                      //         color: Colors.black,
-                      //         fontWeight: FontWeight.bold)),
-                      // Text('Longest streak: 17',
-                      //     style: TextStyle(
-                      //         fontSize: 22.0,
-                      //         color: Colors.black,
-                      //         fontWeight: FontWeight.bold)),
+                      _resultsCard(
+                          text: 'High Score: 38',
+                          iconData: FontAwesomeIcons.star),
+                      _resultsCard(
+                          text: 'Current Score: 41',
+                          iconData: FontAwesomeIcons.star),
+                      _resultsCard(
+                          text: 'Longest streak: 17',
+                          iconData: FontAwesomeIcons.star),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ButtonRounded(
-                    onPressed: () => Navigator.pop(context),
-                    backgroundColor: Colors.black,
-                    textColor: Colors.white,
-                    text: 'Continue',
-                  ),
+                      onPressed: () => Navigator.pop(context),
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                      text: 'Continue'),
                 ),
               ],
             ),
@@ -265,19 +256,24 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     );
   }
 
-  Widget _resultsCard({required IconData iconData, required String text}){
+  Widget _resultsCard({required IconData iconData, required String text}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      margin: EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300, width: 3)
-      ),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey.shade300, width: 3)),
       child: Row(
         children: [
           Icon(iconData, color: Colors.grey.shade700),
-          SizedBox(width: 20.0),
-          Text(text, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Colors.grey.shade700),)
+          const SizedBox(width: 20.0),
+          Text(
+            text,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22.0,
+                color: Colors.grey.shade700),
+          )
         ],
       ),
     );
