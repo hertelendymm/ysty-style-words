@@ -48,8 +48,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     _next5Meaning.shuffle();
     print(_next5Word);
     print(_next5Meaning);
-
-    // print("${flashcardContents[widget.category.toLowerCase()][0]}");
   }
 
   @override
@@ -91,7 +89,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                               fontWeight: FontWeight.bold)),
                       Text('Keep up the good work',
                           style: TextStyle(
-                              fontSize: 28.0,
+                              fontSize: 26.0,
                               color: Colors.grey.shade500,
                               fontWeight: FontWeight.bold)),
                     ],
