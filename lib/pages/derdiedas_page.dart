@@ -71,6 +71,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
 
   @override
   Widget build(BuildContext context) {
+    if(_selectedCategory != widget.category){
+      _loadNewGameData();
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -161,9 +164,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   }
 
   Widget _showCard(){
-    if(_selectedCategory != widget.category){
-      _loadNewGameData();
-    }
     return Container(
       padding: const EdgeInsets.symmetric(
           horizontal: 20.0, vertical: 0.0),
