@@ -7,6 +7,11 @@ A new Ysty Style German language learning app project.
 <img src="/screenshots/figmaUInew.png"/>
 </p>
 
+## The beta UI:
+<p align="center">
+<img src="/screenshots/betaUI1.png"/>
+</p>
+
 Now the main pages have the same appBar.
 
 The main navigation has 3 main page:
@@ -29,6 +34,11 @@ There will be a native ad after every 40 or so swipe on the Flashcard page. The 
 ## Figma concept for the rest of the pages:
 <p align="center">
 <img src="/screenshots/figmaUI2.png"/>
+</p>
+
+## Beta UI for the rest of the pages:
+<p align="center">
+<img src="/screenshots/betaUI2.png"/>
 </p>
 
 On your profile page you can check how many words you know, how good is your Der/Die/Das knowledge (or your guessing game) and your high score on the matching game. You can also check more apps made by us and I want to add a way to export/import your "User Progress".
