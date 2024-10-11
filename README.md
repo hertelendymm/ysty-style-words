@@ -2,7 +2,7 @@
 
 A new Ysty Style German language learning app project.
 
-## The beta UI:
+## The MVP UI:
 <p align="center">
 <img src="/screenshots/betaUI1.png"/>
 </p>
@@ -26,7 +26,7 @@ I will use JSON for the "Flashcard Content" and a local db for the "User Progres
 
 There will be a native ad after every 40 or so swipe on the Flashcard page. The same applies for the Der/Die/Das page. An Interstitial ad after every game in the MatchingGame page
 
-## Beta UI for the rest of the pages:
+## MVP UI for the rest of the pages:
 <p align="center">
 <img src="/screenshots/betaUI2.png"/>
 </p>
