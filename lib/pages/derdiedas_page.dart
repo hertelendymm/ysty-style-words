@@ -116,47 +116,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                               ],
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 0.0),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 0.0),
-                            width: MediaQuery.sizeOf(context).width,
-                            height: MediaQuery.sizeOf(context).width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                border: Border.all(
-                                    color: Colors.grey.shade300, width: 3),
-                                color: Colors.white),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(userAnswer,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40.0,
-                                        color: isCorrectAnswerFound
-                                            ? Colors.green
-                                            : Colors.red)),
-                                const Text('------',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40.0)),
-                                Text(wordData[wordIndex].germanWord,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40.0)),
-                                const SizedBox(height: 14.0),
-                                Text(wordData[wordIndex].englishMeaning,
-                                    style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24.0)),
-                              ],
-                            ),
-                          ),
+                          _showCard(),
                           isCorrectAnswerFound
                               ? Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -196,6 +156,53 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                         ],
                       ),
               ),
+      ),
+    );
+  }
+
+  Widget _showCard(){
+    if(_selectedCategory != widget.category){
+      _loadNewGameData();
+    }
+    return Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal: 20.0, vertical: 0.0),
+      margin: const EdgeInsets.symmetric(
+          horizontal: 20.0, vertical: 0.0),
+      width: MediaQuery.sizeOf(context).width,
+      height: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+              color: Colors.grey.shade300, width: 3),
+          color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(userAnswer,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40.0,
+                  color: isCorrectAnswerFound
+                      ? Colors.green
+                      : Colors.red)),
+          const Text('------',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40.0)),
+          Text(wordData[wordIndex].germanWord,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40.0)),
+          const SizedBox(height: 14.0),
+          Text(wordData[wordIndex].englishMeaning,
+              style: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24.0)),
+        ],
       ),
     );
   }
