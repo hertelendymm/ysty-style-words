@@ -24,9 +24,9 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   List _next5Word = [];
   List _next5Meaning = [];
   bool _isResultsPageOn = false;
-  List _matchStreaks = [];
 
   /// Find longest for an current(the last one) from this list
+  List _matchStreaks = [];
 
   @override
   void initState() {
@@ -37,18 +37,18 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   _loadNext5Word() {
     for (int i = 0; i < 5; i++) {
+      /// TODO: Use the chosen language
       _next5Word.add(
           flashcardContents[widget.category.toLowerCase()]![i]["germanWord"]);
       _next5Meaning.add(flashcardContents[widget.category.toLowerCase()]![i]
           ["englishMeaning"]);
-
-      /// TODO: Use the chosen language
     }
     _next5Word.shuffle();
     _next5Meaning.shuffle();
     print(_next5Word);
     print(_next5Meaning);
   }
+
 
   @override
   Widget build(BuildContext context) {
