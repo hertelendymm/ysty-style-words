@@ -64,14 +64,17 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       _current5Meaning.shuffle();
     }
 
+    checkNext5();
+    // _loadNext5Word();
+  }
+
+  checkNext5(){
     /// Check _next5Words and _next5Meaning size in case they need a refill
     while (_next5Word.length < 5 && _next5Meaning.length < 5) {
       _next5Word.add(allWords[allWordsIndex]);
       _next5Meaning.add(allWords[allWordsIndex]);
       allWordsIndex++;
     }
-
-    // _loadNext5Word();
   }
 
   checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
@@ -80,7 +83,9 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         // Correct answer ===============================
         /// TODO: remove correct words from current list and replace them by index
 
-        /// TODO: load new word to current list from next5
+        /// TODO remove chosen word from next5 after added to current
+
+        /// TODO: load new word to current list from next5 >> call checkNext5()
 
         /// Reset selected indexes
         selectedIndexLeft = -1;
