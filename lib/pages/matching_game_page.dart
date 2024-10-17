@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import '../word_lists/flashcard_content.dart';
@@ -15,40 +16,81 @@ class MatchingGamePage extends StatefulWidget {
 }
 
 class _FlashcardsPageState extends State<MatchingGamePage> {
-  final int _countdownDuration = 120;
+  // final int _countdownDuration = 120;
+  final int _countdownDuration = 920;
 
-  ///120
   final CountDownController _countdownController = CountDownController();
-  List _current5Word = [];
-  List _current5Meaning = [];
-  List _next5Word = [];
-  List _next5Meaning = [];
+  List<Word> _current5Word =
+      []; // The currently shown 5 word (left side)         if size < 5 -> get 1st element from _next5Word (and remove ir from that list)
+  List<Word> _current5Meaning =
+      []; // The currently shown 5 meaning (right side)     if size < 5 -> get 1st element from _next5Word (and remove ir from that list)
+  List<Word> _next5Word =
+      []; // The upcoming 5 shuffled word (left side)       if empty -> refill with the next 5 word from wordsInCategory (and allWordsIndex++)
+  List<Word> _next5Meaning =
+      []; // The upcoming 5 shuffled meaning (right side)   if empty -> refill with the next 5 meaning from wordsInCategory (and remove ir from that list)
+  List<Word> allWords = []; // Contains all the WordModels and shuffled
   bool _isResultsPageOn = false;
-
-  /// Find longest for an current(the last one) from this list
-  List _matchStreaks = [];
+  int selectedIndexLeft = -1;
+  int selectedIndexRight = -1;
+  int allWordsIndex = 0;
+  List _matchStreaks =
+      []; // Find the max value from this list, Add counter value after each streak break
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadNext5Word();
-  }
 
-  _loadNext5Word() {
-    for (int i = 0; i < 5; i++) {
-      /// TODO: Use the chosen language
-      _next5Word.add(
-          flashcardContents[widget.category.toLowerCase()]![i]["germanWord"]);
-      _next5Meaning.add(flashcardContents[widget.category.toLowerCase()]![i]
-          ["englishMeaning"]);
+    /// Setup when the game begins
+    if (allWords.isEmpty) {
+      /// Loading all the words
+      for (var n in flashcardContents[widget.category.toLowerCase()]!) {
+        Word newWord = Word.fromJson(n);
+        allWords.add(newWord);
+      }
+      allWords.shuffle();
+
+      /// Loading the currently show words
+      for (int i = 0; i < 5; i++) {
+        _current5Word.add(allWords[allWordsIndex]);
+        _current5Meaning.add(allWords[allWordsIndex]);
+        allWordsIndex++;
+      }
+
+      /// Shuffle the currently shown words
+      _current5Word.shuffle();
+      _current5Meaning.shuffle();
     }
-    _next5Word.shuffle();
-    _next5Meaning.shuffle();
-    print(_next5Word);
-    print(_next5Meaning);
+
+    /// Check _next5Words and _next5Meaning size in case they need a refill
+    while (_next5Word.length < 5 && _next5Meaning.length < 5 ){
+      _next5Word.add(allWords[allWordsIndex]);
+      _next5Meaning.add(allWords[allWordsIndex]);
+      allWordsIndex++;
+    }
+
+    // _loadNext5Word();
   }
 
+  _loadCurrentWords() {
+    /// Get 1st word from the _next5Word list
+    /// Get 1st meaning from the _next5Meaning list
+  }
+
+  // _loadNext5Word() {
+  //   for (int i = 0; i < 5; i++) {
+  //     /// TODO: Use the chosen language
+  //
+  //     // _next5Word.add(
+  //         // flashcardContents[widget.category.toLowerCase()]![i]["germanWord"]);
+  //     // _next5Meaning.add(flashcardContents[widget.category.toLowerCase()]![i]
+  //     //     ["englishMeaning"]);
+  //   }
+  //   _next5Word.shuffle();
+  //   _next5Meaning.shuffle();
+  //   print(_next5Word);
+  //   print(_next5Meaning);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +149,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                           iconData: FontAwesomeIcons.solidStar),
                       _resultsCard(
                           text: 'Longest streak: 17',
-                          iconData: FontAwesomeIcons.link),
+                          iconData: FontAwesomeIcons.fire),
+                      _resultsCard(
+                          text: 'Mistakes: 1',
+                          iconData: FontAwesomeIcons.triangleExclamation),
                     ],
                   ),
                 ),
@@ -123,6 +168,37 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _resultsCard({required IconData iconData, required String text}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(10),
+          // border: Border.all(color: Colors.black45, width: 2)),
+          border: Border.all(color: Colors.grey.shade200, width: 3)),
+      child: Row(
+        children: [
+          Icon(
+            iconData,
+            color: Colors.black,
+            size: 20.0,
+          ),
+          const SizedBox(width: 20.0),
+          Text(
+            text,
+            style: TextStyle(
+                // fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+                color: Colors.black45),
+            // color: Colors.grey.shade500),
+          )
+        ],
       ),
     );
   }
@@ -156,11 +232,26 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   flex: 1,
                   child: Column(
                     children: [
-                      _gameCard(_next5Word[0]),
-                      _gameCard(_next5Word[1]),
-                      _gameCard(_next5Word[2]),
-                      _gameCard(_next5Word[3]),
-                      _gameCard(_next5Word[4]),
+                      _gameCard(
+                          word: _current5Word[0],
+                          isLeftSide: true,
+                          index: 0),
+                      _gameCard(
+                          word: _current5Word[1],
+                          isLeftSide: true,
+                          index: 1),
+                      _gameCard(
+                          word: _current5Word[2],
+                          isLeftSide: true,
+                          index: 2),
+                      _gameCard(
+                          word: _current5Word[3],
+                          isLeftSide: true,
+                          index: 3),
+                      _gameCard(
+                          word: _current5Word[4],
+                          isLeftSide: true,
+                          index: 4),
                     ],
                   ),
                 ),
@@ -169,11 +260,26 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   flex: 1,
                   child: Column(
                     children: [
-                      _gameCard(_next5Meaning[0]),
-                      _gameCard(_next5Meaning[1]),
-                      _gameCard(_next5Meaning[2]),
-                      _gameCard(_next5Meaning[3]),
-                      _gameCard(_next5Meaning[4]),
+                      _gameCard(
+                          word: _current5Meaning[0],
+                          isLeftSide: false,
+                          index: 0),
+                      _gameCard(
+                          word: _current5Meaning[1],
+                          isLeftSide: false,
+                          index: 1),
+                      _gameCard(
+                          word: _current5Meaning[2],
+                          isLeftSide: false,
+                          index: 2),
+                      _gameCard(
+                          word: _current5Meaning[3],
+                          isLeftSide: false,
+                          index: 3),
+                      _gameCard(
+                          word: _current5Meaning[4],
+                          isLeftSide: false,
+                          index: 4),
                     ],
                   ),
                 ),
@@ -206,7 +312,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       strokeCap: StrokeCap.butt,
       // strokeCap: StrokeCap.round,
       textStyle: const TextStyle(
-        fontSize: 18,
+          fontSize: 18,
           // fontSize: MediaQuery.of(context).size.height * 0.02,
           // fontSize: MediaQuery.of(context).size.height * 0.03,
           color: Colors.black,
@@ -231,42 +337,34 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     );
   }
 
-  Widget _gameCard(String text) {
-    return Container(
-      height: 70.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: Colors.grey.shade200, width: 3),
-        color: Colors.white,
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
-      child: Center(
-          child: Text(
-        text,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      )),
-    );
-  }
-
-  Widget _resultsCard({required IconData iconData, required String text}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey.shade300, width: 3)),
-      child: Row(
-        children: [
-          Icon(iconData, color: Colors.black),
-          const SizedBox(width: 20.0),
-          Text(
-            text,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: Colors.grey.shade500),
-          )
-        ],
+  Widget _gameCard(
+      {
+      required Word word,
+      required bool isLeftSide,
+      required int index}) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if(isLeftSide){
+            selectedIndexLeft = index;
+          }else{
+            selectedIndexRight = index;
+          }
+        });
+      },
+      child: Container(
+        height: 70.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          border: Border.all(color: Colors.grey.shade200, width: 3),
+          color: Colors.white,
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+        child: Center(
+            child: Text(
+          isLeftSide ? word.germanWord : word.englishMeaning,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        )),
       ),
     );
   }
