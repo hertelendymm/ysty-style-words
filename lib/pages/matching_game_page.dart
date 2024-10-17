@@ -33,8 +33,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   int selectedIndexLeft = -1;
   int selectedIndexRight = -1;
   int allWordsIndex = 0;
-  List _matchStreaks = []; // Find the max value from this list, Add counter value after each streak break
-  Color _feedbackButtonColor = Colors.black; // black is the base selecting color
+  List _streaks =
+      []; // Find the max value from this list, Add counter value after each streak break
+  Color _feedbackButtonColor =
+      Colors.black; // black is the base selecting color
 
   @override
   void initState() {
@@ -63,7 +65,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     }
 
     /// Check _next5Words and _next5Meaning size in case they need a refill
-    while (_next5Word.length < 5 && _next5Meaning.length < 5 ){
+    while (_next5Word.length < 5 && _next5Meaning.length < 5) {
       _next5Word.add(allWords[allWordsIndex]);
       _next5Meaning.add(allWords[allWordsIndex]);
       allWordsIndex++;
@@ -72,25 +74,27 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     // _loadNext5Word();
   }
 
-
-  checkAnswer({required Word selectedWord, required Word selectedMeaning}){
+  checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
     setState(() {
-      if(selectedWord.wordId == selectedMeaning.wordId){
-        /// Correct answer
-        /// TODO: reset selection, load new word to current list from next5
+      if (selectedWord.wordId == selectedMeaning.wordId) {
+        // Correct answer ===============================
+        /// TODO: remove correct words from current list and replace them by index
+
+        /// TODO: load new word to current list from next5
+
+        /// Reset selected indexes
         selectedIndexLeft = -1;
         selectedIndexRight = -1;
-      }else{
-        /// Wrong answer
-        // selectedIndexLeft = -1;
-        // selectedIndexRight = -1;
+      } else {
+        // Wrong answer =================================
         _feedbackButtonColor = Colors.red;
 
+        /// TODO: Maybe reduce remaining time duration "-5 seconds"
+        /// TODO: Add streak counter value to _streaks and start new counting from 0
+        /// TODO: Mistake counter++
       }
     });
-
   }
-
 
   _addNewWordToCurrent() {
     /// Get 1st word from the _next5Word list
@@ -253,25 +257,15 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   child: Column(
                     children: [
                       _gameCard(
-                          word: _current5Word[0],
-                          isLeftSide: true,
-                          index: 0),
+                          word: _current5Word[0], isLeftSide: true, index: 0),
                       _gameCard(
-                          word: _current5Word[1],
-                          isLeftSide: true,
-                          index: 1),
+                          word: _current5Word[1], isLeftSide: true, index: 1),
                       _gameCard(
-                          word: _current5Word[2],
-                          isLeftSide: true,
-                          index: 2),
+                          word: _current5Word[2], isLeftSide: true, index: 2),
                       _gameCard(
-                          word: _current5Word[3],
-                          isLeftSide: true,
-                          index: 3),
+                          word: _current5Word[3], isLeftSide: true, index: 3),
                       _gameCard(
-                          word: _current5Word[4],
-                          isLeftSide: true,
-                          index: 4),
+                          word: _current5Word[4], isLeftSide: true, index: 4),
                     ],
                   ),
                 ),
@@ -358,28 +352,29 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   }
 
   Widget _gameCard(
-      {
-      required Word word,
-      required bool isLeftSide,
-      required int index}) {
+      {required Word word, required bool isLeftSide, required int index}) {
     return GestureDetector(
       onTap: () {
         setState(() {
           /// Remove selection if feedback shows previous wrong answer
-          if (_feedbackButtonColor == Colors.red){
-            _feedbackButtonColor =  Colors.black;
+          if (_feedbackButtonColor == Colors.red) {
+            _feedbackButtonColor = Colors.black;
             selectedIndexLeft = -1;
             selectedIndexRight = -1;
           }
+
           /// Select button by index
-          if(isLeftSide){
+          if (isLeftSide) {
             selectedIndexLeft = index;
-          }else{
+          } else {
             selectedIndexRight = index;
           }
+
           /// If both side has a selected button call chackAnswer
-          if (selectedIndexLeft != -1 && selectedIndexRight != -1){
-            checkAnswer(selectedWord: _current5Word[selectedIndexLeft], selectedMeaning: _current5Meaning[selectedIndexRight]);
+          if (selectedIndexLeft != -1 && selectedIndexRight != -1) {
+            checkAnswer(
+                selectedWord: _current5Word[selectedIndexLeft],
+                selectedMeaning: _current5Meaning[selectedIndexRight]);
           }
         });
       },
@@ -387,15 +382,29 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         height: 70.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          border: Border.all(color: ((isLeftSide && selectedIndexLeft == index) || (!isLeftSide && selectedIndexRight == index)) ? _feedbackButtonColor : Colors.grey.shade200, width: 3),
-          color: ((isLeftSide && selectedIndexLeft == index) || (!isLeftSide && selectedIndexRight == index)) ? _feedbackButtonColor : Colors.white,
+          border: Border.all(
+              color: ((isLeftSide && selectedIndexLeft == index) ||
+                      (!isLeftSide && selectedIndexRight == index))
+                  ? _feedbackButtonColor
+                  : Colors.grey.shade200,
+              width: 3),
+          color: ((isLeftSide && selectedIndexLeft == index) ||
+                  (!isLeftSide && selectedIndexRight == index))
+              ? _feedbackButtonColor
+              : Colors.white,
         ),
         margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
         child: Center(
             child: Text(
           isLeftSide ? word.germanWord : word.englishMeaning,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
-            color: ((isLeftSide && selectedIndexLeft == index) || (!isLeftSide && selectedIndexRight == index)) ? Colors.white : Colors.black,),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: ((isLeftSide && selectedIndexLeft == index) ||
+                    (!isLeftSide && selectedIndexRight == index))
+                ? Colors.white
+                : Colors.black,
+          ),
         )),
       ),
     );
