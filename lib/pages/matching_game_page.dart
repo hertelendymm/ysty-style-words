@@ -5,6 +5,7 @@ import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import '../word_lists/flashcard_content.dart';
+import "dart:math";
 
 class MatchingGamePage extends StatefulWidget {
   const MatchingGamePage({super.key, required this.category});
@@ -17,7 +18,9 @@ class MatchingGamePage extends StatefulWidget {
 
 class _FlashcardsPageState extends State<MatchingGamePage> {
   // final int _countdownDuration = 120;
-  final int _countdownDuration = 920;
+  final int _countdownDuration = 20;
+
+  // final int _countdownDuration = 920;
 
   final CountDownController _countdownController = CountDownController();
   List<Word> _current5Word =
@@ -33,11 +36,11 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   int selectedIndexLeft = -1;
   int selectedIndexRight = -1;
   int allWordsIndex = 0;
-  List _streaks =
-      []; // Find the max value from this list, Add counter value after each streak break
+  List<int> _streaks = []; // Find the max value from this list, Add counter value after each streak break
   Color _feedbackButtonColor =
       Colors.black; // black is the base selecting color
   int _mistakeCounter = 0;
+  int _matchCounter = 0; // founded good matches (answers)
 
   @override
   void initState() {
@@ -69,7 +72,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     // _loadNext5Word();
   }
 
-  checkNext5(){
+  checkNext5() {
     /// Check _next5Words and _next5Meaning size in case they need a refill
     while (_next5Word.length < 5 && _next5Meaning.length < 5) {
       _next5Word.add(allWords[allWordsIndex]);
@@ -83,7 +86,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       if (selectedWord.wordId == selectedMeaning.wordId) {
         // Correct answer ===============================
         /// TODO: remove correct words from current list and replace them by index
-        
 
         /// TODO remove chosen word from next5 after added to current
 
@@ -178,13 +180,19 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                           iconData: FontAwesomeIcons.medal,
                           numberValue: 38),
                       _resultsCard(
-                          text: 'Current Score',
-                          iconData: FontAwesomeIcons.solidStar,
-                          numberValue: 41),
+                        text: 'Current Score',
+                        iconData: FontAwesomeIcons.solidStar,
+                        numberValue: (_matchCounter - (_mistakeCounter*2)),
+                      ),
                       _resultsCard(
-                          text: 'Longest streak',
-                          iconData: FontAwesomeIcons.fire,
-                          numberValue: 17),
+                        text: 'Longest streak',
+                        iconData: FontAwesomeIcons.fire,
+                        numberValue: _streaks.isEmpty ? _matchCounter : (_streaks).reduce((a, b) => a > b ? a : b),
+                            // .sort(),
+                            // .reduce(combine)
+                            // .sortReversed()[0],
+                        // numberValue: _matchCounter,
+                      ),
                       _resultsCard(
                           text: 'Mistakes',
                           iconData: FontAwesomeIcons.triangleExclamation,
@@ -208,7 +216,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     );
   }
 
-  Widget _resultsCard({required IconData iconData, required String text, required int numberValue}) {
+  Widget _resultsCard(
+      {required IconData iconData,
+      required String text,
+      required int numberValue}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -218,22 +229,43 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           // border: Border.all(color: Colors.black45, width: 2)),
           border: Border.all(color: Colors.grey.shade200, width: 3)),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            iconData,
-            color: Colors.black,
-            size: 20.0,
+          Flexible(
+            flex: 4,
+            child: Text(
+              text,
+              style: const TextStyle(
+                  // fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Colors.black45),
+              // color: Colors.grey.shade500),
+            ),
           ),
-          const SizedBox(width: 20.0),
-          Text(
-            text,
-            style: const TextStyle(
-                // fontWeight: FontWeight.w800,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: Colors.black45),
-            // color: Colors.grey.shade500),
-          )
+          Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  iconData,
+                  color: Colors.black,
+                  size: 20.0,
+                ),
+                const SizedBox(width: 20.0),
+                Text(
+                  '$numberValue',
+                  style: const TextStyle(
+                      // fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      color: Colors.black45),
+                  // color: Colors.grey.shade500),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
