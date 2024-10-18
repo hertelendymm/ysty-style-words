@@ -174,17 +174,21 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   child: Column(
                     children: [
                       _resultsCard(
-                          text: 'High Score: 38',
-                          iconData: FontAwesomeIcons.medal),
+                          text: 'High Score',
+                          iconData: FontAwesomeIcons.medal,
+                          numberValue: 38),
                       _resultsCard(
-                          text: 'Current Score: 41',
-                          iconData: FontAwesomeIcons.solidStar),
+                          text: 'Current Score',
+                          iconData: FontAwesomeIcons.solidStar,
+                          numberValue: 41),
                       _resultsCard(
-                          text: 'Longest streak: 17',
-                          iconData: FontAwesomeIcons.fire),
+                          text: 'Longest streak',
+                          iconData: FontAwesomeIcons.fire,
+                          numberValue: 17),
                       _resultsCard(
-                          text: 'Mistakes: $_mistakeCounter',
-                          iconData: FontAwesomeIcons.triangleExclamation),
+                          text: 'Mistakes',
+                          iconData: FontAwesomeIcons.triangleExclamation,
+                          numberValue: _mistakeCounter),
                     ],
                   ),
                 ),
@@ -204,7 +208,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     );
   }
 
-  Widget _resultsCard({required IconData iconData, required String text}) {
+  Widget _resultsCard({required IconData iconData, required String text, required int numberValue}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -223,7 +227,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           const SizedBox(width: 20.0),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
                 // fontWeight: FontWeight.w800,
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
