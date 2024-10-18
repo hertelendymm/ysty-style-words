@@ -82,6 +82,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       if (selectedWord.wordId == selectedMeaning.wordId) {
         // Correct answer ===============================
         /// TODO: remove correct words from current list and replace them by index
+        
 
         /// TODO remove chosen word from next5 after added to current
 
