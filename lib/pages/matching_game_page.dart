@@ -37,6 +37,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       []; // Find the max value from this list, Add counter value after each streak break
   Color _feedbackButtonColor =
       Colors.black; // black is the base selecting color
+  int _mistakeCounter = 0;
 
   @override
   void initState() {
@@ -97,7 +98,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
         /// TODO: Maybe reduce remaining time duration "-5 seconds"
         /// TODO: Add streak counter value to _streaks and start new counting from 0
-        /// TODO: Mistake counter++
+        /// Increase mistake counter
+        _mistakeCounter++;
       }
     });
   }
@@ -181,7 +183,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                           text: 'Longest streak: 17',
                           iconData: FontAwesomeIcons.fire),
                       _resultsCard(
-                          text: 'Mistakes: 1',
+                          text: 'Mistakes: $_mistakeCounter',
                           iconData: FontAwesomeIcons.triangleExclamation),
                     ],
                   ),
