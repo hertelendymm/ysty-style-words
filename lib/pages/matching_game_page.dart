@@ -80,6 +80,9 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       _next5Meaning.add(allWords[allWordsIndex]);
       allWordsIndex++;
     }
+    /// Shuffle the next5Words & next5Meaning words
+    _next5Word.shuffle();
+    _next5Meaning.shuffle();
   }
 
   checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
