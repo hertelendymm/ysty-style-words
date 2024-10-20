@@ -36,7 +36,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   int selectedIndexLeft = -1;
   int selectedIndexRight = -1;
   int allWordsIndex = 0;
-  List<int> _streaks = []; // Find the max value from this list, Add counter value after each streak break
+  List<int> _streaks =
+      []; // Find the max value from this list, Add new counter value starts from 0 after each streak break. After each correct answer increase last score value
   Color _feedbackButtonColor =
       Colors.black; // black is the base selecting color
   int _mistakeCounter = 0;
@@ -94,14 +95,26 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         /// Reset selected indexes
         selectedIndexLeft = -1;
         selectedIndexRight = -1;
+
+        /// Increase score
+        _matchCounter++;
+
+        /// TODO: increase streak
+        if (_streaks.isEmpty) {
+          _streaks.add(1);
+        } else {
+          _streaks[_streaks.length - 1] += 1;
+        }
       } else {
         // Wrong answer =================================
         _feedbackButtonColor = Colors.red;
 
         /// TODO: Maybe reduce remaining time duration "-5 seconds"
-        /// TODO: Add streak counter value to _streaks and start new counting from 0
         /// Increase mistake counter
         _mistakeCounter++;
+
+        ///Add streak counter value to _streaks and start new counting from 0
+        _streaks.add(0);
       }
     });
   }
@@ -182,15 +195,17 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                       _resultsCard(
                         text: 'Current Score',
                         iconData: FontAwesomeIcons.solidStar,
-                        numberValue: (_matchCounter - (_mistakeCounter*2)),
+                        numberValue: (_matchCounter - (_mistakeCounter * 2)),
                       ),
                       _resultsCard(
                         text: 'Longest streak',
                         iconData: FontAwesomeIcons.fire,
-                        numberValue: _streaks.isEmpty ? _matchCounter : (_streaks).reduce((a, b) => a > b ? a : b),
-                            // .sort(),
-                            // .reduce(combine)
-                            // .sortReversed()[0],
+                        numberValue: _streaks.isEmpty
+                            ? _matchCounter
+                            : (_streaks).reduce((a, b) => a > b ? a : b),
+                        // .sort(),
+                        // .reduce(combine)
+                        // .sortReversed()[0],
                         // numberValue: _matchCounter,
                       ),
                       _resultsCard(
@@ -230,9 +245,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           border: Border.all(color: Colors.grey.shade200, width: 3)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            flex: 4,
+            flex: 3,
             child: Text(
               text,
               style: const TextStyle(
@@ -247,6 +263,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   iconData,
