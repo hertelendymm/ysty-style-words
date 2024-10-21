@@ -31,8 +31,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       []; // The upcoming 5 shuffled meaning (right side)   if empty -> refill with the next 5 meaning from wordsInCategory (and remove ir from that list)
   List<Word> allWords = []; // Contains all the WordModels and shuffled
   bool _isResultsPageOn = false;
-  int selectedIndexLeft = -1;
-  int selectedIndexRight = -1;
+  int selectedIndexWord = -1;
+  int selectedIndexMeaning = -1;
   int allWordsIndex = 0;
   List<int> _streaks =
       []; // Find the max value from this list, Add new counter value starts from 0 after each streak break. After each correct answer increase last score value
@@ -95,14 +95,23 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       if (selectedWord.wordId == selectedMeaning.wordId) {
         // Correct answer ======================================================
         /// TODO: remove correct words from current list and replace them by index
+        _current5Word[selectedIndexWord] = _next5Word[0];
+        _current5Meaning[selectedIndexMeaning] = _next5Meaning[0];
 
-        /// TODO remove chosen word from next5 after added to current
+        /// TODO remove chosen word from next5 after it has been added to current
+        print("BEFORE: $_next5Word");
+        print("BEFORE: $_next5Meaning");
+        _next5Word.removeAt(0);
+        _next5Meaning.removeAt(0);
 
-        /// TODO: load new word to current list from next5 >> call checkNext5()
+        /// TODO: call checkNext5() to refill _next5 lists
+        checkNext5();
+        print("AFTER: $_next5Word");
+        print("AFTER: $_next5Meaning");
 
         /// Reset selected indexes
-        selectedIndexLeft = -1;
-        selectedIndexRight = -1;
+        selectedIndexWord = -1;
+        selectedIndexMeaning = -1;
 
         /// Increase score
         _matchCounter++;
@@ -431,22 +440,22 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           /// Remove selection if feedback shows previous wrong answer
           if (_feedbackButtonColor == Colors.red) {
             _feedbackButtonColor = Colors.black;
-            selectedIndexLeft = -1;
-            selectedIndexRight = -1;
+            selectedIndexWord = -1;
+            selectedIndexMeaning = -1;
           }
 
           /// Select button by index
           if (isLeftSide) {
-            selectedIndexLeft = index;
+            selectedIndexWord = index;
           } else {
-            selectedIndexRight = index;
+            selectedIndexMeaning = index;
           }
 
           /// If both side has a selected button call chackAnswer
-          if (selectedIndexLeft != -1 && selectedIndexRight != -1) {
+          if (selectedIndexWord != -1 && selectedIndexMeaning != -1) {
             checkAnswer(
-                selectedWord: _current5Word[selectedIndexLeft],
-                selectedMeaning: _current5Meaning[selectedIndexRight]);
+                selectedWord: _current5Word[selectedIndexWord],
+                selectedMeaning: _current5Meaning[selectedIndexMeaning]);
           }
         });
       },
@@ -455,13 +464,13 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           border: Border.all(
-              color: ((isLeftSide && selectedIndexLeft == index) ||
-                      (!isLeftSide && selectedIndexRight == index))
+              color: ((isLeftSide && selectedIndexWord == index) ||
+                      (!isLeftSide && selectedIndexMeaning == index))
                   ? _feedbackButtonColor
                   : Colors.grey.shade200,
               width: 3),
-          color: ((isLeftSide && selectedIndexLeft == index) ||
-                  (!isLeftSide && selectedIndexRight == index))
+          color: ((isLeftSide && selectedIndexWord == index) ||
+                  (!isLeftSide && selectedIndexMeaning == index))
               ? _feedbackButtonColor
               : Colors.white,
         ),
@@ -472,8 +481,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: ((isLeftSide && selectedIndexLeft == index) ||
-                    (!isLeftSide && selectedIndexRight == index))
+            color: ((isLeftSide && selectedIndexWord == index) ||
+                    (!isLeftSide && selectedIndexMeaning == index))
                 ? Colors.white
                 : Colors.black,
           ),
