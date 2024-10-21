@@ -17,8 +17,7 @@ class MatchingGamePage extends StatefulWidget {
 }
 
 class _FlashcardsPageState extends State<MatchingGamePage> {
-  // final int _countdownDuration = 120;
-  final int _countdownDuration = 920;
+  final int _countdownDuration = 120;
 
   final CountDownController _countdownController = CountDownController();
   List<Word> _current5Word =
@@ -38,8 +37,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       []; // Find the max value from this list, Add new counter value starts from 0 after each streak break. After each correct answer increase last score value
   Color _feedbackButtonColor =
       Colors.black; // black is the base selecting color
-  int _mistakeCounter = 0;
+  int _mistakeCounter = 0; // mistake counter +1 fo   r each wrong answer
   int _matchCounter = 0; // founded good matches (answers)
+  int _delayedWordIndex = -1;
+  int _delayedMeaningIndex = -1;
 
   @override
   void initState() {
@@ -92,8 +93,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
     setState(() {
-      if (selectedWord.wordId == selectedMeaning.wordId) {
+      // if (selectedWord.wordId == selectedMeaning.wordId) {
+      if (selectedWord.englishMeaning == selectedMeaning.englishMeaning) {
         // Correct answer ======================================================
+
         /// Remove correct words from current list and replace them by index with next3Word/Meaning
         _current5Word[selectedIndexWord] = _next3Word[0];
         _current5Meaning[selectedIndexMeaning] = _next3Meaning[0];
@@ -106,7 +109,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         checkNext3();
 
         /// TODO: Add delay effect for replaced cards before the previous selected indexes resets
-        // delayNextCards();
+        delayNextCards();
 
         /// Reset selected indexes
         selectedIndexWord = -1;
@@ -121,6 +124,9 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         } else {
           _streaks[_streaks.length - 1] += 1;
         }
+
+        /// Reset feedbackButtonColor to black
+        _feedbackButtonColor = Colors.black;
       } else {
         // Wrong answer ========================================================
         _feedbackButtonColor = Colors.red;
@@ -135,7 +141,19 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     });
   }
 
+  delayNextCards() async {
+    /// get selected correct card indexes
+    _delayedWordIndex = selectedIndexWord;
+    _delayedMeaningIndex = selectedIndexMeaning;
 
+    /// TODO: delay 1 o 2 sec
+    await Future.delayed(const Duration(seconds: 1));
+    setState(() {
+      /// reset to base value
+      _delayedWordIndex = -1;
+      _delayedMeaningIndex = -1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -415,60 +433,71 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   Widget _gameCard(
       {required Word word, required bool isLeftSide, required int index}) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          /// Remove selection if feedback shows previous wrong answer
-          if (_feedbackButtonColor == Colors.red) {
-            _feedbackButtonColor = Colors.black;
-            selectedIndexWord = -1;
-            selectedIndexMeaning = -1;
-          }
+    return (isLeftSide && _delayedWordIndex == index) ||
+            (!isLeftSide && _delayedMeaningIndex == index)
+        ? Container(
+            height: 70.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                border: Border.all(color: Colors.grey.shade50, width: 3),
+                color: Colors.grey.shade50),
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+          )
+        : GestureDetector(
+            onTap: () {
+              setState(() {
+                /// Remove selection if feedback shows previous wrong answer
+                if (_feedbackButtonColor == Colors.red) {
+                  _feedbackButtonColor = Colors.black;
+                  selectedIndexWord = -1;
+                  selectedIndexMeaning = -1;
+                }
 
-          /// Select button by index
-          if (isLeftSide) {
-            selectedIndexWord = index;
-          } else {
-            selectedIndexMeaning = index;
-          }
+                /// Select button by index
+                if (isLeftSide) {
+                  selectedIndexWord = index;
+                } else {
+                  selectedIndexMeaning = index;
+                }
 
-          /// If both side has a selected button call chackAnswer
-          if (selectedIndexWord != -1 && selectedIndexMeaning != -1) {
-            checkAnswer(
-                selectedWord: _current5Word[selectedIndexWord],
-                selectedMeaning: _current5Meaning[selectedIndexMeaning]);
-          }
-        });
-      },
-      child: Container(
-        height: 70.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          border: Border.all(
-              color: ((isLeftSide && selectedIndexWord == index) ||
-                      (!isLeftSide && selectedIndexMeaning == index))
-                  ? _feedbackButtonColor
-                  : Colors.grey.shade200,
-              width: 3),
-          color: ((isLeftSide && selectedIndexWord == index) ||
-                  (!isLeftSide && selectedIndexMeaning == index))
-              ? _feedbackButtonColor
-              : Colors.white,
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
-        child: Center(
-            child: Text(
-          isLeftSide ? word.germanWord : word.englishMeaning,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: ((isLeftSide && selectedIndexWord == index) ||
-                    (!isLeftSide && selectedIndexMeaning == index))
-                ? Colors.white
-                : Colors.black,
-          ),
-        )),
-      ),
-    );
+                /// If both side has a selected button call chackAnswer
+                if (selectedIndexWord != -1 && selectedIndexMeaning != -1) {
+                  checkAnswer(
+                      selectedWord: _current5Word[selectedIndexWord],
+                      selectedMeaning: _current5Meaning[selectedIndexMeaning]);
+                }
+              });
+            },
+            child: Container(
+              height: 70.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                border: Border.all(
+                    color: ((isLeftSide && selectedIndexWord == index) ||
+                            (!isLeftSide && selectedIndexMeaning == index))
+                        ? _feedbackButtonColor
+                        : Colors.grey.shade200,
+                    width: 3),
+                color: ((isLeftSide && selectedIndexWord == index) ||
+                        (!isLeftSide && selectedIndexMeaning == index))
+                    ? _feedbackButtonColor
+                    : Colors.white,
+              ),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+              child: Center(
+                  child: Text(
+                isLeftSide ? word.germanWord : word.englishMeaning,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: ((isLeftSide && selectedIndexWord == index) ||
+                          (!isLeftSide && selectedIndexMeaning == index))
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              )),
+            ),
+          );
   }
 }
