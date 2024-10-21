@@ -18,9 +18,7 @@ class MatchingGamePage extends StatefulWidget {
 
 class _FlashcardsPageState extends State<MatchingGamePage> {
   // final int _countdownDuration = 120;
-  final int _countdownDuration = 20;
-
-  // final int _countdownDuration = 920;
+  final int _countdownDuration = 920;
 
   final CountDownController _countdownController = CountDownController();
   List<Word> _current5Word =
@@ -74,12 +72,19 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   }
 
   checkNext5() {
+    /// Check the user already went through all the words, if true reshuffle list and reset index counter
+    if (allWords.length == allWordsIndex + 1) {
+      allWords.shuffle();
+      allWordsIndex = 0;
+    }
+
     /// Check _next5Words and _next5Meaning size in case they need a refill
     while (_next5Word.length < 5 && _next5Meaning.length < 5) {
       _next5Word.add(allWords[allWordsIndex]);
       _next5Meaning.add(allWords[allWordsIndex]);
       allWordsIndex++;
     }
+
     /// Shuffle the next5Words & next5Meaning words
     _next5Word.shuffle();
     _next5Meaning.shuffle();
@@ -88,7 +93,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
     setState(() {
       if (selectedWord.wordId == selectedMeaning.wordId) {
-        // Correct answer ===============================
+        // Correct answer ======================================================
         /// TODO: remove correct words from current list and replace them by index
 
         /// TODO remove chosen word from next5 after added to current
@@ -109,10 +114,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
           _streaks[_streaks.length - 1] += 1;
         }
       } else {
-        // Wrong answer =================================
+        // Wrong answer ========================================================
         _feedbackButtonColor = Colors.red;
 
-        /// TODO: Maybe reduce remaining time duration "-5 seconds"
+        /// TODO: Maybe reduce remaining time duration "-5 seconds" or calculate mistakes 2x for scores
         /// Increase mistake counter
         _mistakeCounter++;
 
@@ -198,7 +203,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                       _resultsCard(
                         text: 'Current Score',
                         iconData: FontAwesomeIcons.solidStar,
-                        numberValue: (_matchCounter - (_mistakeCounter * 2)),
+                        numberValue: (_matchCounter - _mistakeCounter),
+
+                        /// TODO: decrease reaming time duration or count mistakes 2x for score calculations
+                        // numberValue: (_matchCounter - (_mistakeCounter * 2)),
                       ),
                       _resultsCard(
                         text: 'Longest streak',
