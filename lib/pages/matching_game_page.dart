@@ -25,10 +25,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       []; // The currently shown 5 word (left side)         if size < 5 -> get 1st element from _next5Word (and remove ir from that list)
   List<Word> _current5Meaning =
       []; // The currently shown 5 meaning (right side)     if size < 5 -> get 1st element from _next5Word (and remove ir from that list)
-  List<Word> _next5Word =
-      []; // The upcoming 5 shuffled word (left side)       if empty -> refill with the next 5 word from wordsInCategory (and allWordsIndex++)
-  List<Word> _next5Meaning =
-      []; // The upcoming 5 shuffled meaning (right side)   if empty -> refill with the next 5 meaning from wordsInCategory (and remove ir from that list)
+  List<Word> _next3Word =
+      []; // The upcoming 3 shuffled word (left side)       if empty -> refill with the next 3 word from wordsInCategory (and allWordsIndex++)
+  List<Word> _next3Meaning =
+      []; // The upcoming 3 shuffled meaning (right side)   if empty -> refill with the next 3 meaning from wordsInCategory (and remove ir from that list)
   List<Word> allWords = []; // Contains all the WordModels and shuffled
   bool _isResultsPageOn = false;
   int selectedIndexWord = -1;
@@ -67,11 +67,11 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       _current5Meaning.shuffle();
     }
 
-    checkNext5();
+    checkNext3();
     // _loadNext5Word();
   }
 
-  checkNext5() {
+  checkNext3() {
     /// Check the user already went through all the words, if true reshuffle list and reset index counter
     if (allWords.length == allWordsIndex + 1) {
       allWords.shuffle();
@@ -79,15 +79,15 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     }
 
     /// Check _next5Words and _next5Meaning size in case they need a refill
-    while (_next5Word.length < 5 && _next5Meaning.length < 5) {
-      _next5Word.add(allWords[allWordsIndex]);
-      _next5Meaning.add(allWords[allWordsIndex]);
+    while (_next3Word.length < 3 && _next3Meaning.length < 3) {
+      _next3Word.add(allWords[allWordsIndex]);
+      _next3Meaning.add(allWords[allWordsIndex]);
       allWordsIndex++;
     }
 
     /// Shuffle the next5Words & next5Meaning words
-    _next5Word.shuffle();
-    _next5Meaning.shuffle();
+    _next3Word.shuffle();
+    _next3Meaning.shuffle();
   }
 
   checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
@@ -95,19 +95,15 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       if (selectedWord.wordId == selectedMeaning.wordId) {
         // Correct answer ======================================================
         /// TODO: remove correct words from current list and replace them by index
-        _current5Word[selectedIndexWord] = _next5Word[0];
-        _current5Meaning[selectedIndexMeaning] = _next5Meaning[0];
+        _current5Word[selectedIndexWord] = _next3Word[0];
+        _current5Meaning[selectedIndexMeaning] = _next3Meaning[0];
 
         /// TODO remove chosen word from next5 after it has been added to current
-        print("BEFORE: $_next5Word");
-        print("BEFORE: $_next5Meaning");
-        _next5Word.removeAt(0);
-        _next5Meaning.removeAt(0);
+        _next3Word.removeAt(0);
+        _next3Meaning.removeAt(0);
 
         /// TODO: call checkNext5() to refill _next5 lists
-        checkNext5();
-        print("AFTER: $_next5Word");
-        print("AFTER: $_next5Meaning");
+        checkNext3();
 
         /// Reset selected indexes
         selectedIndexWord = -1;
