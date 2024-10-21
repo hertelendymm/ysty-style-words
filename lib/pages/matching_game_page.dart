@@ -94,15 +94,15 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     setState(() {
       if (selectedWord.wordId == selectedMeaning.wordId) {
         // Correct answer ======================================================
-        /// TODO: remove correct words from current list and replace them by index
+        /// Remove correct words from current list and replace them by index with next3Word/Meaning
         _current5Word[selectedIndexWord] = _next3Word[0];
         _current5Meaning[selectedIndexMeaning] = _next3Meaning[0];
 
-        /// TODO remove chosen word from next5 after it has been added to current
+        /// Remove first elements from _next3Word and _next3Meaning after it has been added to current lists
         _next3Word.removeAt(0);
         _next3Meaning.removeAt(0);
 
-        /// TODO: call checkNext5() to refill _next5 lists
+        /// Refill _next3 lists with a new word
         checkNext3();
 
         /// Reset selected indexes
@@ -112,7 +112,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         /// Increase score
         _matchCounter++;
 
-        /// TODO: increase streak
+        /// Increase streak counter
         if (_streaks.isEmpty) {
           _streaks.add(1);
         } else {
