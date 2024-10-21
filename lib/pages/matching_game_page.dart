@@ -105,6 +105,9 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         /// Refill _next3 lists with a new word
         checkNext3();
 
+        /// TODO: Add delay effect for replaced cards before the previous selected indexes resets
+        // delayNextCards();
+
         /// Reset selected indexes
         selectedIndexWord = -1;
         selectedIndexMeaning = -1;
@@ -132,25 +135,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     });
   }
 
-  _addNewWordToCurrent() {
-    /// Get 1st word from the _next5Word list
-    /// Get 1st meaning from the _next5Meaning list
-  }
 
-  // _loadNext5Word() {
-  //   for (int i = 0; i < 5; i++) {
-  //     /// TODO: Use the chosen language
-  //
-  //     // _next5Word.add(
-  //         // flashcardContents[widget.category.toLowerCase()]![i]["germanWord"]);
-  //     // _next5Meaning.add(flashcardContents[widget.category.toLowerCase()]![i]
-  //     //     ["englishMeaning"]);
-  //   }
-  //   _next5Word.shuffle();
-  //   _next5Meaning.shuffle();
-  //   print(_next5Word);
-  //   print(_next5Meaning);
-  // }
 
   @override
   Widget build(BuildContext context) {
