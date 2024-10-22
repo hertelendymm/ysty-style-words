@@ -439,8 +439,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
             height: 70.0,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                border: Border.all(color: Colors.grey.shade50, width: 3),
-                color: Colors.grey.shade50),
+                border: Border.all(color: Colors.green.shade50, width: 3),
+                // border: Border.all(color: Colors.grey.shade50, width: 3),
+                color: Colors.green.shade50),
+                // color: Colors.grey.shade50),
             margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
       child: Center(child: Icon(FontAwesomeIcons.check, color:Colors.green)),
           )
