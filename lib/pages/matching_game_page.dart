@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
@@ -8,9 +9,10 @@ import '../word_lists/flashcard_content.dart';
 import "dart:math";
 
 class MatchingGamePage extends StatefulWidget {
-  const MatchingGamePage({super.key, required this.category});
+  const MatchingGamePage({super.key, required this.category, required this.highScore});
 
   final String category;
+  final int highScore;
 
   @override
   State<MatchingGamePage> createState() => _FlashcardsPageState();
@@ -155,6 +157,12 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     });
   }
 
+
+  Future<void> _saveHighScore(int newHighScore) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('highScore', newHighScore);
+  }
+
   @override
   Widget build(BuildContext context) {
     return _isResultsPageOn ? _showResultsScreen() : _showGameScreen();
@@ -162,12 +170,15 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   /// ResultsScreen ============================================================
   Widget _showResultsScreen() {
+    if((_matchCounter - _mistakeCounter) > widget.highScore){
+      _saveHighScore(_matchCounter - _mistakeCounter);
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
-          child: Container(
+          child: Container( 
             color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,7 +218,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                       _resultsCard(
                           text: 'High Score',
                           iconData: FontAwesomeIcons.medal,
-                          numberValue: 38),
+                          numberValue: (_matchCounter - _mistakeCounter) > widget.highScore ? (_matchCounter - _mistakeCounter) : widget.highScore),
                       _resultsCard(
                         text: 'Current Score',
                         iconData: FontAwesomeIcons.solidStar,
@@ -442,10 +453,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                 border: Border.all(color: Colors.green.shade50, width: 3),
                 // border: Border.all(color: Colors.grey.shade50, width: 3),
                 color: Colors.green.shade50),
-                // color: Colors.grey.shade50),
+            // color: Colors.grey.shade50),
             margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
-      child: Center(child: Icon(FontAwesomeIcons.check, color:Colors.green)),
-          )
+            child: const Center(
+                child: Icon(FontAwesomeIcons.check, color: Colors.green)))
         : GestureDetector(
             onTap: () {
               setState(() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 
 import 'matching_game_page.dart';
@@ -15,6 +16,7 @@ class MatchingPage extends StatefulWidget {
 class _MatchingPageState extends State<MatchingPage> {
   bool _isLoading = true;
   String? _selectedCategory;
+  int _highScore = 0;
 
   /// I will need this to to the MatchingGame page
 
@@ -23,8 +25,16 @@ class _MatchingPageState extends State<MatchingPage> {
     // TODO: implement initState
     super.initState();
     // _loadSelectedCategory();
+    _loadHighScore();
     _selectedCategory = widget.category;
     print("||||||||||||||||||$_selectedCategory");
+  }
+
+  Future<void> _loadHighScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _highScore = prefs.getInt('highScore') ?? 0;
+    });
   }
 
   @override
@@ -38,23 +48,23 @@ class _MatchingPageState extends State<MatchingPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // MainAppBar(updateParent: _loadSelectedCategory, selectedCategory: _selectedCategory.toString()),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 40, 20, 20.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20.0),
               child: Column(
                 children: [
-                  Text('Time Trial',
+                  const Text('Time Trial',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 40.0),
                       textAlign: TextAlign.center),
-                  SizedBox(height: 20.0),
-                  Text(
+                  const SizedBox(height: 20.0),
+                  const Text(
                       'How many matches can you make in two minutes? Let\'s find out!',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                       textAlign: TextAlign.center),
-                  SizedBox(height: 20.0),
-                  Text('High Score: 75',
-                      style: TextStyle(
+                  const SizedBox(height: 20.0),
+                  Text('High Score: $_highScore',
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
                           color: Colors.grey)),
@@ -82,6 +92,7 @@ class _MatchingPageState extends State<MatchingPage> {
                         MaterialPageRoute(
                             builder: (context) => MatchingGamePage(
                               category: _selectedCategory!,
+                              highScore: _highScore,
                             )));
                   },
                   // onPressed: () => Navigator.push(
