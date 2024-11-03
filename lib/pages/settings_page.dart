@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
@@ -11,9 +12,30 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool isEnglishChosenLang() {
-    /// TODO: Get chosen language settings from SharedPref (hungarian-german or english-german) and english should be the default
-    return false;
+  // bool isEnglishChosenLang() {
+  //   /// TODO: Get chosen language settings from SharedPref (hungarian-german or english-german) and english should be the default
+  //   return false;
+  // }
+
+  bool _isEngLang = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadBoolIsEngLang();
+  }
+
+  Future<void> _loadBoolIsEngLang() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isEngLang = prefs.getBool('isEngLang') ?? true;
+    });
+  }
+
+  Future<void> _saveBoolIsEngLang(bool isEngLang) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isEngLang', isEngLang);
   }
 
   @override
@@ -167,13 +189,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const SizedBox(height: 10.0),
                     const TitleWSeparator(title: "Spracheinstellungen"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _languageButton(true),
-                        const SizedBox(width: 20.0),
-                        _languageButton(false),
-                      ],
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(child: _languageButton(isActive: _isEngLang, isEngLangCard: true)),
+                          const SizedBox(width: 20.0),
+                          Flexible(child: _languageButton(isActive: !_isEngLang, isEngLangCard: false)),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10.0),
                     const TitleWSeparator(title: "Links"),
@@ -219,42 +243,52 @@ class _SettingsPageState extends State<SettingsPage> {
         ));
   }
 
-  Widget _languageButton(bool isActive) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-                color: isActive ? Colors.black : Colors.grey.shade200,
-                width: 3),
-            color: isActive ? Colors.black : Colors.white),
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        child: Row(
-          children: [
-            Image.asset(
-              isActive
-                  ? 'assets/images/uk_flag_icon.png'
-                  : 'assets/images/magyar_flag_icon.png',
-              width: 36.0,
-              height: 36.0,
-            ),
-            const SizedBox(width: 20.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(isActive ? 'English' : 'Magyar',
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: isActive ? Colors.white : Colors.grey)),
-                Text(isActive ? 'German' : 'Német',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                        color: isActive ? Colors.white : Colors.grey)),
-              ],
-            ),
-          ],
+  Widget _languageButton({required bool isActive, required bool isEngLangCard}) {
+    return GestureDetector(
+      onTap: (){
+        if(!isActive) {
+          setState(() {
+            _isEngLang = !_isEngLang;
+          });
+          _saveBoolIsEngLang(_isEngLang);
+        }
+      },
+      child: Expanded(
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                  color: isActive ? Colors.black : Colors.grey.shade200,
+                  width: 3),
+              color: isActive ? Colors.black : Colors.white),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Row(
+            children: [
+              Image.asset(
+                isEngLangCard
+                    ? 'assets/images/uk_flag_icon.png'
+                    : 'assets/images/magyar_flag_icon.png',
+                width: 36.0,
+                height: 36.0,
+              ),
+              const SizedBox(width: 20.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(isEngLangCard ? 'English' : 'Magyar',
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: isActive ? Colors.white : Colors.grey)),
+                  Text(isEngLangCard ? 'German' : 'Német',
+                      style: TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                          color: isActive ? Colors.white : Colors.grey)),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

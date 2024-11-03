@@ -248,6 +248,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ButtonRounded(
+                    ///TODO: Call refresh for the MatchingPage --> widget.onRefresh(); for refreshing the highScore over there
                       onPressed: () => Navigator.pop(context),
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
