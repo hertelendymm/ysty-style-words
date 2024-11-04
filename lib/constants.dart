@@ -79,3 +79,13 @@ Map<String, String> derdiedas_help_page_tipp1 = <String, String>{
   "english": "While not foolproof, certain word endings can often indicate gender:\n\n • Masculine: -er, -el, -or, -ling (e.g., der Vater - father, der Apfel - apple), Automarken, \"Kalendar\", \"Wetter\", Alkoholsorten\n • Feminine: -ung, -heit, -keit, -schaft (e.g., die Zeitung - newspaper, die Freiheit - freedom)\n • Neuter: -chen, -lein, -tum (e.g., das Mädchen - girl, das Häuschen - little house), Chemische Elemente",
   "hungarian": "A német főnevek nemét gyakran a végződések alapján lehet meghatározni, de ez nem mindig egyértelmű szabály. Íme néhány gyakori végződés és hozzájuk tartozó nemek:\n\n • Hímnem: Számos főnév végződik -er, -el, -or vagy -ling raggal. Ezen kívül az autómárkák, a „Kalendar” (naptár), a „Wetter” (időjárás) és az alkoholos italok is általában hímneműek.\n\n • Nőnem: Az -ung, -heit, -keit és -schaft végződések jellemzően nőnemű főnevekre utalnak. Ezek gyakran olyan fogalmakat jelölnek, mint állapot, tulajdonság vagy tevékenység.\n\n • Semleges nem: A -chen és -lein kicsinyítőképzők gyakran semleges nemű főneveket eredményeznek. Az -tum végződés is gyakori a semleges nemben, például az állapotot vagy tulajdonságot jelölő szavaknál. A kémiai elemek is általában semleges neműek.",
 };
+
+Map<String, String> derdiedas_help_page_title2 = <String, String>{
+  "english": "Noun Pairs",
+  "hungarian": "Főnévpárok",
+};
+
+Map<String, String> derdiedas_help_page_tipp2 = <String, String>{
+  "english": "Some nouns have gendered pairs:\n\n • Masculine and Feminine: der Mann (man) - die Frau (woman), der Junge (boy) - das Mädchen (girl)\n\n • Masculine and Neuter: der Tag (day) - das Jahr (year), der Berg (mountain) - das Tal (valley)",
+  "hungarian": "Néhány főnévnek van nem szerinti párja:\n\n • Hímnem és nőnem: der Mann (férfi) - die Frau (nő), der Junge (fiú) - das Mädchen (lány)\n\n • Hímnem és semleges nem: der Tag (nap) - das Jahr (év), der Berg (hegy) - das Tal (völgy)",
+};

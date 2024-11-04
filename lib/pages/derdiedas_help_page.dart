@@ -34,8 +34,8 @@ class DerDieDasHelpPage extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: 'Noun Pairs'),
-                  Text("Some nouns have gendered pairs:\n\n • Masculine and Feminine: der Mann (man) - die Frau (woman), der Junge (boy) - das Mädchen (girl)\n • Masculine and Neuter: der Tag (day) - das Jahr (year), der Berg (mountain) - das Tal (valley)", style: TextStyle(fontSize: 16.0),),
+                  TitleWSeparator(title: derdiedas_help_page_title2[language]!),
+                  Text(derdiedas_help_page_tipp2[language]!, style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),
