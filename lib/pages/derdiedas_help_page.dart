@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ysty_style_words/constants.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
 class DerDieDasHelpPage extends StatelessWidget {
-  const DerDieDasHelpPage({super.key});
+  const DerDieDasHelpPage({super.key, required this.language});
+
+  final String language;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +22,9 @@ class DerDieDasHelpPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(20.0),
                 /// padding: const EdgeInsets.all(40.0), <-- The bigger padding looks better
-                children: const [
+                children: [
                   Text(
-                      "German, unlike English, has grammatical gender for nouns. This means that each noun is classified as masculine, feminine, or neuter. Unfortunately, there's no hard-and-fast rule for determining a noun's gender. However, here are some general guidelines and tips:", style: TextStyle(fontSize: 16.0),),
+                    derdiedas_help_page_def[language]!, style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),

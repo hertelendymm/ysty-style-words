@@ -114,7 +114,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const DerDieDasHelpPage())),
+                                              DerDieDasHelpPage(language: widget.language,))),
                                   backgroundColor: Colors.grey.shade100,
                                   textColor: Colors.black,
                                   isIconWText: true,

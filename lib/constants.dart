@@ -9,7 +9,6 @@ Map<String, String> flashcard_page_swipe = <String, String>{
   "hungarian": "Húzd",
 };
 
-
 /// MATCHING PAGE ==============================================================
 Map<String, String> matching_page_title = <String, String>{
   "english": "Time Trial",
@@ -63,18 +62,10 @@ Map<String, String> settings_page_links = <String, String>{
   "hungarian": "Linkek",
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/// DER/DIE/DAS HELP PAGE ======================================================
+Map<String, String> derdiedas_help_page_def = <String, String>{
+  "english":
+      "German, unlike English, has grammatical gender for nouns. This means that each noun is classified as masculine, feminine, or neuter. Unfortunately, there's no hard-and-fast rule for determining a noun's gender. However, here are some general guidelines and tips:",
+  "hungarian":
+      "A német nyelvben, ellentétben a magyaral, a főneveknek van nyelvtani nemük. Ez azt jelenti, hogy minden főnév vagy hímnemű, nőnemű vagy semleges nemű. Sajnos nincsenek szigorú szabályok a főnevek nemének meghatározására. Azonban néhány általános irányelv és tipp segíthet:",
+};
