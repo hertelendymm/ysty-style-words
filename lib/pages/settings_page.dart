@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
@@ -74,15 +75,16 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 50.0),
-                        child: const Column(
+                        child: Column(
                           children: [
-                            Text("1274",
+                            const Text("1274",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 80.0,
                                     fontWeight: FontWeight.bold)),
-                            Text("Your total word count",
-                                style: TextStyle(
+                            Text(settings_page_totalwords[_language]!,
+                                // "Your total word count",
+                                style: const TextStyle(
                                     color: Colors.grey, fontSize: 18.0)),
                           ],
                         ),
@@ -101,7 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 20.0),
-                            child: const Column(
+                            child: Column(
                               children: [
                                 Text("89%",
                                     style: TextStyle(
@@ -109,7 +111,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                         fontSize: 30.0,
                                         fontWeight: FontWeight.bold)),
                                 Text(
-                                  "Der/Die/Das",
+                                  textAlign: TextAlign.center,
+                                    settings_page_derdiedas[_language]!,
+                                  // "Der/Die/Das stat",
                                 ),
                               ],
                             ),
