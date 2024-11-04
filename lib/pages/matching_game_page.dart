@@ -9,10 +9,16 @@ import '../word_lists/flashcard_content.dart';
 import "dart:math";
 
 class MatchingGamePage extends StatefulWidget {
-  const MatchingGamePage({super.key, required this.category, required this.highScore});
+  const MatchingGamePage({
+    super.key,
+    required this.category,
+    required this.highScore,
+    required this.language,
+  });
 
   final String category;
   final int highScore;
+  final String language;
 
   @override
   State<MatchingGamePage> createState() => _FlashcardsPageState();
@@ -96,7 +102,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   checkAnswer({required Word selectedWord, required Word selectedMeaning}) {
     setState(() {
       // if (selectedWord.wordId == selectedMeaning.wordId) {
-      if (selectedWord.englishMeaning == selectedMeaning.englishMeaning) {
+      if (widget.language == "english" ? (selectedWord.englishMeaning == selectedMeaning.englishMeaning) : (selectedWord.hungarianMeaning == selectedMeaning.hungarianMeaning))  {
         // Correct answer ======================================================
 
         /// Remove correct words from current list and replace them by index with next3Word/Meaning
@@ -157,7 +163,6 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     });
   }
 
-
   Future<void> _saveHighScore(int newHighScore) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('highScore', newHighScore);
@@ -170,7 +175,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   /// ResultsScreen ============================================================
   Widget _showResultsScreen() {
-    if((_matchCounter - _mistakeCounter) > widget.highScore){
+    if ((_matchCounter - _mistakeCounter) > widget.highScore) {
       _saveHighScore(_matchCounter - _mistakeCounter);
     }
     return Scaffold(
@@ -178,7 +183,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
-          child: Container( 
+          child: Container(
             color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +223,10 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                       _resultsCard(
                           text: 'High Score',
                           iconData: FontAwesomeIcons.medal,
-                          numberValue: (_matchCounter - _mistakeCounter) > widget.highScore ? (_matchCounter - _mistakeCounter) : widget.highScore),
+                          numberValue: (_matchCounter - _mistakeCounter) >
+                                  widget.highScore
+                              ? (_matchCounter - _mistakeCounter)
+                              : widget.highScore),
                       _resultsCard(
                         text: 'Current Score',
                         iconData: FontAwesomeIcons.solidStar,
@@ -248,7 +256,8 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ButtonRounded(
-                    ///TODO: Call refresh for the MatchingPage --> widget.onRefresh(); for refreshing the highScore over there
+
+                      ///TODO: Call refresh for the MatchingPage --> widget.onRefresh(); for refreshing the highScore over there
                       onPressed: () => Navigator.pop(context),
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
@@ -502,7 +511,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
               child: Center(
                   child: Text(
-                isLeftSide ? word.germanWord : word.englishMeaning,
+                isLeftSide ? word.germanWord : (widget.language == "english" ? word.englishMeaning : word.hungarianMeaning),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

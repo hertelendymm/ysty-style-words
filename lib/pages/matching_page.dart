@@ -98,6 +98,7 @@ class _MatchingPageState extends State<MatchingPage> {
                             builder: (context) => MatchingGamePage(
                               category: _selectedCategory!,
                               highScore: _highScore,
+                              language: widget.language,
                             )));
                   },
                   // onPressed: () => Navigator.push(
