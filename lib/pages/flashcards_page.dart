@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class FlashcardsPage extends StatefulWidget {
-  const FlashcardsPage({super.key, required this.category});
+  const FlashcardsPage({super.key, required this.category, required this.language});
 
   final String category;
+  final String language;
 
   @override
   State<FlashcardsPage> createState() => _FlashcardsPageState();
@@ -18,7 +20,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   bool isCorrectAnswerFound = false;
   final CardSwiperController controller = CardSwiperController();
   ValueNotifier<bool> _isCardFlippedNotifier = ValueNotifier<bool>(false);
-  // String? _selectedCategory;
   String? _selectedCategory;
   bool _isLoading = true;
 
@@ -73,11 +74,12 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _showCards(),
+                  _showCards(widget.language),
                   const SizedBox(height: 0),
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text('Tap to flip',
+                      child: Text(flashcard_page_flip[widget.language]!,
+                          // 'Tap to flip',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -93,8 +95,9 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                                 color: Colors.red, size: 40.0),
                             Icon(FontAwesomeIcons.arrowLeftLong,
                                 color: Colors.grey.shade300, size: 40.0),
-                            const Text("Swipe",
-                                style: TextStyle(
+                            Text(flashcard_page_swipe[widget.language]!,
+                                // "Swipe",
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0,
                                     color: Colors.grey)),
@@ -110,7 +113,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     );
   }
 
-  Widget _showCards(){
+  Widget _showCards(String language){
     if(_selectedCategory != widget.category){
       _loadNewGameData();
     }
@@ -135,6 +138,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                   index: index,
                   word: wordData[index],
                   isCardFlippedNotifier: _isCardFlippedNotifier,
+                  language: language,
                 )));
   }
 }
@@ -145,11 +149,13 @@ class Flashcard extends StatelessWidget {
     required this.index,
     required this.word,
     required this.isCardFlippedNotifier,
+    required this.language,
   });
 
   final int index;
   final Word word;
   final ValueNotifier<bool> isCardFlippedNotifier;
+  final String language;
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +189,7 @@ class Flashcard extends StatelessWidget {
                         fontSize: 20.0,
                         color: Colors.white)),
                 const SizedBox(height: 40.0),
-                Text(isCardFlipped ? word.englishMeaning : word.germanWord,
+                Text(isCardFlipped ? (language == 'english' ? word.englishMeaning: word.hungarianMeaning) : word.germanWord,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,

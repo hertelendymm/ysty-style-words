@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/pages/derdiedas_page.dart';
 import 'package:ysty_style_words/pages/flashcards_page.dart';
 import 'package:ysty_style_words/pages/matching_page.dart';
@@ -22,6 +23,16 @@ class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcardsNav;
   bool _isLoading = true;
   String? _selectedCategory;
+  // bool _isEngLang = true;
+  String _language = "english";
+
+  @override
+  void initState() {
+    super.initState();
+    _updatePages();
+    // _loadSelectedCategory();
+    // _loadLanguage();
+  }
 
   void switchNav(NavigationStatus newNavStatus) {
     setState(() {
@@ -29,19 +40,27 @@ class _NavigationPageState extends State<NavigationPage> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadSelectedCategory();
+  Future<void> _loadLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _language = prefs.getString('language') ?? "english";
+    });
   }
 
   Future<void> _loadSelectedCategory() async {
-    _isLoading = true;
+    // _isLoading = true;
     print("=+=+===+==++===+==");
     String? categoryName = await CategoryService.loadSelectedCategory();
     setState(() {
       _selectedCategory = categoryName;
     });
+    // _isLoading = false; // Update loading state after data is loaded
+  }
+
+  _updatePages(){
+    _isLoading = true;
+    _loadSelectedCategory();
+    _loadLanguage();
     _isLoading = false; // Update loading state after data is loaded
   }
 
@@ -57,7 +76,8 @@ class _NavigationPageState extends State<NavigationPage> {
                 child: Column(
                   children: [
                     AppBarMain(
-                        updateParent: _loadSelectedCategory,
+                        // updateParent: _loadSelectedCategory,
+                        updateParent: _updatePages,
                         selectedCategory: _selectedCategory.toString()),
                    Expanded(child: _showNavPage()),
                   ],
@@ -109,11 +129,11 @@ class _NavigationPageState extends State<NavigationPage> {
     } else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcardsNav:
-          return FlashcardsPage(category: _selectedCategory!);
+          return FlashcardsPage(category: _selectedCategory!, language: _language);
         case NavigationStatus.matchingNav:
-          return MatchingPage(category: _selectedCategory!);
+          return MatchingPage(category: _selectedCategory!, language: _language);
         case NavigationStatus.derdiedasNav:
-          return DerDieDasPage(category: _selectedCategory!);
+          return DerDieDasPage(category: _selectedCategory!, language: _language);
         default:
           return const LoadingScreen();
           // return FlashcardsPage(category: _selectedCategory!);

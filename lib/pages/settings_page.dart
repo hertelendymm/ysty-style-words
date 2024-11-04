@@ -5,37 +5,45 @@ import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  const SettingsPage({super.key, required this.onRefresh});
+
+  final VoidCallback onRefresh;
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  // bool isEnglishChosenLang() {
-  //   /// TODO: Get chosen language settings from SharedPref (hungarian-german or english-german) and english should be the default
-  //   return false;
-  // }
-
-  bool _isEngLang = true;
+  // bool _isEngLang = true;
+  String _language = "english";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadBoolIsEngLang();
+    // _loadBoolIsEngLang();
+    _loadLanguage();
   }
 
-  Future<void> _loadBoolIsEngLang() async {
+  // Future<void> _loadBoolIsEngLang() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _isEngLang = prefs.getBool('isEngLang') ?? true;
+  //   });
+  // }
+  Future<void> _loadLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isEngLang = prefs.getBool('isEngLang') ?? true;
+      _language = prefs.getString('language') ?? "english";
     });
   }
 
-  Future<void> _saveBoolIsEngLang(bool isEngLang) async {
+  Future<void> _saveLanguage(String language) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isEngLang', isEngLang);
+    prefs.setString('language', language);
+
+    /// update parent with new language setting
+    widget.onRefresh();
   }
 
   @override
@@ -46,63 +54,8 @@ class _SettingsPageState extends State<SettingsPage> {
       body: SafeArea(
         child: Column(
           children: [
-            AppBarSecondary(onPressed: ()=> Navigator.pop(context), title: 'Ysty Style'),
-            // Container(
-            //   color: Colors.white,
-            //   child: Column(
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-            //             GestureDetector(
-            //               onTap: () {
-            //                 Navigator.pop(context);
-            //               },
-            //               child: Container(
-            //                 // color: Colors.red,
-            //                 padding:
-            //                     const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            //                 // const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            //                 child: Container(
-            //                   padding: const EdgeInsets.all(10.0),
-            //                   decoration: BoxDecoration(
-            //                     borderRadius: BorderRadius.circular(25.0),
-            //                     color: Colors.grey.shade200,
-            //                   ),
-            //                   child: const Icon(FontAwesomeIcons.xmark,
-            //                       color: Colors.black),
-            //                 ),
-            //               ),
-            //             ),
-            //             Expanded(
-            //               child: Container(
-            //                 // height: 40.0,
-            //                 padding: const EdgeInsets.symmetric(
-            //                     horizontal: 0.0, vertical: 6.0),
-            //                 child: const Center(
-            //                     child: Text(
-            //                   "Settings",
-            //                   style: TextStyle(
-            //                       fontWeight: FontWeight.bold, fontSize: 24.0),
-            //                   textAlign: TextAlign.center,
-            //                 )),
-            //               ),
-            //             ),
-            //             const SizedBox(width: 45.0),
-            //           ],
-            //         ),
-            //       ),
-            //       const SizedBox(height: 20.0),
-            //       Container(
-            //         color: Colors.grey.shade200,
-            //         height: 2.0,
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            AppBarSecondary(
+                onPressed: () => Navigator.pop(context), title: 'Ysty Style'),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -193,9 +146,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Flexible(child: _languageButton(isActive: _isEngLang, isEngLangCard: true)),
+                          Flexible(
+                              child: _languageButton(buttonLanguage: "english")),
+                          // isActive: _language == "english", isEngLangCard: true)),
                           const SizedBox(width: 20.0),
-                          Flexible(child: _languageButton(isActive: !_isEngLang, isEngLangCard: false)),
+                          Flexible(
+                              child: _languageButton(buttonLanguage: "hungarian")),
+                          // isActive: _language == "hungarian", isEngLangCard: false)),
                         ],
                       ),
                     ),
@@ -243,14 +200,18 @@ class _SettingsPageState extends State<SettingsPage> {
         ));
   }
 
-  Widget _languageButton({required bool isActive, required bool isEngLangCard}) {
+  Widget _languageButton({required String buttonLanguage}) {
+    // {required bool isActive, required bool isEngLangCard}) {
     return GestureDetector(
-      onTap: (){
-        if(!isActive) {
+      onTap: () {
+        // if (!isActive) {
+        if (_language != buttonLanguage) {
           setState(() {
-            _isEngLang = !_isEngLang;
+            // _isEngLang = !_isEngLang;
+            _language = buttonLanguage;
           });
-          _saveBoolIsEngLang(_isEngLang);
+          // _saveBoolIsEngLang(_isEngLang);
+          _saveLanguage(buttonLanguage);
         }
       },
       child: Expanded(
@@ -258,14 +219,14 @@ class _SettingsPageState extends State<SettingsPage> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               border: Border.all(
-                  color: isActive ? Colors.black : Colors.grey.shade200,
+                  color: _language == buttonLanguage ? Colors.black : Colors.grey.shade200,
                   width: 3),
-              color: isActive ? Colors.black : Colors.white),
+              color: _language == buttonLanguage ? Colors.black : Colors.white),
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
           child: Row(
             children: [
               Image.asset(
-                isEngLangCard
+                buttonLanguage == "english"
                     ? 'assets/images/uk_flag_icon.png'
                     : 'assets/images/magyar_flag_icon.png',
                 width: 36.0,
@@ -275,16 +236,16 @@ class _SettingsPageState extends State<SettingsPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(isEngLangCard ? 'English' : 'Magyar',
+                  Text(buttonLanguage == "english" ? 'English' : 'Magyar',
                       style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
-                          color: isActive ? Colors.white : Colors.grey)),
-                  Text(isEngLangCard ? 'German' : 'Német',
+                          color: _language == buttonLanguage ? Colors.white : Colors.grey)),
+                  Text(buttonLanguage == "english" ? 'German' : 'Német',
                       style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
-                          color: isActive ? Colors.white : Colors.grey)),
+                          color: _language == buttonLanguage ? Colors.white : Colors.grey)),
                 ],
               ),
             ],

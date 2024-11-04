@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class DerDieDasPage extends StatefulWidget {
-  const DerDieDasPage({super.key, required this.category});
+  const DerDieDasPage({super.key, required this.category, required this.language});
 
   final String category;
+  final String language;
 
   @override
   State<DerDieDasPage> createState() => _DerDieDasPageState();
@@ -88,14 +90,15 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                         children: [
                           // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding:  const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 0.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
                                     child: ButtonRounded(
-                                  text: "Skip",
+                                  text: derdiedas_page_skip[widget.language]!,
+                                  // text: "Skip",
                                   onPressed: () => _getNextWord(),
                                   backgroundColor: Colors.grey.shade100,
                                   textColor: Colors.black,
@@ -105,7 +108,8 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                                 const SizedBox(width: 20.0),
                                 Expanded(
                                     child: ButtonRounded(
-                                  text: "Help",
+                                  text: derdiedas_page_help[widget.language]!,
+                                  // text: "Help",
                                   onPressed: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -197,7 +201,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   fontWeight: FontWeight.bold,
                   fontSize: 40.0)),
           const SizedBox(height: 14.0),
-          Text(wordData[wordIndex].englishMeaning,
+          Text(widget.language == 'english' ? wordData[wordIndex].englishMeaning: wordData[wordIndex].hungarianMeaning,
               style: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,

@@ -78,7 +78,9 @@ class _AppBarMainState extends State<AppBarMain> {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SettingsPage())),
+                          builder: (context) => SettingsPage(onRefresh: () {
+                            widget.updateParent();
+                          }))),
                   child: Container(
                       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                       child: Container(

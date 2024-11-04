@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 
 import 'matching_game_page.dart';
 
 class MatchingPage extends StatefulWidget {
-  const MatchingPage({super.key, required this.category});
+  const MatchingPage({super.key, required this.category, required this.language});
 
   final String category;
+  final String language;
 
   @override
   State<MatchingPage> createState() => _MatchingPageState();
@@ -52,18 +54,20 @@ class _MatchingPageState extends State<MatchingPage> {
               padding: const EdgeInsets.fromLTRB(20, 40, 20, 20.0),
               child: Column(
                 children: [
-                  const Text('Time Trial',
-                      style: TextStyle(
+                  Text(matching_page_title[widget.language]!,
+                  // Text(widget.language,
+                  // Text(widget.language == "english" ? 'Time Trial' : 'Időpróba',
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 40.0),
                       textAlign: TextAlign.center),
                   const SizedBox(height: 20.0),
-                  const Text(
-                      'How many matches can you make in two minutes? Let\'s find out!',
-                      style: TextStyle(
+                  Text(matching_page_subtitle[widget.language]!,
+                      // 'How many matches can you make in two minutes? Let\'s find out!',
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                       textAlign: TextAlign.center),
                   const SizedBox(height: 20.0),
-                  Text('High Score: $_highScore',
+                  Text('${matching_page_highscore[widget.language]!}: $_highScore',
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
@@ -84,7 +88,8 @@ class _MatchingPageState extends State<MatchingPage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ButtonRounded(
-                  text: "Start Game",
+                  text: matching_page_start[widget.language]!,
+                  // text: "Start Game",
                   onPressed: (){
                     _selectedCategory = widget.category;
                     Navigator.push(
