@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 
 class CategoriesPage extends StatefulWidget {
-  const CategoriesPage({super.key, required this.onRefresh});
+  const CategoriesPage(
+      {super.key, required this.onRefresh, required this.language});
 
   final VoidCallback onRefresh;
+  final String language;
 
   @override
   State<CategoriesPage> createState() => _CategoriesPageState();
@@ -51,42 +54,66 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ///TODO: Replace this with a ListView builder
         child: Column(
           children: [
-            AppBarSecondary(onPressed: ()=> closePage(), title: 'Choose a category'),
+            AppBarSecondary(
+              onPressed: () => closePage(),
+              title: category_page_appbartitle[widget.language]!,
+            ),
             // _showAppBar(),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 15.0),
                 children: [
                   _categoryItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
                   _categoryItem(title: "Animal", icon: FontAwesomeIcons.dog),
-                  _categoryItem(title: "Transportation", icon: FontAwesomeIcons.car),
-                  _categoryItem(title: "Family", icon: FontAwesomeIcons.peopleGroup),
-                  _categoryItem(title: "Sport", icon: FontAwesomeIcons.personSkiing),
+                  _categoryItem(
+                      title: "Transportation", icon: FontAwesomeIcons.car),
+                  _categoryItem(
+                      title: "Family", icon: FontAwesomeIcons.peopleGroup),
+                  _categoryItem(
+                      title: "Sport", icon: FontAwesomeIcons.personSkiing),
                   _categoryItem(title: "Home", icon: FontAwesomeIcons.house),
                   _categoryItem(title: "Travel", icon: FontAwesomeIcons.plane),
-                  _categoryItem(title: "Education", icon: FontAwesomeIcons.spellCheck),
-                  _categoryItem(title: "Clothing", icon: FontAwesomeIcons.shirt),
+                  _categoryItem(
+                      title: "Education", icon: FontAwesomeIcons.spellCheck),
+                  _categoryItem(
+                      title: "Clothing", icon: FontAwesomeIcons.shirt),
                   _categoryItem(title: "Music", icon: FontAwesomeIcons.music),
-                  _categoryItem(title: "School", icon: FontAwesomeIcons.graduationCap),
+                  _categoryItem(
+                      title: "School", icon: FontAwesomeIcons.graduationCap),
                   _categoryItem(title: "Space", icon: FontAwesomeIcons.rocket),
                   _categoryItem(title: "Nature", icon: FontAwesomeIcons.tree),
                   _categoryItem(title: "Fruits", icon: FontAwesomeIcons.lemon),
-                  _categoryItem(title: "Vegetables", icon: FontAwesomeIcons.carrot),
+                  _categoryItem(
+                      title: "Vegetables", icon: FontAwesomeIcons.carrot),
                   _categoryItem(title: "Body", icon: FontAwesomeIcons.skull),
-                  _categoryItem(title: "Hospital", icon: FontAwesomeIcons.hospital),
-                  _categoryItem(title: "Office", icon: FontAwesomeIcons.briefcase),
+                  _categoryItem(
+                      title: "Hospital", icon: FontAwesomeIcons.hospital),
+                  _categoryItem(
+                      title: "Office", icon: FontAwesomeIcons.briefcase),
                   _categoryItem(title: "Jobs", icon: FontAwesomeIcons.hammer),
-                  _categoryItem(title: "Dining", icon: FontAwesomeIcons.utensils),
-                  _categoryItem(title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
+                  _categoryItem(
+                      title: "Dining", icon: FontAwesomeIcons.utensils),
+                  _categoryItem(
+                      title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
                   _categoryItem(title: "Verbs", icon: FontAwesomeIcons.comment),
-                  _categoryItem(title: "Technology", icon: FontAwesomeIcons.microchip),
-                  _categoryItem(title: "Hobbies", icon: FontAwesomeIcons.gamepad),
-                  _categoryItem(title: "Colors", icon: FontAwesomeIcons.palette),
-                  _categoryItem(title: "Time", icon: FontAwesomeIcons.hourglassHalf),
-                  _categoryItem(title: "Numbers", icon: FontAwesomeIcons.listOl),
-                  _categoryItem(title: "Emotions", icon: FontAwesomeIcons.faceGrinTears),
-                  _categoryItem(title: "Seasons", icon: FontAwesomeIcons.snowflake),
-                  _categoryItem(title: "Countries and Cities", icon: FontAwesomeIcons.earthAmericas),
+                  _categoryItem(
+                      title: "Technology", icon: FontAwesomeIcons.microchip),
+                  _categoryItem(
+                      title: "Hobbies", icon: FontAwesomeIcons.gamepad),
+                  _categoryItem(
+                      title: "Colors", icon: FontAwesomeIcons.palette),
+                  _categoryItem(
+                      title: "Time", icon: FontAwesomeIcons.hourglassHalf),
+                  _categoryItem(
+                      title: "Numbers", icon: FontAwesomeIcons.listOl),
+                  _categoryItem(
+                      title: "Emotions", icon: FontAwesomeIcons.faceGrinTears),
+                  _categoryItem(
+                      title: "Seasons", icon: FontAwesomeIcons.snowflake),
+                  _categoryItem(
+                      title: "Countries and Cities",
+                      icon: FontAwesomeIcons.earthAmericas),
                 ],
               ),
             ),
@@ -183,7 +210,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 }
-
 
 // "Food"
 // "Animal"

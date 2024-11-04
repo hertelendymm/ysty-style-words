@@ -17,7 +17,7 @@ class DerDieDasHelpPage extends StatelessWidget {
         child: Column(
           children: [
             // _myAppBar(context),
-            AppBarSecondary(onPressed: ()=> Navigator.pop(context), title: 'Help'),
+            AppBarSecondary(onPressed: ()=> Navigator.pop(context), title: derdiedas_help_page_appbartitle[language]!),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(20.0),

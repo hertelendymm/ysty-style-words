@@ -78,7 +78,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     AppBarMain(
                         // updateParent: _loadSelectedCategory,
                         updateParent: _updatePages,
-                        selectedCategory: _selectedCategory.toString()),
+                        selectedCategory: _selectedCategory.toString(), language: _language,),
                    Expanded(child: _showNavPage()),
                   ],
                 ))),

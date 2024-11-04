@@ -63,6 +63,11 @@ Map<String, String> settings_page_links = <String, String>{
 };
 
 /// DER/DIE/DAS HELP PAGE ======================================================
+Map<String, String> derdiedas_help_page_appbartitle = <String, String>{
+  "english": "Help",
+  "hungarian": "Segítség",
+};
+
 Map<String, String> derdiedas_help_page_def = <String, String>{
   "english":
       "German, unlike English, has grammatical gender for nouns. This means that each noun is classified as masculine, feminine, or neuter. Unfortunately, there's no hard-and-fast rule for determining a noun's gender. However, here are some general guidelines and tips:",
@@ -108,4 +113,10 @@ Map<String, String> derdiedas_help_page_title4 = <String, String>{
 Map<String, String> derdiedas_help_page_tipp4 = <String, String>{
   "english": "The best way to learn German word genders is through consistent practice and exposure to the language. Read books, watch movies, and listen to music in German to familiarize yourself with the patterns and exceptions.",
   "hungarian": "A német főnevek nemének legjobb módja a folyamatos gyakorlás és a nyelvvel való ismerkedés. Olvass könyveket, nézz filmeket és hallgass zenét németül, hogy megismerkedj a mintákkal és a kivételekkel.",
+};
+
+/// CATEGORY PAGE ==============================================================
+Map<String, String> category_page_appbartitle = <String, String>{
+  "english": "Choose a category",
+  "hungarian": "Válassz egy kategóriát",
 };

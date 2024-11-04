@@ -7,11 +7,12 @@ class AppBarMain extends StatefulWidget {
   const AppBarMain({
     super.key,
     required this.updateParent,
-    required this.selectedCategory,
+    required this.selectedCategory, required this.language,
   });
 
   final VoidCallback updateParent;
   final String selectedCategory;
+  final String language;
 
   @override
   State<AppBarMain> createState() => _AppBarMainState();
@@ -54,7 +55,7 @@ class _AppBarMainState extends State<AppBarMain> {
                           builder: (context) => CategoriesPage(onRefresh: () {
                                 widget.updateParent();
                                 // _checkCategory();
-                              }))),
+                              }, language: widget.language,))),
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40.0),
