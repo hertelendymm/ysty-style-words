@@ -39,8 +39,8 @@ class DerDieDasHelpPage extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: 'Cognates'),
-                  Text("If a German noun is a cognate with an English word, the gender often matches:\n\n • Masculine: der Vater (father), der Bruder (brother), der Garten (garden)\n • Feminine: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n • Neuter: das Haus (house), das Buch (book), das Auto (car)", style: TextStyle(fontSize: 16.0),),
+                  TitleWSeparator(title: derdiedas_help_page_title3[language]!),
+                  Text(derdiedas_help_page_tipp3[language]!, style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),

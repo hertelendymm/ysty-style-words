@@ -89,3 +89,13 @@ Map<String, String> derdiedas_help_page_tipp2 = <String, String>{
   "english": "Some nouns have gendered pairs:\n\n • Masculine and Feminine: der Mann (man) - die Frau (woman), der Junge (boy) - das Mädchen (girl)\n\n • Masculine and Neuter: der Tag (day) - das Jahr (year), der Berg (mountain) - das Tal (valley)",
   "hungarian": "Néhány főnévnek van nem szerinti párja:\n\n • Hímnem és nőnem: der Mann (férfi) - die Frau (nő), der Junge (fiú) - das Mädchen (lány)\n\n • Hímnem és semleges nem: der Tag (nap) - das Jahr (év), der Berg (hegy) - das Tal (völgy)",
 };
+
+Map<String, String> derdiedas_help_page_title3 = <String, String>{
+  "english": "Cognates",
+  "hungarian": "Rokon szavak",
+};
+
+Map<String, String> derdiedas_help_page_tipp3 = <String, String>{
+  "english": "If a German noun is a cognate with an English word, the gender often matches:\n\n • Masculine: der Vater (father), der Bruder (brother), der Garten (garden)\n • Feminine: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n • Neuter: das Haus (house), das Buch (book), das Auto (car)",
+  "hungarian": "Ha egy német főnév rokon szó egy angol szóval, a nemük gyakran megegyezik:\n\n • Hímnem: der Vater (father), der Bruder (brother), der Garten (garden)\n\n • Nőnem: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n\n • Semleges nem: das Haus (house), das Buch (book), das Auto (car)",
+};
