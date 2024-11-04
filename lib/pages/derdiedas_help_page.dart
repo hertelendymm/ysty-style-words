@@ -44,8 +44,8 @@ class DerDieDasHelpPage extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: 'Practice and Exposure'),
-                  Text("The best way to learn German word genders is through consistent practice and exposure to the language. Read books, watch movies, and listen to music in German to familiarize yourself with the patterns and exceptions.", style: TextStyle(fontSize: 16.0),),
+                  TitleWSeparator(title: derdiedas_help_page_title4[language]!),
+                  Text(derdiedas_help_page_tipp4[language]!, style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),

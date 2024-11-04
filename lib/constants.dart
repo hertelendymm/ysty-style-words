@@ -99,3 +99,13 @@ Map<String, String> derdiedas_help_page_tipp3 = <String, String>{
   "english": "If a German noun is a cognate with an English word, the gender often matches:\n\n • Masculine: der Vater (father), der Bruder (brother), der Garten (garden)\n • Feminine: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n • Neuter: das Haus (house), das Buch (book), das Auto (car)",
   "hungarian": "Ha egy német főnév rokon szó egy angol szóval, a nemük gyakran megegyezik:\n\n • Hímnem: der Vater (father), der Bruder (brother), der Garten (garden)\n\n • Nőnem: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n\n • Semleges nem: das Haus (house), das Buch (book), das Auto (car)",
 };
+
+Map<String, String> derdiedas_help_page_title4 = <String, String>{
+  "english": "Practice and Exposure",
+  "hungarian": "Gyakorlás és tapasztalatszerzés",
+};
+
+Map<String, String> derdiedas_help_page_tipp4 = <String, String>{
+  "english": "The best way to learn German word genders is through consistent practice and exposure to the language. Read books, watch movies, and listen to music in German to familiarize yourself with the patterns and exceptions.",
+  "hungarian": "A német főnevek nemének legjobb módja a folyamatos gyakorlás és a nyelvvel való ismerkedés. Olvass könyveket, nézz filmeket és hallgass zenét németül, hogy megismerkedj a mintákkal és a kivételekkel.",
+};
