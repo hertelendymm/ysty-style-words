@@ -112,7 +112,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                         fontWeight: FontWeight.bold)),
                                 Text(
                                   textAlign: TextAlign.center,
-                                    settings_page_derdiedas[_language]!,
+                                  settings_page_derdiedas[_language]!,
+                                  overflow: TextOverflow.ellipsis,
                                   // "Der/Die/Das stat",
                                 ),
                               ],
@@ -130,14 +131,19 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 20.0),
-                            child: const Column(
+                            child: Column(
                               children: [
                                 Text("75",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 30.0,
                                         fontWeight: FontWeight.bold)),
-                                Text("High Score"),
+                                Text(
+                                  settings_page_timetrial[_language]!,
+                                  // "High Score",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ],
                             ),
                           ),
@@ -151,17 +157,19 @@ class _SettingsPageState extends State<SettingsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Flexible(
-                              child: _languageButton(buttonLanguage: "english")),
+                              child:
+                                  _languageButton(buttonLanguage: "english")),
                           // isActive: _language == "english", isEngLangCard: true)),
                           const SizedBox(width: 20.0),
                           Flexible(
-                              child: _languageButton(buttonLanguage: "hungarian")),
+                              child:
+                                  _languageButton(buttonLanguage: "hungarian")),
                           // isActive: _language == "hungarian", isEngLangCard: false)),
                         ],
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    const TitleWSeparator(title: "Links"),
+                    TitleWSeparator(title: settings_page_links[_language]!),
                     _tempLinkButton('Link 1'),
                     _tempLinkButton('Link 2'),
                     _tempLinkButton('Link 3'),
@@ -223,7 +231,9 @@ class _SettingsPageState extends State<SettingsPage> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               border: Border.all(
-                  color: _language == buttonLanguage ? Colors.black : Colors.grey.shade200,
+                  color: _language == buttonLanguage
+                      ? Colors.black
+                      : Colors.grey.shade200,
                   width: 3),
               color: _language == buttonLanguage ? Colors.black : Colors.white),
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -244,12 +254,16 @@ class _SettingsPageState extends State<SettingsPage> {
                       style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
-                          color: _language == buttonLanguage ? Colors.white : Colors.grey)),
+                          color: _language == buttonLanguage
+                              ? Colors.white
+                              : Colors.grey)),
                   Text(buttonLanguage == "english" ? 'German' : 'Német',
                       style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
-                          color: _language == buttonLanguage ? Colors.white : Colors.grey)),
+                          color: _language == buttonLanguage
+                              ? Colors.white
+                              : Colors.grey)),
                 ],
               ),
             ],

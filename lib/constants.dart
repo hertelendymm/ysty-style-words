@@ -53,6 +53,16 @@ Map<String, String> settings_page_derdiedas = <String, String>{
   "hungarian": "Der/Die/Das találatod",
 };
 
+Map<String, String> settings_page_timetrial = <String, String>{
+  "english": "Time Trial Score",
+  "hungarian": "Időpróba rekord",
+};
+
+Map<String, String> settings_page_links = <String, String>{
+  "english": "Links",
+  "hungarian": "Linkek",
+};
+
 
 
 
