@@ -81,7 +81,7 @@ Map<String, String> derdiedas_help_page_title1 = <String, String>{
 };
 
 Map<String, String> derdiedas_help_page_tipp1 = <String, String>{
-  "english": "While not foolproof, certain word endings can often indicate gender:\n\n • Masculine: -er, -el, -or, -ling (e.g., der Vater - father, der Apfel - apple), Automarken, \"Kalendar\", \"Wetter\", Alkoholsorten\n • Feminine: -ung, -heit, -keit, -schaft (e.g., die Zeitung - newspaper, die Freiheit - freedom)\n • Neuter: -chen, -lein, -tum (e.g., das Mädchen - girl, das Häuschen - little house), Chemische Elemente",
+  "english": "While not foolproof, certain word endings can often indicate gender:\n\n • Masculine: -er, -el, -or, -ling (e.g., der Vater - father, der Apfel - apple), Automarken, \"Kalendar\", \"Wetter\", Alkoholsorten\n\n • Feminine: -ung, -heit, -keit, -schaft (e.g., die Zeitung - newspaper, die Freiheit - freedom)\n\n • Neuter: -chen, -lein, -tum (e.g., das Mädchen - girl, das Häuschen - little house), Chemische Elemente",
   "hungarian": "A német főnevek nemét gyakran a végződések alapján lehet meghatározni, de ez nem mindig egyértelmű szabály. Íme néhány gyakori végződés és hozzájuk tartozó nemek:\n\n • Hímnem: Számos főnév végződik -er, -el, -or vagy -ling raggal. Ezen kívül az autómárkák, a „Kalendar” (naptár), a „Wetter” (időjárás) és az alkoholos italok is általában hímneműek.\n\n • Nőnem: Az -ung, -heit, -keit és -schaft végződések jellemzően nőnemű főnevekre utalnak. Ezek gyakran olyan fogalmakat jelölnek, mint állapot, tulajdonság vagy tevékenység.\n\n • Semleges nem: A -chen és -lein kicsinyítőképzők gyakran semleges nemű főneveket eredményeznek. Az -tum végződés is gyakori a semleges nemben, például az állapotot vagy tulajdonságot jelölő szavaknál. A kémiai elemek is általában semleges neműek.",
 };
 
@@ -101,7 +101,7 @@ Map<String, String> derdiedas_help_page_title3 = <String, String>{
 };
 
 Map<String, String> derdiedas_help_page_tipp3 = <String, String>{
-  "english": "If a German noun is a cognate with an English word, the gender often matches:\n\n • Masculine: der Vater (father), der Bruder (brother), der Garten (garden)\n • Feminine: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n • Neuter: das Haus (house), das Buch (book), das Auto (car)",
+  "english": "If a German noun is a cognate with an English word, the gender often matches:\n\n • Masculine: der Vater (father), der Bruder (brother), der Garten (garden)\n\n • Feminine: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n\n • Neuter: das Haus (house), das Buch (book), das Auto (car)",
   "hungarian": "Ha egy német főnév rokon szó egy angol szóval, a nemük gyakran megegyezik:\n\n • Hímnem: der Vater (father), der Bruder (brother), der Garten (garden)\n\n • Nőnem: die Mutter (mother), die Schwester (sister), die Küche (kitchen)\n\n • Semleges nem: das Haus (house), das Buch (book), das Auto (car)",
 };
 
