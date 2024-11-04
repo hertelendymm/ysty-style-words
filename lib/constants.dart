@@ -69,3 +69,13 @@ Map<String, String> derdiedas_help_page_def = <String, String>{
   "hungarian":
       "A német nyelvben, ellentétben a magyaral, a főneveknek van nyelvtani nemük. Ez azt jelenti, hogy minden főnév vagy hímnemű, nőnemű vagy semleges nemű. Sajnos nincsenek szigorú szabályok a főnevek nemének meghatározására. Azonban néhány általános irányelv és tipp segíthet:",
 };
+
+Map<String, String> derdiedas_help_page_title1 = <String, String>{
+  "english": 'Common Gender Endings',
+  "hungarian": "Gyakori nemi végződések",
+};
+
+Map<String, String> derdiedas_help_page_tipp1 = <String, String>{
+  "english": "While not foolproof, certain word endings can often indicate gender:\n\n • Masculine: -er, -el, -or, -ling (e.g., der Vater - father, der Apfel - apple), Automarken, \"Kalendar\", \"Wetter\", Alkoholsorten\n • Feminine: -ung, -heit, -keit, -schaft (e.g., die Zeitung - newspaper, die Freiheit - freedom)\n • Neuter: -chen, -lein, -tum (e.g., das Mädchen - girl, das Häuschen - little house), Chemische Elemente",
+  "hungarian": "A német főnevek nemét gyakran a végződések alapján lehet meghatározni, de ez nem mindig egyértelmű szabály. Íme néhány gyakori végződés és hozzájuk tartozó nemek:\n\n • Hímnem: Számos főnév végződik -er, -el, -or vagy -ling raggal. Ezen kívül az autómárkák, a „Kalendar” (naptár), a „Wetter” (időjárás) és az alkoholos italok is általában hímneműek.\n\n • Nőnem: Az -ung, -heit, -keit és -schaft végződések jellemzően nőnemű főnevekre utalnak. Ezek gyakran olyan fogalmakat jelölnek, mint állapot, tulajdonság vagy tevékenység.\n\n • Semleges nem: A -chen és -lein kicsinyítőképzők gyakran semleges nemű főneveket eredményeznek. Az -tum végződés is gyakori a semleges nemben, például az állapotot vagy tulajdonságot jelölő szavaknál. A kémiai elemek is általában semleges neműek.",
+};

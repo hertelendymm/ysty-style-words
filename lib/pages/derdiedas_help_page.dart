@@ -28,8 +28,9 @@ class DerDieDasHelpPage extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  TitleWSeparator(title: 'Common Gender Endings'),
-                  Text("While not foolproof, certain word endings can often indicate gender:\n\n • Masculine: -er, -el, -or, -ling (e.g., der Vater - father, der Apfel - apple), Automarken, \"Kalendar\", \"Wetter\", Alkoholsorten\n • Feminine: -ung, -heit, -keit, -schaft (e.g., die Zeitung - newspaper, die Freiheit - freedom)\n • Neuter: -chen, -lein, -tum (e.g., das Mädchen - girl, das Häuschen - little house), Chemische Elemente", style: TextStyle(fontSize: 16.0),),
+                  TitleWSeparator(title: derdiedas_help_page_title1[language]!),
+                  Text(
+                    derdiedas_help_page_tipp1[language]!, style: TextStyle(fontSize: 16.0),),
                   SizedBox(
                     height: 20.0,
                   ),
