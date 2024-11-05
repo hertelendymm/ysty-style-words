@@ -120,3 +120,22 @@ Map<String, String> category_page_appbartitle = <String, String>{
   "english": "Choose a category",
   "hungarian": "Válassz egy kategóriát",
 };
+
+
+/// MATCHING GAME PAGE =========================================================
+Map<String, String> matching_game_page_result_appbartitle = <String, String>{
+  "english": "Results",
+  "hungarian": "Eredmény",
+};
+
+Map<String, String> matching_game_page_result_title = <String, String>{
+  "english": "Good job!",
+  "hungarian": "Szép munka!",
+};
+
+Map<String, String> matching_game_page_result_subtitle = <String, String>{
+  "english": "Good job!",
+  "hungarian": "Kitartás és csak így tovább!",
+};
+
+

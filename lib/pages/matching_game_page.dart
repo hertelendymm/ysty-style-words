@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import '../word_lists/flashcard_content.dart';
-import "dart:math";
 
 class MatchingGamePage extends StatefulWidget {
   const MatchingGamePage({
@@ -170,11 +170,11 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isResultsPageOn ? _showResultsScreen() : _showGameScreen();
+    return _isResultsPageOn ? _showResultsScreen(widget.language) : _showGameScreen();
   }
 
   /// ResultsScreen ============================================================
-  Widget _showResultsScreen() {
+  Widget _showResultsScreen(String language) {
     if ((_matchCounter - _mistakeCounter) > widget.highScore) {
       _saveHighScore(_matchCounter - _mistakeCounter);
     }
@@ -189,7 +189,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppBarSecondary(
-                    onPressed: () => Navigator.pop(context), title: 'Results'),
+                    onPressed: () => Navigator.pop(context), title: matching_game_page_result_appbartitle[widget.language]!),
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.4,
                   height: MediaQuery.sizeOf(context).width * 0.4,
@@ -203,12 +203,12 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Good job!',
+                      Text(matching_game_page_result_title[language]!,
                           style: TextStyle(
                               fontSize: 38.0,
                               color: Colors.black,
                               fontWeight: FontWeight.bold)),
-                      Text('Keep up the good work',
+                      Text(matching_game_page_result_subtitle[language]!,
                           style: TextStyle(
                               fontSize: 26.0,
                               color: Colors.grey.shade500,
