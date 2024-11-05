@@ -13,7 +13,8 @@ class CategoryService {
     String? categoryName = prefs.getString(_selectedCategoryKey);
 
     // Check if categoryName is null and return a default value if necessary
-    categoryName ??= 'Animal';
+    categoryName ??= 'animal';
+    // categoryName ??= 'Animal';
     return categoryName;
   }
 }

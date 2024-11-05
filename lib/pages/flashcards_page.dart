@@ -43,7 +43,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     setState(()  {
       _selectedCategory = widget.category;
       wordData = [];
-      for (var n in flashcardContents[widget.category.toLowerCase()]!) {
+      for (var n in flashcardContents[widget.category]!) {
       // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
         wordData.add(newWord);

@@ -49,10 +49,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        ///TODO: Replace this with a ListView builder
-        child: Column(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+
+            ///TODO: Replace this with a ListView builder
+            child: Column(
           children: [
             AppBarSecondary(
               onPressed: () => closePage(),
@@ -60,67 +61,44 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
             // _showAppBar(),
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 15.0),
-                children: [
-                  _categoryItem(title: "Food", icon: FontAwesomeIcons.bowlFood),
-                  _categoryItem(title: "Animal", icon: FontAwesomeIcons.dog),
-                  _categoryItem(
-                      title: "Transportation", icon: FontAwesomeIcons.car),
-                  _categoryItem(
-                      title: "Family", icon: FontAwesomeIcons.peopleGroup),
-                  _categoryItem(
-                      title: "Sport", icon: FontAwesomeIcons.personSkiing),
-                  _categoryItem(title: "Home", icon: FontAwesomeIcons.house),
-                  _categoryItem(title: "Travel", icon: FontAwesomeIcons.plane),
-                  _categoryItem(
-                      title: "Education", icon: FontAwesomeIcons.spellCheck),
-                  _categoryItem(
-                      title: "Clothing", icon: FontAwesomeIcons.shirt),
-                  _categoryItem(title: "Music", icon: FontAwesomeIcons.music),
-                  _categoryItem(
-                      title: "School", icon: FontAwesomeIcons.graduationCap),
-                  _categoryItem(title: "Space", icon: FontAwesomeIcons.rocket),
-                  _categoryItem(title: "Nature", icon: FontAwesomeIcons.tree),
-                  _categoryItem(title: "Fruits", icon: FontAwesomeIcons.lemon),
-                  _categoryItem(
-                      title: "Vegetables", icon: FontAwesomeIcons.carrot),
-                  _categoryItem(title: "Body", icon: FontAwesomeIcons.skull),
-                  _categoryItem(
-                      title: "Hospital", icon: FontAwesomeIcons.hospital),
-                  _categoryItem(
-                      title: "Office", icon: FontAwesomeIcons.briefcase),
-                  _categoryItem(title: "Jobs", icon: FontAwesomeIcons.hammer),
-                  _categoryItem(
-                      title: "Dining", icon: FontAwesomeIcons.utensils),
-                  _categoryItem(
-                      title: "Weather", icon: FontAwesomeIcons.cloudSunRain),
-                  _categoryItem(title: "Verbs", icon: FontAwesomeIcons.comment),
-                  _categoryItem(
-                      title: "Technology", icon: FontAwesomeIcons.microchip),
-                  _categoryItem(
-                      title: "Hobbies", icon: FontAwesomeIcons.gamepad),
-                  _categoryItem(
-                      title: "Colors", icon: FontAwesomeIcons.palette),
-                  _categoryItem(
-                      title: "Time", icon: FontAwesomeIcons.hourglassHalf),
-                  _categoryItem(
-                      title: "Numbers", icon: FontAwesomeIcons.listOl),
-                  _categoryItem(
-                      title: "Emotions", icon: FontAwesomeIcons.faceGrinTears),
-                  _categoryItem(
-                      title: "Seasons", icon: FontAwesomeIcons.snowflake),
-                  _categoryItem(
-                      title: "Countries and Cities",
-                      icon: FontAwesomeIcons.earthAmericas),
-                ],
-              ),
-            ),
+                child: ListView(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+              children: [
+                _categoryItem(id: "food"),
+                _categoryItem(id: "animal"),
+                _categoryItem(id: "transportation"),
+                _categoryItem(id: "family"),
+                _categoryItem(id: "sport"),
+                _categoryItem(id: "home"),
+                _categoryItem(id: "travel"),
+                _categoryItem(id: "education"),
+                _categoryItem(id: "clothing"),
+                _categoryItem(id: "music"),
+                _categoryItem(id: "school"),
+                _categoryItem(id: "space"),
+                _categoryItem(id: "nature"),
+                _categoryItem(id: "fruits"),
+                _categoryItem(id: "vegetables"),
+                _categoryItem(id: "body"),
+                _categoryItem(id: "hospital"),
+                _categoryItem(id: "office"),
+                _categoryItem(id: "jobs"),
+                _categoryItem(id: "dining"),
+                _categoryItem(id: "weather"),
+                _categoryItem(id: "verbs"),
+                _categoryItem(id: "technology"),
+                _categoryItem(id: "hobbies"),
+                _categoryItem(id: "colors"),
+                _categoryItem(id: "time"),
+                _categoryItem(id: "numbers"),
+                _categoryItem(id: "emotions"),
+                _categoryItem(id: "seasons"),
+                _categoryItem(id: "countries and cities"),
+              ],
+            ))
           ],
-        ),
-      ),
-    );
+        )));
   }
 
   // Widget _showAppBar() {
@@ -174,12 +152,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
   // }
 
   Widget _categoryItem({
-    required String title,
-    IconData icon = FontAwesomeIcons.x,
+    required String id,
+    // required String title,
+    // IconData icon = FontAwesomeIcons.x,
   }) {
-    bool isActive = title == _selectedCategory;
+    bool isActive = id == _selectedCategory;
     return GestureDetector(
-      onTap: () => saveSelectedCategory(title),
+      onTap: () => saveSelectedCategory(id),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
@@ -191,9 +170,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
         child: Row(
           children: [
-            Icon(icon, color: isActive ? Colors.white : Colors.black),
+            Icon(categories[id]["icon"]!,
+                color: isActive ? Colors.white : Colors.black),
             const SizedBox(width: 20.0),
-            Text(title,
+            Text(categories[id][widget.language]!,
                 style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,

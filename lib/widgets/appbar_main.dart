@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/pages/categories_page.dart';
 import 'package:ysty_style_words/pages/settings_page.dart';
 
@@ -66,7 +67,7 @@ class _AppBarMainState extends State<AppBarMain> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 0.0, vertical: 12.0),
                     child: Center(
-                        child: Text(widget.selectedCategory,
+                        child: Text(categories[widget.selectedCategory][widget.language],
                             // child: Text(_selectedCategory!,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20.0),
