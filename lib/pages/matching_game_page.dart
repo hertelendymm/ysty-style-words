@@ -170,7 +170,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isResultsPageOn ? _showResultsScreen(widget.language) : _showGameScreen();
+    return _isResultsPageOn ? _showResultsScreen(widget.language) : _showGameScreen(widget.language);
   }
 
   /// ResultsScreen ============================================================
@@ -329,7 +329,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   }
 
   /// GameScreen ===============================================================
-  Widget _showGameScreen() {
+  Widget _showGameScreen(String language) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -340,13 +340,14 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
               children: [
                 AppBarSecondary(
                     onPressed: () => Navigator.pop(context),
-                    title: "Time Trial: ${widget.category}")
+                    title: "${matching_game_page_appbar[language]!}: ${widget.category}")
               ],
             ),
             _showCountdown(),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text('Race against the clock to match the words',
+              child: Text(matching_game_page_description[language]!,
+                  textAlign: TextAlign.center,
                   style:
                       TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
             ),

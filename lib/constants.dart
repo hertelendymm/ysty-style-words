@@ -163,5 +163,15 @@ Map<String, String> matching_game_page_result_continue = <String, String>{
   "hungarian": "Tovább",
 };
 
+Map<String, String> matching_game_page_appbar = <String, String>{
+  "english": "Time Trial",
+  "hungarian": "Időpróba",
+};
+
+Map<String, String> matching_game_page_description = <String, String>{
+  "english": "Race against the clock to match the words",
+  "hungarian": "Verseny az idővel a szavak párosításáért",
+};
+
 
 
