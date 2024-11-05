@@ -138,4 +138,15 @@ Map<String, String> matching_game_page_result_subtitle = <String, String>{
   "hungarian": "Kitartás és csak így tovább!",
 };
 
+Map<String, String> matching_game_page_result_highscore = <String, String>{
+  "english": "High Score",
+  "hungarian": "Rekordod",
+};
+
+Map<String, String> matching_game_page_result_currentscore = <String, String>{
+  "english": "Current Score",
+  "hungarian": "Új pontod",
+};
+
+
 

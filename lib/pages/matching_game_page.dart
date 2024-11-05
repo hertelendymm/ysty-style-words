@@ -221,14 +221,14 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   child: Column(
                     children: [
                       _resultsCard(
-                          text: 'High Score',
+                          text: matching_game_page_result_highscore[language]!,
                           iconData: FontAwesomeIcons.medal,
                           numberValue: (_matchCounter - _mistakeCounter) >
                                   widget.highScore
                               ? (_matchCounter - _mistakeCounter)
                               : widget.highScore),
                       _resultsCard(
-                        text: 'Current Score',
+                        text: matching_game_page_result_currentscore[language]!,
                         iconData: FontAwesomeIcons.solidStar,
                         numberValue: (_matchCounter - _mistakeCounter),
 
