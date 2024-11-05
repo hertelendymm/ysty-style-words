@@ -236,7 +236,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                         // numberValue: (_matchCounter - (_mistakeCounter * 2)),
                       ),
                       _resultsCard(
-                        text: 'Longest streak',
+                        text: matching_game_page_result_streak[language]!,
                         iconData: FontAwesomeIcons.fire,
                         numberValue: _streaks.isEmpty
                             ? _matchCounter
@@ -247,7 +247,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                         // numberValue: _matchCounter,
                       ),
                       _resultsCard(
-                          text: 'Mistakes',
+                          text: matching_game_page_result_mistakes[language]!,
                           iconData: FontAwesomeIcons.triangleExclamation,
                           numberValue: _mistakeCounter),
                     ],
@@ -261,7 +261,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                       onPressed: () => Navigator.pop(context),
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
-                      text: 'Continue'),
+                      text: matching_game_page_result_continue[language]!),
                 ),
               ],
             ),

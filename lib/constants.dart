@@ -148,5 +148,20 @@ Map<String, String> matching_game_page_result_currentscore = <String, String>{
   "hungarian": "Új pontod",
 };
 
+Map<String, String> matching_game_page_result_streak = <String, String>{
+  "english": "Longest streak",
+  "hungarian": "Leghosszabb sorozat",
+};
+
+Map<String, String> matching_game_page_result_mistakes = <String, String>{
+  "english": "Mistakes",
+  "hungarian": "Hibák",
+};
+
+Map<String, String> matching_game_page_result_continue = <String, String>{
+  "english": "Continue",
+  "hungarian": "Tovább",
+};
+
 
 
