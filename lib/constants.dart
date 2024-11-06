@@ -143,7 +143,7 @@ Map<String, String> matching_game_page_result_title = <String, String>{
 };
 
 Map<String, String> matching_game_page_result_subtitle = <String, String>{
-  "english": "Good job!",
+  "english": "Keep up the great work!",
   "hungarian": "Kitartás és csak így tovább!",
 };
 

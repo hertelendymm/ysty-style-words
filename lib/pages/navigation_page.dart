@@ -72,53 +72,92 @@ class _NavigationPageState extends State<NavigationPage> {
         backgroundColor: Colors.white,
         body: SafeArea(
             child: Padding(
-                padding: const EdgeInsets.only(bottom: 60.0),
+                padding: const EdgeInsets.only(bottom: 0.0),
+                // padding: const EdgeInsets.only(bottom: 60.0),
                 child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AppBarMain(
                         // updateParent: _loadSelectedCategory,
                         updateParent: _updatePages,
                         selectedCategory: _selectedCategory.toString(), language: _language,),
                    Expanded(child: _showNavPage()),
+                Container(
+                    color: Colors.grey.shade100,
+                    // color: Colors.grey.shade200,
+                    // height: 62.0,
+                    height: 60.0,
+                    child: Column(
+                      children: [
+                        // Container(color: Colors.grey.shade200, height: 2.0),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ButtonNavigation(
+                                isActive:
+                                _navigationStatus == NavigationStatus.flashcardsNav,
+                                onPressed: () =>
+                                    switchNav(NavigationStatus.flashcardsNav),
+                                iconData: FontAwesomeIcons.house,
+                              ),
+                              ButtonNavigation(
+                                isActive:
+                                _navigationStatus == NavigationStatus.matchingNav,
+                                onPressed: () =>
+                                    switchNav(NavigationStatus.matchingNav),
+                                iconData: FontAwesomeIcons.hourglassHalf,
+                              ),
+                              ButtonNavigation(
+                                isActive:
+                                _navigationStatus == NavigationStatus.derdiedasNav,
+                                onPressed: () =>
+                                    switchNav(NavigationStatus.derdiedasNav),
+                                iconData: FontAwesomeIcons.language,
+                              ),
+                            ]),
+                      ],
+                    ))
                   ],
                 ))),
         // child: Expanded(child: _showNavPage()))),
-        bottomSheet: Container(
-            color: Colors.grey.shade100,
-            // color: Colors.grey.shade200,
-            // height: 62.0,
-            height: 60.0,
-            child: Column(
-              children: [
-                // Container(color: Colors.grey.shade200, height: 2.0),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ButtonNavigation(
-                        isActive:
-                            _navigationStatus == NavigationStatus.flashcardsNav,
-                        onPressed: () =>
-                            switchNav(NavigationStatus.flashcardsNav),
-                        iconData: FontAwesomeIcons.house,
-                      ),
-                      ButtonNavigation(
-                        isActive:
-                            _navigationStatus == NavigationStatus.matchingNav,
-                        onPressed: () =>
-                            switchNav(NavigationStatus.matchingNav),
-                        iconData: FontAwesomeIcons.hourglassHalf,
-                      ),
-                      ButtonNavigation(
-                        isActive:
-                            _navigationStatus == NavigationStatus.derdiedasNav,
-                        onPressed: () =>
-                            switchNav(NavigationStatus.derdiedasNav),
-                        iconData: FontAwesomeIcons.language,
-                      ),
-                    ]),
-              ],
-            )));
+        // bottomSheet: Container(
+        //     color: Colors.grey.shade100,
+        //     // color: Colors.grey.shade200,
+        //     // height: 62.0,
+        //     height: 60.0,
+        //     child: Column(
+        //       children: [
+        //         // Container(color: Colors.grey.shade200, height: 2.0),
+        //         Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //             crossAxisAlignment: CrossAxisAlignment.center,
+        //             children: [
+        //               ButtonNavigation(
+        //                 isActive:
+        //                     _navigationStatus == NavigationStatus.flashcardsNav,
+        //                 onPressed: () =>
+        //                     switchNav(NavigationStatus.flashcardsNav),
+        //                 iconData: FontAwesomeIcons.house,
+        //               ),
+        //               ButtonNavigation(
+        //                 isActive:
+        //                     _navigationStatus == NavigationStatus.matchingNav,
+        //                 onPressed: () =>
+        //                     switchNav(NavigationStatus.matchingNav),
+        //                 iconData: FontAwesomeIcons.hourglassHalf,
+        //               ),
+        //               ButtonNavigation(
+        //                 isActive:
+        //                     _navigationStatus == NavigationStatus.derdiedasNav,
+        //                 onPressed: () =>
+        //                     switchNav(NavigationStatus.derdiedasNav),
+        //                 iconData: FontAwesomeIcons.language,
+        //               ),
+        //             ]),
+        //       ],
+        //     ))
+        );
   }
 
   _showNavPage() {

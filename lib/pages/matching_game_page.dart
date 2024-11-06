@@ -25,7 +25,8 @@ class MatchingGamePage extends StatefulWidget {
 }
 
 class _FlashcardsPageState extends State<MatchingGamePage> {
-  final int _countdownDuration = 120;
+  final int _countdownDuration = 12;
+  // final int _countdownDuration = 120;
 
   final CountDownController _countdownController = CountDownController();
   List<Word> _current5Word =
@@ -76,11 +77,11 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
       _current5Meaning.shuffle();
     }
 
-    checkNext3();
+    checkNext2();
     // _loadNext5Word();
   }
 
-  checkNext3() {
+  checkNext2() {
     /// Check the user already went through all the words, if true reshuffle list and reset index counter
     if (allWords.length == allWordsIndex + 1) {
       allWords.shuffle();
@@ -88,7 +89,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     }
 
     /// Check _next5Words and _next5Meaning size in case they need a refill
-    while (_next3Word.length < 3 && _next3Meaning.length < 3) {
+    while (_next3Word.length < 2 && _next3Meaning.length < 2) {
       _next3Word.add(allWords[allWordsIndex]);
       _next3Meaning.add(allWords[allWordsIndex]);
       allWordsIndex++;
@@ -114,7 +115,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         _next3Meaning.removeAt(0);
 
         /// Refill _next3 lists with a new word
-        checkNext3();
+        checkNext2();
 
         /// TODO: Add delay effect for replaced cards before the previous selected indexes resets
         delayNextCards();
@@ -190,34 +191,37 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
               children: [
                 AppBarSecondary(
                     onPressed: () => Navigator.pop(context), title: matching_game_page_result_appbartitle[widget.language]!),
+                /// TODO: Add multiple options: negative score, new highscore etc.
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.4,
                   height: MediaQuery.sizeOf(context).width * 0.4,
+                  // padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    // color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(2000),
                   ),
+                  child: Image.asset('assets/icon/email.png'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(matching_game_page_result_title[language]!,
                           style: TextStyle(
-                              fontSize: 38.0,
+                              fontSize: 30.0,
                               color: Colors.black,
                               fontWeight: FontWeight.bold)),
                       Text(matching_game_page_result_subtitle[language]!,
                           style: TextStyle(
-                              fontSize: 26.0,
+                              fontSize: 22.0,
                               color: Colors.grey.shade500,
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     children: [
                       _resultsCard(
@@ -254,7 +258,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 20.0),
                   child: ButtonRounded(
 
                       ///TODO: Call refresh for the MatchingPage --> widget.onRefresh(); for refreshing the highScore over there
@@ -340,7 +344,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
               children: [
                 AppBarSecondary(
                     onPressed: () => Navigator.pop(context),
-                    title: "${matching_game_page_appbar[language]!}: ${widget.category}")
+                    title: "${matching_game_page_appbar[language]!}: ${categories[widget.category][language]!}")
               ],
             ),
             _showCountdown(),
