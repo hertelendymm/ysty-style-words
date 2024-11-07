@@ -129,7 +129,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20.0),
                                   child: ButtonRounded(
-                                      text: "Next",
+                                      text: derdiedas_page_next[widget.language]!,
                                       backgroundColor: Colors.green.shade800,
                                       textColor: Colors.white,
                                       onPressed: () => _getNextWord()),

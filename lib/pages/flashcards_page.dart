@@ -3,10 +3,12 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
+import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class FlashcardsPage extends StatefulWidget {
-  const FlashcardsPage({super.key, required this.category, required this.language});
+  const FlashcardsPage(
+      {super.key, required this.category, required this.language});
 
   final String category;
   final String language;
@@ -40,11 +42,11 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   }
 
   _loadNewGameData() {
-    setState(()  {
+    setState(() {
       _selectedCategory = widget.category;
       wordData = [];
       for (var n in flashcardContents[widget.category]!) {
-      // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
+        // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
         wordData.add(newWord);
       }
@@ -113,27 +115,26 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     );
   }
 
-  Widget _showCards(String language){
-    if(_selectedCategory != widget.category){
+  Widget _showCards(String language) {
+    if (_selectedCategory != widget.category) {
       _loadNewGameData();
     }
     return Flexible(
         child: CardSwiper(
             cardsCount: wordData.length,
             onSwipe: _onSwipe,
-            allowedSwipeDirection: const AllowedSwipeDirection.only(
-                left: true, right: true),
+            allowedSwipeDirection:
+                const AllowedSwipeDirection.only(left: true, right: true),
             numberOfCardsDisplayed: 3,
-            padding: const EdgeInsets.symmetric(
-                vertical: 60, horizontal: 40.0),
+            padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40.0),
             controller: controller,
             backCardOffset: const Offset(0, 35),
             cardBuilder: (
-                context,
-                index,
-                horizontalThresholdPercentage,
-                verticalThresholdPercentage,
-                ) =>
+              context,
+              index,
+              horizontalThresholdPercentage,
+              verticalThresholdPercentage,
+            ) =>
                 Flashcard(
                   index: index,
                   word: wordData[index],
@@ -181,22 +182,34 @@ class Flashcard extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(word.article,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20.0,
-                        color: Colors.white)),
-                const SizedBox(height: 40.0),
-                Text(isCardFlipped ? (language == 'english' ? word.englishMeaning: word.hungarianMeaning) : word.germanWord,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
-                        color: isCardFlipped ? Colors.black : Colors.white)),
-                const SizedBox(height: 40.0),
+                SizedBox(),
+                Column(
+                  children: [
+                    Text(word.article,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20.0,
+                            color: Colors.white)),
+                    // const SizedBox(height: 40.0),
+                    Text(
+                        isCardFlipped
+                            ? (language == 'english'
+                                ? word.englishMeaning
+                                : word.hungarianMeaning)
+                            : word.germanWord,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
+                            color:
+                                isCardFlipped ? Colors.black : Colors.white)),
+                  ],
+                  // const SizedBox(height: 40.0),
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  // padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     word.exampleSentence,
                     style: const TextStyle(
@@ -206,6 +219,18 @@ class Flashcard extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 0.0, horizontal: 40.0),
+                  child: ButtonRounded(
+                    onPressed: () {},
+                    isIconWText: true,
+                    iconData: FontAwesomeIcons.play,
+                    iconColor: Colors.white,
+                    text: "Audio",
+                    backgroundColor: Colors.white.withOpacity(0.2),
+                  ),
+                )
               ],
             ),
           ),

@@ -9,6 +9,7 @@ class ButtonRounded extends StatelessWidget {
     required this.onPressed,
     this.isIconWText=false,
     this.iconData = FontAwesomeIcons.xmark,
+    this.iconColor = Colors.black,
   });
 
   final String text;
@@ -17,6 +18,7 @@ class ButtonRounded extends StatelessWidget {
   final Function onPressed;
   final bool isIconWText;
   final IconData iconData;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class ButtonRounded extends StatelessWidget {
         child: isIconWText ? Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(iconData, color: Colors.black),
+            Icon(iconData, color: iconColor),
             const SizedBox(width: 10.0),
             Text(text, style: TextStyle(color: textColor, fontSize: 20.0, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
           ],

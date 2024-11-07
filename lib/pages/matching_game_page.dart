@@ -208,7 +208,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(matching_game_page_result_title[language]!,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 30.0,
                               color: Colors.black,
                               fontWeight: FontWeight.bold)),

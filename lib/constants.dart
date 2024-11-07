@@ -43,25 +43,9 @@ Map<String, String> derdiedas_page_help = <String, String>{
   "hungarian": "Segítség",
 };
 
-/// SETTINGS PAGE ===========================================================
-Map<String, String> settings_page_totalwords = <String, String>{
-  "english": "Your total word count",
-  "hungarian": "Eddig megtanult szavaid száma",
-};
-
-Map<String, String> settings_page_derdiedas = <String, String>{
-  "english": "Der/Die/Das stat",
-  "hungarian": "Der/Die/Das találatod",
-};
-
-Map<String, String> settings_page_timetrial = <String, String>{
-  "english": "Time Trial Score",
-  "hungarian": "Időpróba rekord",
-};
-
-Map<String, String> settings_page_links = <String, String>{
-  "english": "Links",
-  "hungarian": "Linkek",
+Map<String, String> derdiedas_page_next = <String, String>{
+  "english": "Next",
+  "hungarian": "Tovább",
 };
 
 /// DER/DIE/DAS HELP PAGE ======================================================
@@ -180,6 +164,27 @@ Map<String, String> matching_game_page_appbar = <String, String>{
 Map<String, String> matching_game_page_description = <String, String>{
   "english": "Race against the clock to match the words",
   "hungarian": "Verseny az idővel a szavak párosításáért",
+};
+
+/// SETTINGS PAGE ===========================================================
+Map<String, String> settings_page_totalwords = <String, String>{
+  "english": "Your total word count",
+  "hungarian": "Eddig megtanult szavaid száma",
+};
+
+Map<String, String> settings_page_derdiedas = <String, String>{
+  "english": "Der/Die/Das stat",
+  "hungarian": "Der/Die/Das találatod",
+};
+
+Map<String, String> settings_page_timetrial = <String, String>{
+  "english": "Time Trial Score",
+  "hungarian": "Időpróba rekord",
+};
+
+Map<String, String> settings_page_links = <String, String>{
+  "english": "Links",
+  "hungarian": "Linkek",
 };
 
 /// CATEGORIES =================================================================
