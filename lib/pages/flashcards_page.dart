@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/widgets/button_tts.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class FlashcardsPage extends StatefulWidget {
@@ -222,13 +223,12 @@ class Flashcard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 0.0, horizontal: 40.0),
-                  child: ButtonRounded(
-                    onPressed: () {},
-                    isIconWText: true,
+                  child: ButtonTts(
+                    word: word,
                     iconData: FontAwesomeIcons.play,
                     iconColor: Colors.white,
                     text: "Audio",
-                    backgroundColor: Colors.white.withOpacity(0.2),
+                    backgroundColor: Colors.white.withOpacity(0.1),
                   ),
                 )
               ],

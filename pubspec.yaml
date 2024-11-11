@@ -41,6 +41,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.1
   circular_countdown_timer: ^0.2.4
+  flutter_tts: ^4.1.0
 
 dev_dependencies:
   flutter_test:
