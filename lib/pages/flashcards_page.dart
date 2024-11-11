@@ -88,7 +88,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                               fontSize: 20.0,
                               color: Colors.grey.shade300),
                           textAlign: TextAlign.center)),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
@@ -109,7 +109,8 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                             const Icon(FontAwesomeIcons.check,
                                 color: Colors.green, size: 40.0)
                           ])),
-                  const SizedBox(height: 40.0),
+                  const SizedBox(height: 20.0),
+                  // const SizedBox(height: 40.0),
                 ],
               ),
       ),
@@ -186,30 +187,34 @@ class Flashcard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(),
-                Column(
-                  children: [
-                    Text(word.article,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 20.0,
-                            color: Colors.white)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    children: [
+                      Text(word.article,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20.0,
+                              color: Colors.white)),
+                      // const SizedBox(height: 40.0),
+                      Text(
+                          isCardFlipped
+                              ? (language == 'english'
+                                  ? word.englishMeaning
+                                  : word.hungarianMeaning)
+                              : word.germanWord,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
+                              color:
+                                  isCardFlipped ? Colors.black : Colors.white),
+                      textAlign: TextAlign.center,),
+                    ],
                     // const SizedBox(height: 40.0),
-                    Text(
-                        isCardFlipped
-                            ? (language == 'english'
-                                ? word.englishMeaning
-                                : word.hungarianMeaning)
-                            : word.germanWord,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
-                            color:
-                                isCardFlipped ? Colors.black : Colors.white)),
-                  ],
-                  // const SizedBox(height: 40.0),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   // padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     word.exampleSentence,
@@ -226,11 +231,21 @@ class Flashcard extends StatelessWidget {
                   child: ButtonTts(
                     word: word,
                     iconData: FontAwesomeIcons.play,
-                    iconColor: Colors.white,
+                    iconColor: isCardFlipped ? Colors.black : Colors.white,
                     text: "Audio",
-                    backgroundColor: Colors.white.withOpacity(0.1),
+                    textColor: isCardFlipped ? Colors.black : Colors.white,
+                    backgroundColor: isCardFlipped ? Colors.grey.shade100 : Colors.white.withOpacity(0.1),
                   ),
-                )
+                ),
+                // Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                //     child: Text(flashcard_page_flip[language]!,
+                //         // 'Tap to flip',
+                //         style: TextStyle(
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 16.0,
+                //             color: Colors.grey),
+                //         textAlign: TextAlign.center)),
               ],
             ),
           ),

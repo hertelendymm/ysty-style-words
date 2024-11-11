@@ -50,7 +50,8 @@ class _ButtonTtsState extends State<ButtonTts> {
   }
 
   _runTts() async{
-    await _tts.speak(widget.word.germanWord);
+    String text = "${widget.word.article} ${widget.word.germanWord}";
+    await _tts.speak(text);
   }
 
   @override

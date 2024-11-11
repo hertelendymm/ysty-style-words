@@ -2,7 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// FLASHCARD PAGE ==============================================================
 Map<String, String> flashcard_page_flip = <String, String>{
-  "english": "Tap to flip",
+  "english": "Tap card to flip",
+  // "english": "Tap to flip",
   "hungarian": "Érintésre fordul",
 };
 
