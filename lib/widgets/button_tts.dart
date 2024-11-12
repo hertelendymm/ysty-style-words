@@ -6,16 +6,16 @@ import 'package:ysty_style_words/model/word_model.dart';
 class ButtonTts extends StatefulWidget {
   const ButtonTts({
     super.key,
-    required this.word,
-    this.text="Button",
+    required this.text,
+    this.title="Button",
     this.backgroundColor=Colors.black,
     this.textColor=Colors.white,
     this.iconData = FontAwesomeIcons.xmark,
     this.iconColor = Colors.black,
   });
 
-  final Word word;
   final String text;
+  final String title;
   final Color backgroundColor;
   final Color textColor;
   final IconData iconData;
@@ -50,9 +50,7 @@ class _ButtonTtsState extends State<ButtonTts> {
   }
 
   _runTts() async{
-    // String text = "${widget.word.article} ${widget.word.germanWord}";
-    String text = widget.word.exampleSentence;
-    await _tts.speak(text);
+    await _tts.speak(widget.text);
   }
 
   @override
@@ -80,7 +78,7 @@ class _ButtonTtsState extends State<ButtonTts> {
           children: [
             Icon(widget.iconData, color: widget.iconColor),
             const SizedBox(width: 10.0),
-            Text(widget.text, style: TextStyle(color: widget.textColor, fontSize: 20.0, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+            Text(widget.title, style: TextStyle(color: widget.textColor, fontSize: 20.0, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
           ],
         ),
       ),

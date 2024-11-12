@@ -229,10 +229,11 @@ class Flashcard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       vertical: 0.0, horizontal: 40.0),
                   child: ButtonTts(
-                    word: word,
+                    text: "${word.article} ${word.germanWord}",
+                    // text: word.exampleSentence,
                     iconData: FontAwesomeIcons.play,
                     iconColor: isCardFlipped ? Colors.black : Colors.white,
-                    text: "Audio",
+                    title: "Audio",
                     textColor: isCardFlipped ? Colors.black : Colors.white,
                     backgroundColor: isCardFlipped ? Colors.grey.shade100 : Colors.white.withOpacity(0.1),
                   ),

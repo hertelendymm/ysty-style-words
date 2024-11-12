@@ -4,6 +4,7 @@ import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/widgets/button_tts.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class DerDieDasPage extends StatefulWidget {
@@ -206,6 +207,19 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0)),
+          const SizedBox(height: 14.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: 0.0, horizontal: 00.0),
+            child: ButtonTts(
+              text: wordData[wordIndex].germanWord,
+              iconData: FontAwesomeIcons.play,
+              iconColor: Colors.black,
+              title: "Audio",
+              textColor: Colors.black,
+              backgroundColor: Colors.grey.shade100,
+            ),
+          ),
         ],
       ),
     );
