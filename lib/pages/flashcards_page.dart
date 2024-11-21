@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
@@ -25,6 +26,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   ValueNotifier<bool> _isCardFlippedNotifier = ValueNotifier<bool>(false);
   String? _selectedCategory;
   bool _isLoading = true;
+  final box = GetStorage();
 
   @override
   void initState() {
@@ -43,6 +45,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   }
 
   _loadNewGameData() {
+    List<String>? myList = box.read('my_list');
     setState(() {
       _selectedCategory = widget.category;
       wordData = [];
