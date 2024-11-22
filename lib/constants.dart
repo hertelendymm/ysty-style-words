@@ -12,6 +12,21 @@ Map<String, String> flashcard_page_swipe = <String, String>{
   "hungarian": "Húzd",
 };
 
+Map<String, String> flashcard_page_continue = <String, String>{
+  "english": "Continue",
+  "hungarian": "Tovább",
+};
+
+Map<String, String> flashcard_page_thank_you = <String, String>{
+  "english": "Thank you for using the app!",
+  "hungarian": "Köszönöm, hogy használod az app-ot!",
+};
+
+Map<String, String> flashcard_page_ads_text = <String, String>{
+  "english": "Advertising helps me to keep working on useful apps like this",
+  "hungarian": "A reklámok segítenek abban, hogy hasonló hasznos alkalmazásokat készíthessek",
+};
+
 /// MATCHING PAGE ==============================================================
 Map<String, String> matching_page_title = <String, String>{
   "english": "Time Trial",

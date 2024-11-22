@@ -27,6 +27,8 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   String? _selectedCategory;
   bool _isLoading = true;
   final box = GetStorage();
+  List<String>? knowWords;
+  bool isDisplayCards = true;
 
   @override
   void initState() {
@@ -45,8 +47,13 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   }
 
   _loadNewGameData() {
-    List<String>? myList = box.read('my_list');
     setState(() {
+      _isLoading = true;
+
+      /// Load knownWords list
+      knowWords = box.read('knownWordIDs');
+
+      /// Load wordData from
       _selectedCategory = widget.category;
       wordData = [];
       for (var n in flashcardContents[widget.category]!) {
@@ -56,6 +63,9 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       }
       wordData.shuffle();
       // await Future.delayed(Duration(milliseconds: 500));
+
+      /// Show cards instead of end of deck ads
+      isDisplayCards = true;
       _isLoading = false; // Update loading state after data is loaded
     });
   }
@@ -65,6 +75,11 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     int? currentIndex,
     CardSwiperDirection direction,
   ) {
+    if (direction.name == "right") {
+      /// TODO: add to DB if not in knowWords
+    } else {
+      /// TODO: remove from DB if in knowWords
+    }
     print(
         'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
     return true;
@@ -74,49 +89,88 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: _isLoading
-            ? const CircularProgressIndicator(color: Colors.blue)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _showCards(widget.language),
-                  const SizedBox(height: 0),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(flashcard_page_flip[widget.language]!,
-                          // 'Tap to flip',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              color: Colors.grey.shade300),
-                          textAlign: TextAlign.center)),
-                  const SizedBox(height: 20),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Icon(FontAwesomeIcons.xmark,
-                                color: Colors.red, size: 40.0),
-                            Icon(FontAwesomeIcons.arrowLeftLong,
-                                color: Colors.grey.shade300, size: 40.0),
-                            Text(flashcard_page_swipe[widget.language]!,
-                                // "Swipe",
-                                style: const TextStyle(
+      body: _isLoading
+          ? const CircularProgressIndicator(color: Colors.blue)
+          : SafeArea(
+              child: isDisplayCards
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _showCards(widget.language),
+                        const SizedBox(height: 0),
+                        Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Text(flashcard_page_flip[widget.language]!,
+                                // 'Tap to flip',
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0,
-                                    color: Colors.grey)),
-                            Icon(FontAwesomeIcons.arrowRightLong,
-                                color: Colors.grey.shade300, size: 40.0),
-                            const Icon(FontAwesomeIcons.check,
-                                color: Colors.green, size: 40.0)
-                          ])),
-                  const SizedBox(height: 20.0),
-                  // const SizedBox(height: 40.0),
-                ],
-              ),
-      ),
+                                    color: Colors.grey.shade300),
+                                textAlign: TextAlign.center)),
+                        const SizedBox(height: 20),
+                        Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Icon(FontAwesomeIcons.xmark,
+                                      color: Colors.red, size: 40.0),
+                                  Icon(FontAwesomeIcons.arrowLeftLong,
+                                      color: Colors.grey.shade300, size: 40.0),
+                                  Text(flashcard_page_swipe[widget.language]!,
+                                      // "Swipe",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0,
+                                          color: Colors.grey)),
+                                  Icon(FontAwesomeIcons.arrowRightLong,
+                                      color: Colors.grey.shade300, size: 40.0),
+                                  const Icon(FontAwesomeIcons.check,
+                                      color: Colors.green, size: 40.0)
+                                ])),
+                        const SizedBox(height: 20.0),
+                        // const SizedBox(height: 40.0),
+                      ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 0.0),
+                          Text(
+                            flashcard_page_thank_you[widget.language]!,
+                            style: const TextStyle(
+                                fontSize: 26.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            color: Colors.red,
+                            width: MediaQuery.sizeOf(context).width,
+                            height: MediaQuery.sizeOf(context).width * 0.8,
+                            child: const Center(
+                              child: Text(
+                                'Ad',
+                                style: TextStyle(fontSize: 30.0),
+                              ),
+                            ),
+                          ),
+                          Text(flashcard_page_ads_text[widget.language]!,
+                              style: const TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,),
+                          ButtonRounded(
+                            onPressed: () => _loadNewGameData(),
+                            text: flashcard_page_continue[widget.language]!,
+                          ),
+                        ],
+                      ),
+                    ),
+            ),
     );
   }
 
@@ -134,6 +188,12 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
             padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40.0),
             controller: controller,
             backCardOffset: const Offset(0, 35),
+            isLoop: false,
+            onEnd: () {
+              setState(() {
+                isDisplayCards = false;
+              });
+            },
             cardBuilder: (
               context,
               index,
@@ -201,17 +261,17 @@ class Flashcard extends StatelessWidget {
                               color: Colors.white)),
                       // const SizedBox(height: 40.0),
                       Text(
-                          isCardFlipped
-                              ? (language == 'english'
-                                  ? word.englishMeaning
-                                  : word.hungarianMeaning)
-                              : word.germanWord,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
-                              color:
-                                  isCardFlipped ? Colors.black : Colors.white),
-                      textAlign: TextAlign.center,),
+                        isCardFlipped
+                            ? (language == 'english'
+                                ? word.englishMeaning
+                                : word.hungarianMeaning)
+                            : word.germanWord,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: word.germanWord.length > 8 ? 30.0 : 50.0,
+                            color: isCardFlipped ? Colors.black : Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                     // const SizedBox(height: 40.0),
                   ),
@@ -238,7 +298,9 @@ class Flashcard extends StatelessWidget {
                     iconColor: isCardFlipped ? Colors.black : Colors.white,
                     title: "Audio",
                     textColor: isCardFlipped ? Colors.black : Colors.white,
-                    backgroundColor: isCardFlipped ? Colors.grey.shade100 : Colors.white.withOpacity(0.1),
+                    backgroundColor: isCardFlipped
+                        ? Colors.grey.shade100
+                        : Colors.white.withOpacity(0.1),
                   ),
                 ),
                 // Padding(
