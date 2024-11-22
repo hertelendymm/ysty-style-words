@@ -27,7 +27,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   String? _selectedCategory;
   bool _isLoading = true;
   final box = GetStorage();
-  List<String>? knowWords;
+  List<String> knownWordIDs = [];
   bool isDisplayCards = true;
 
   @override
@@ -46,23 +46,67 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     super.dispose();
   }
 
+  List<String> getKnownWordIDs(){
+    // List<String>? myList = box.read('knownWordIDs');
+    List<String>? myList = box.read('knownWordIDs')?.cast<String>();
+    myList ??= [];
+
+    box.write('my_list', myList);
+    return myList;
+  }
+
   _loadNewGameData() {
     setState(() {
       _isLoading = true;
 
       /// Load knownWords list
-      knowWords = box.read('knownWordIDs');
+      knownWordIDs = getKnownWordIDs();
+      print("knownWordIDs: $knownWordIDs");
 
       /// Load wordData from
       _selectedCategory = widget.category;
       wordData = [];
+      List<Word> knownWords = [];
+      List<Word> notKnownWords = [];
+
+      /// Separate words in category based on the knownWordIDs list
       for (var n in flashcardContents[widget.category]!) {
         // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
-        wordData.add(newWord);
+        if(knownWordIDs!.contains(newWord.wordId)){
+          knownWords.add(newWord);
+        }else{
+          notKnownWords.add(newWord);
+        }
+        // wordData.add(newWord);
       }
+      /// Shuffle lists so the user will get different card
+      knownWords.shuffle();
+      notKnownWords.shuffle();
+      print("knownWords: $knownWords");
+      print("notKnownWords: $notKnownWords");
+
+      /// If notKnownWords >= 6 load 6 notKnownWords into wordData
+      if(notKnownWords.length >= 6){
+        for(int i=0; i < 6; i++){
+          wordData.add(notKnownWords[i]);
+        }
+      }
+      /// If notKnownWords < 6 use knownWords to fill the 6 card places
+      else {
+        for(var n in notKnownWords){
+          wordData.add(n);
+        }
+        int index = 0;
+        while(wordData.length < 6){
+          wordData.add(knownWords[index]);
+          index++;
+        }
+      }
+
+      /// Shuffle known and not known words in wordData
       wordData.shuffle();
-      // await Future.delayed(Duration(milliseconds: 500));
+      print("wordData: $wordData");
 
       /// Show cards instead of end of deck ads
       isDisplayCards = true;
@@ -76,13 +120,38 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
     CardSwiperDirection direction,
   ) {
     if (direction.name == "right") {
-      /// TODO: add to DB if not in knowWords
+      /// Add to DB if not in knowWordIDs
+      if(!knownWordIDs.contains(wordData[previousIndex].wordId)) {
+        addItemToGetStorage(wordData[previousIndex].wordId);
+      }
     } else {
-      /// TODO: remove from DB if in knowWords
+      /// Remove from DB if in knowWords
+      if(knownWordIDs.contains(wordData[previousIndex].wordId)) {
+        removeItemFromGetStorage(wordData[previousIndex].wordId);
+      }
     }
     print(
         'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
     return true;
+  }
+
+  void addItemToGetStorage(String wordID) {
+    final box = GetStorage();
+    List<String>? myList = box.read('knownWordIDs')?.cast<String>();
+    myList ??= [];
+
+    myList.add(wordID);
+    box.write('knownWordIDs', myList);
+  }
+
+  void removeItemFromGetStorage(String itemToRemove) {
+    final box = GetStorage();
+    List<String>? myList = box.read('knownWordIDs')?.cast<String>();
+
+    if (myList != null) {
+      myList.remove(itemToRemove);
+      box.write('knownWordIDs', myList);
+    }
   }
 
   @override
