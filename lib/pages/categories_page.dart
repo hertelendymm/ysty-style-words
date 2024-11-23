@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/services/category_services.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
+import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage(
@@ -17,6 +19,9 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
   String? _selectedCategory;
+  final box = GetStorage();
+  List<String> knownWordIDs = [];
+  bool isLoading = true;
 
   saveSelectedCategory(String category) {
     CategoryService.saveSelectedCategory(category);
@@ -25,14 +30,20 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   getSelectedCategory() {
-    CategoryService.loadSelectedCategory().then((categoryName) {
-      if (categoryName != null) {
-        // Use the categoryName to load relevant content
-        setState(() {
-          _selectedCategory = categoryName;
-        });
-      }
+    setState(() {
+      isLoading = true;
+      CategoryService.loadSelectedCategory().then((categoryName) {
+        if (categoryName != null) {
+          // Use the categoryName to load relevant content
+          setState(() {
+            _selectedCategory = categoryName;
+          });
+        }
+      });
+      knownWordIDs = getKnownWordIDs();
+      isLoading = false;
     });
+
   }
 
   closePage() {
@@ -44,6 +55,29 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void initState() {
     super.initState();
     getSelectedCategory();
+  }
+
+  List<String> getKnownWordIDs(){
+    // List<String>? myList = box.read('knownWordIDs');
+    List<String>? myList = box.read('knownWordIDs')?.cast<String>();
+    myList ??= [];
+
+    box.write('my_list', myList);
+    return myList;
+  }
+
+  int getCategoryPercentage(String category){
+    int count = 0;
+    for (String item in knownWordIDs) {
+      if (item.startsWith(category)) {
+        count++;
+      }
+    }
+
+    int percentage = (count / flashcardContents[category]!.length *100).round();
+    print('The count of "$category" is $count');
+    print('Percentage for "$category" is $percentage');
+    return percentage;
   }
 
   @override
@@ -60,41 +94,43 @@ class _CategoriesPageState extends State<CategoriesPage> {
               title: category_page_appbartitle[widget.language]!,
             ),
             // _showAppBar(),
-            Expanded(
+            isLoading ?
+                const CircularProgressIndicator(color: Colors.blue)
+                : Expanded(
                 child: ListView(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
               children: [
-                _categoryItem(id: "food"),
-                _categoryItem(id: "animal"),
-                _categoryItem(id: "transportation"),
-                _categoryItem(id: "family"),
-                _categoryItem(id: "sport"),
-                _categoryItem(id: "home"),
-                _categoryItem(id: "travel"),
-                _categoryItem(id: "education"),
-                _categoryItem(id: "clothing"),
-                _categoryItem(id: "music"),
-                _categoryItem(id: "school"),
-                _categoryItem(id: "space"),
-                _categoryItem(id: "nature"),
-                _categoryItem(id: "fruits"),
-                _categoryItem(id: "vegetables"),
-                _categoryItem(id: "body"),
-                _categoryItem(id: "hospital"),
-                _categoryItem(id: "office"),
-                _categoryItem(id: "jobs"),
-                _categoryItem(id: "dining"),
-                _categoryItem(id: "weather"),
-                _categoryItem(id: "verbs"),
-                _categoryItem(id: "technology"),
-                _categoryItem(id: "hobbies"),
-                _categoryItem(id: "colors"),
-                _categoryItem(id: "time"),
-                _categoryItem(id: "numbers"),
-                _categoryItem(id: "emotions"),
-                _categoryItem(id: "seasons"),
-                _categoryItem(id: "countries and cities"),
+                _categoryItem(categoryId: "food"),
+                _categoryItem(categoryId: "animal"),
+                _categoryItem(categoryId: "transportation"),
+                _categoryItem(categoryId: "family"),
+                _categoryItem(categoryId: "sport"),
+                _categoryItem(categoryId: "home"),
+                _categoryItem(categoryId: "travel"),
+                _categoryItem(categoryId: "education"),
+                _categoryItem(categoryId: "clothing"),
+                _categoryItem(categoryId: "music"),
+                _categoryItem(categoryId: "school"),
+                _categoryItem(categoryId: "space"),
+                _categoryItem(categoryId: "nature"),
+                _categoryItem(categoryId: "fruits"),
+                _categoryItem(categoryId: "vegetables"),
+                _categoryItem(categoryId: "body"),
+                _categoryItem(categoryId: "hospital"),
+                _categoryItem(categoryId: "office"),
+                _categoryItem(categoryId: "jobs"),
+                _categoryItem(categoryId: "dining"),
+                _categoryItem(categoryId: "weather"),
+                _categoryItem(categoryId: "verbs"),
+                _categoryItem(categoryId: "technology"),
+                _categoryItem(categoryId: "hobbies"),
+                _categoryItem(categoryId: "colors"),
+                _categoryItem(categoryId: "time"),
+                _categoryItem(categoryId: "numbers"),
+                _categoryItem(categoryId: "emotions"),
+                _categoryItem(categoryId: "seasons"),
+                _categoryItem(categoryId: "countries and cities"),
               ],
             ))
           ],
@@ -152,13 +188,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
   // }
 
   Widget _categoryItem({
-    required String id,
+    required String categoryId,
     // required String title,
     // IconData icon = FontAwesomeIcons.x,
   }) {
-    bool isActive = id == _selectedCategory;
+    bool isActive = categoryId == _selectedCategory;
+    int percent = getCategoryPercentage(categoryId);
     return GestureDetector(
-      onTap: () => saveSelectedCategory(id),
+      onTap: () => saveSelectedCategory(categoryId),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
@@ -170,16 +207,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
         child: Row(
           children: [
-            Icon(categories[id]["icon"]!,
+            Icon(categories[categoryId]["icon"]!,
                 color: isActive ? Colors.white : Colors.black),
             const SizedBox(width: 20.0),
-            Text(categories[id][widget.language]!,
+            Text(categories[categoryId][widget.language]!,
                 style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     color: isActive ? Colors.white : Colors.black)),
             const Expanded(child: SizedBox()),
-            Text("0%",
+            Text("$percent %",
                 style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
