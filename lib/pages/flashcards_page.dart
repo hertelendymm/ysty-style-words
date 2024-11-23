@@ -105,6 +105,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       }
 
       /// Shuffle known and not known words in wordData
+      /// TODO: After the shuffling I should add a sort by frequency Word.frequency (5 -> 1)
       wordData.shuffle();
       print("wordData: $wordData");
 

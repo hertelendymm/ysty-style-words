@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
@@ -17,6 +18,10 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   // bool _isEngLang = true;
   String _language = "english";
+  final box = GetStorage();
+  List<String> knownWordIDs = [];
+  bool isLoading = true;
+  String allKnownWordsCounter = 'N/A';
 
   @override
   void initState() {
@@ -24,6 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
     // _loadBoolIsEngLang();
     _loadLanguage();
+    allKnownWordsCounter = getKnownWordIDsSize();
   }
 
   // Future<void> _loadBoolIsEngLang() async {
@@ -45,6 +51,15 @@ class _SettingsPageState extends State<SettingsPage> {
 
     /// update parent with new language setting
     widget.onRefresh();
+  }
+
+  String getKnownWordIDsSize() {
+    // List<String>? myList = box.read('knownWordIDs');
+    List<String>? myList = box.read('knownWordIDs')?.cast<String>();
+    myList ??= [];
+
+    box.write('my_list', myList);
+    return '${myList.length}';
   }
 
   @override
@@ -77,7 +92,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             horizontal: 20.0, vertical: 50.0),
                         child: Column(
                           children: [
-                            const Text("1274",
+                            allKnownWordsCounter == 'N/A'
+                                ? const CircularProgressIndicator(color: Colors.black)
+                                : Text(allKnownWordsCounter,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 80.0,

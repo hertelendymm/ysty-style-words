@@ -43,7 +43,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
       knownWordIDs = getKnownWordIDs();
       isLoading = false;
     });
-
   }
 
   closePage() {
@@ -57,7 +56,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     getSelectedCategory();
   }
 
-  List<String> getKnownWordIDs(){
+  List<String> getKnownWordIDs() {
     // List<String>? myList = box.read('knownWordIDs');
     List<String>? myList = box.read('knownWordIDs')?.cast<String>();
     myList ??= [];
@@ -66,7 +65,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return myList;
   }
 
-  int getCategoryPercentage(String category){
+  int getCategoryPercentage(String category) {
     int count = 0;
     for (String item in knownWordIDs) {
       if (item.startsWith(category)) {
@@ -74,7 +73,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
       }
     }
 
-    int percentage = (count / flashcardContents[category]!.length *100).round();
+    int percentage =
+        (count / flashcardContents[category]!.length * 100).round();
     print('The count of "$category" is $count');
     print('Percentage for "$category" is $percentage');
     return percentage;
@@ -94,106 +94,71 @@ class _CategoriesPageState extends State<CategoriesPage> {
               title: category_page_appbartitle[widget.language]!,
             ),
             // _showAppBar(),
-            isLoading ?
-                const CircularProgressIndicator(color: Colors.blue)
+            isLoading
+                ? const CircularProgressIndicator(color: Colors.blue)
                 : Expanded(
-                child: ListView(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-              children: [
-                _categoryItem(categoryId: "food"),
-                _categoryItem(categoryId: "animal"),
-                _categoryItem(categoryId: "transportation"),
-                _categoryItem(categoryId: "family"),
-                _categoryItem(categoryId: "sport"),
-                _categoryItem(categoryId: "home"),
-                _categoryItem(categoryId: "travel"),
-                _categoryItem(categoryId: "education"),
-                _categoryItem(categoryId: "clothing"),
-                _categoryItem(categoryId: "music"),
-                _categoryItem(categoryId: "school"),
-                _categoryItem(categoryId: "space"),
-                _categoryItem(categoryId: "nature"),
-                _categoryItem(categoryId: "fruits"),
-                _categoryItem(categoryId: "vegetables"),
-                _categoryItem(categoryId: "body"),
-                _categoryItem(categoryId: "hospital"),
-                _categoryItem(categoryId: "office"),
-                _categoryItem(categoryId: "jobs"),
-                _categoryItem(categoryId: "dining"),
-                _categoryItem(categoryId: "weather"),
-                _categoryItem(categoryId: "verbs"),
-                _categoryItem(categoryId: "technology"),
-                _categoryItem(categoryId: "hobbies"),
-                _categoryItem(categoryId: "colors"),
-                _categoryItem(categoryId: "time"),
-                _categoryItem(categoryId: "numbers"),
-                _categoryItem(categoryId: "emotions"),
-                _categoryItem(categoryId: "seasons"),
-                _categoryItem(categoryId: "countries and cities"),
-              ],
-            ))
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15.0),
+                      itemCount: categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _categoryItem(
+                          categoryId: categories.keys.toList()[index],
+                          percentage: getCategoryPercentage(
+                            categories.keys.toList()[index],
+                          ),
+                        );
+                      },
+                    ),
+                    // child: ListView(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 20.0, vertical: 15.0),
+                    //   children: [
+                    //     _categoryItem(categoryId: "food"),
+                    //     _categoryItem(categoryId: "animal"),
+                    //     _categoryItem(categoryId: "transportation"),
+                    //     _categoryItem(categoryId: "family"),
+                    //     _categoryItem(categoryId: "sport"),
+                    //     _categoryItem(categoryId: "home"),
+                    //     _categoryItem(categoryId: "travel"),
+                    //     _categoryItem(categoryId: "education"),
+                    //     _categoryItem(categoryId: "clothing"),
+                    //     _categoryItem(categoryId: "music"),
+                    //     _categoryItem(categoryId: "school"),
+                    //     _categoryItem(categoryId: "space"),
+                    //     _categoryItem(categoryId: "nature"),
+                    //     _categoryItem(categoryId: "fruits"),
+                    //     _categoryItem(categoryId: "vegetables"),
+                    //     _categoryItem(categoryId: "body"),
+                    //     _categoryItem(categoryId: "hospital"),
+                    //     _categoryItem(categoryId: "office"),
+                    //     _categoryItem(categoryId: "jobs"),
+                    //     _categoryItem(categoryId: "dining"),
+                    //     _categoryItem(categoryId: "weather"),
+                    //     _categoryItem(categoryId: "verbs"),
+                    //     _categoryItem(categoryId: "technology"),
+                    //     _categoryItem(categoryId: "hobbies"),
+                    //     _categoryItem(categoryId: "colors"),
+                    //     _categoryItem(categoryId: "time"),
+                    //     _categoryItem(categoryId: "numbers"),
+                    //     _categoryItem(categoryId: "emotions"),
+                    //     _categoryItem(categoryId: "seasons"),
+                    //     _categoryItem(categoryId: "countries and cities"),
+                    //   ],
+                    // ),
+                  )
           ],
         )));
   }
 
-  // Widget _showAppBar() {
-  //   return Container(
-  //     color: Colors.white,
-  //     child: Column(
-  //       children: [
-  //         Padding(
-  //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             crossAxisAlignment: CrossAxisAlignment.center,
-  //             children: [
-  //               GestureDetector(
-  //                 onTap: () => closePage(),
-  //                 child: Container(
-  //                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-  //                   child: Container(
-  //                     padding: const EdgeInsets.all(10.0),
-  //                     decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(25.0),
-  //                       color: Colors.grey.shade200,
-  //                     ),
-  //                     child: const Icon(FontAwesomeIcons.xmark,
-  //                         color: Colors.black),
-  //                   ),
-  //                 ),
-  //               ),
-  //               Expanded(
-  //                 child: Container(
-  //                   padding: const EdgeInsets.symmetric(
-  //                       horizontal: 0.0, vertical: 6.0),
-  //                   child: const Center(
-  //                       child: Text(
-  //                     "Choose a Category",
-  //                     style: TextStyle(
-  //                         fontWeight: FontWeight.bold, fontSize: 24.0),
-  //                     textAlign: TextAlign.center,
-  //                   )),
-  //                 ),
-  //               ),
-  //               const SizedBox(width: 45.0),
-  //             ],
-  //           ),
-  //         ),
-  //         const SizedBox(height: 20.0),
-  //         Container(color: Colors.grey.shade200, height: 2.0),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget _categoryItem({
     required String categoryId,
+    required int percentage,
     // required String title,
     // IconData icon = FontAwesomeIcons.x,
   }) {
     bool isActive = categoryId == _selectedCategory;
-    int percent = getCategoryPercentage(categoryId);
+    // int percent = getCategoryPercentage(categoryId);
     return GestureDetector(
       onTap: () => saveSelectedCategory(categoryId),
       child: Container(
@@ -216,7 +181,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     fontWeight: FontWeight.bold,
                     color: isActive ? Colors.white : Colors.black)),
             const Expanded(child: SizedBox()),
-            Text("$percent %",
+            Text("$percentage %",
                 style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,

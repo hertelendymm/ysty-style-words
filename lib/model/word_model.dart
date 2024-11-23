@@ -6,6 +6,7 @@ class Word {
   final String exampleSentence;
   final String article;
   final String category;
+  final int frequency; /// min: 1, max: 5
 
   Word({
     required this.wordId,
@@ -15,6 +16,7 @@ class Word {
     required this.exampleSentence,
     required this.article,
     required this.category,
+    required this.frequency,
   });
 
   factory Word.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class Word {
       exampleSentence: json['exampleSentence'],
       article: json['article'],
       category: json['category'],
+      frequency: json['frequency'],
     );
   }
 
