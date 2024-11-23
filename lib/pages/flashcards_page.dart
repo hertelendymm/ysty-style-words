@@ -73,7 +73,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       for (var n in flashcardContents[widget.category]!) {
         // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
-        if(knownWordIDs!.contains(newWord.wordId)){
+        if(knownWordIDs.contains(newWord.wordId)){
           knownWords.add(newWord);
         }else{
           notKnownWords.add(newWord);
@@ -217,6 +217,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                                 fontSize: 26.0, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
+                          /// TODO: Show real NativeAds
                           Container(
                             color: Colors.red,
                             width: MediaQuery.sizeOf(context).width,
