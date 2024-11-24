@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key, required this.onRefresh});
@@ -21,7 +23,8 @@ class _SettingsPageState extends State<SettingsPage> {
   final box = GetStorage();
   List<String> knownWordIDs = [];
   bool isLoading = true;
-  String allKnownWordsCounter = 'N/A';
+  int allKnownWordsCounter = -1;
+  int _highScore = 0;
 
   @override
   void initState() {
@@ -29,7 +32,15 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
     // _loadBoolIsEngLang();
     _loadLanguage();
+    _loadHighScore();
     allKnownWordsCounter = getKnownWordIDsSize();
+  }
+
+  Future<void> _loadHighScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _highScore = prefs.getInt('highScore') ?? 0;
+    });
   }
 
   // Future<void> _loadBoolIsEngLang() async {
@@ -38,6 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
   //     _isEngLang = prefs.getBool('isEngLang') ?? true;
   //   });
   // }
+
   Future<void> _loadLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -53,32 +65,29 @@ class _SettingsPageState extends State<SettingsPage> {
     widget.onRefresh();
   }
 
-  String getKnownWordIDsSize() {
+  int getKnownWordIDsSize() {
     // List<String>? myList = box.read('knownWordIDs');
     List<String>? myList = box.read('knownWordIDs')?.cast<String>();
     myList ??= [];
 
     box.write('my_list', myList);
-    return '${myList.length}';
+    return myList.length;
   }
 
   String getCEFRLevel(int vocabularyLevel) {
-    Map<String, int> cefrVocabularyLevels = {
-      "A1": 1500,
-      "A2": 2500,
-      "B1": 3250,
-      "B2": 3750,
-      "C1": 5000,
-      "C2": 35000
-    };
-
-    for (String level in cefrVocabularyLevels.keys) {
-      if (vocabularyLevel <= cefrVocabularyLevels[level]!) {
+    for (String level in settings_cefr_vocabulary_levels.keys) {
+      if (vocabularyLevel <= settings_cefr_vocabulary_levels[level]!) {
         return level;
       }
     }
-
     return "C2"; // Default to the highest level if not found
+  }
+
+  Future<void> _launchUrl({required String url}) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $uri');
+    }
   }
 
   @override
@@ -111,18 +120,20 @@ class _SettingsPageState extends State<SettingsPage> {
                             horizontal: 20.0, vertical: 50.0),
                         child: Column(
                           children: [
-                            allKnownWordsCounter == 'N/A'
-                                ? const CircularProgressIndicator(color: Colors.black)
-                                : Text(allKnownWordsCounter,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 80.0,
-                                    fontWeight: FontWeight.bold)),
+                            allKnownWordsCounter == -1
+                                ? const CircularProgressIndicator(
+                                    color: Colors.black)
+                                : Text('$allKnownWordsCounter',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 80.0,
+                                        fontWeight: FontWeight.bold)),
                             Text(settings_page_totalwords[_language]!,
                                 // "Your total word count",
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 18.0)),
-                            Text("CEFc",
+                            Text(
+                                "CEFR ${getCEFRLevel(allKnownWordsCounter)} ${settings_page_level[_language]}",
                                 // "Your total word count",
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 18.0)),
@@ -151,8 +162,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                         fontSize: 30.0,
                                         fontWeight: FontWeight.bold)),
                                 Text(
-                                  textAlign: TextAlign.center,
                                   settings_page_derdiedas[_language]!,
+                                  textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
                                   // "Der/Die/Das stat",
                                 ),
@@ -173,7 +184,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 horizontal: 20.0, vertical: 20.0),
                             child: Column(
                               children: [
-                                Text("75",
+                                Text("$_highScore",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 30.0,
@@ -190,7 +201,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 0.0),
                     const TitleWSeparator(title: "Spracheinstellungen"),
                     Expanded(
                       child: Row(
@@ -208,15 +219,91 @@ class _SettingsPageState extends State<SettingsPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10.0),
-                    TitleWSeparator(title: settings_page_links[_language]!),
-                    _tempLinkButton('Link 1'),
-                    _tempLinkButton('Link 2'),
-                    _tempLinkButton('Link 3'),
-                    _tempLinkButton('Link 4'),
-                    _tempLinkButton('Link 5'),
-                    _tempLinkButton('Link 6'),
-                    _tempLinkButton('More apps'),
+                    SizedBox(height: 0),
+                    TitleWSeparator(title: "About Me"),
+                    _tempLinkButton(
+                      title: "Maximilian",
+                      iconData: FontAwesomeIcons.solidUser,
+                      iconColor: Colors.black,
+                      urlLink: "https://hertelendymm.netlify.app/"
+                    ),
+                    _tempLinkButton(
+                      title: "ystystyle.com",
+                      iconData: FontAwesomeIcons.link,
+                      iconColor: Colors.lightBlue,
+                      urlLink: "https://hertelendymm.netlify.app/"
+                    ),
+                    _tempLinkButton(
+                      title: "BuyMeACoffee/ystystyle",
+                      iconData: FontAwesomeIcons.mugSaucer,
+                      iconColor: Colors.orange,
+                      urlLink: "https://buymeacoffee.com/ystystyle",
+                    ),
+                    SizedBox(height: 0),
+                    TitleWSeparator(title: "More apps"),
+                    _tempLinkButton(
+                      title: "Ysty Style",
+                      iconData: FontAwesomeIcons.android,
+                      iconColor: Colors.green,
+                      urlLink: "https://play.google.com/store/apps/developer?id=Ysty+Style&hl=hu"
+                    ),
+                    _tempLinkButton(
+                      title: "hertelendymm",
+                      iconData: FontAwesomeIcons.android,
+                      iconColor: Colors.green,
+                      urlLink: "https://play.google.com/store/apps/developer?id=hertelendymm&hl=hu"
+                    ),
+                    _tempLinkButton(
+                      title: "hertelendymm",
+                      iconData: FontAwesomeIcons.apple,
+                      iconColor: Colors.grey,
+                      urlLink: "https://apps.apple.com/at/developer/marton-maximilian-hertelendy/id1579520614?l=en"
+                    ),
+                    const SizedBox(height: 0.0),
+                    TitleWSeparator(title: "Social Media"),
+                    _tempLinkButton(
+                      title: "Discord",
+                      iconData: FontAwesomeIcons.discord,
+                      iconColor: Colors.indigo.shade300,
+                      urlLink: "https://discord.gg/feK4cj6"
+                    ),
+                    _tempLinkButton(
+                      title: "Instagram",
+                      iconData: FontAwesomeIcons.instagram,
+                      iconColor: Colors.deepOrangeAccent,
+                        urlLink: "https://www.instagram.com/ystystyle"
+                    ),
+                    _tempLinkButton(
+                      title: "Twitter/X",
+                      iconData: FontAwesomeIcons.xTwitter,
+                      iconColor: Colors.black,
+                        urlLink: "https://x.com/ystystyle"
+                    ),
+                    _tempLinkButton(
+                      title: "ProductHunt",
+                      iconData: FontAwesomeIcons.productHunt,
+                      iconColor: Colors.orange.shade800,
+                        urlLink: "https://www.producthunt.com/@hertelendymm/activity"
+                    ),
+                    SizedBox(height: 0),
+                    TitleWSeparator(title: "Legal notice"),
+                    _tempLinkButton(
+                      title: "Terms & Conditions",
+                      iconData: FontAwesomeIcons.fileContract,
+                      iconColor: Colors.grey,
+                    ),
+                    _tempLinkButton(
+                      title: "Privacy Policy",
+                      iconData: FontAwesomeIcons.fileContract,
+                      iconColor: Colors.grey,
+                    ),
+                    _tempLinkButton(
+                      title: "Icons and images",
+                      iconData: FontAwesomeIcons.fileLines,
+                      iconColor: Colors.grey,
+                    ),
+                    const SizedBox(height: 20),
+                    // _tempLinkButton('More apps'),
                   ],
                 ),
               ),
@@ -227,29 +314,48 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _tempLinkButton(String title) {
-    return Container(
-        padding: const EdgeInsets.all(20.0),
-        margin: const EdgeInsets.symmetric(vertical: 5.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.grey.shade300, width: 1),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style:
-                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.start,
-            ),
-            const Icon(
-              FontAwesomeIcons.arrowRight,
-              size: 30.0,
-            ),
-          ],
-        ));
+  Widget _tempLinkButton({
+    required String title,
+    required IconData iconData,
+    required Color iconColor,
+    String urlLink = "",
+  }) {
+    return GestureDetector(
+      onTap: () {
+        if (urlLink != "") {
+          _launchUrl(url: urlLink);
+        }
+      },
+      child: Container(
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.symmetric(vertical: 5.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: Colors.grey.shade300, width: 1),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(iconData, color: iconColor, size: 20.0),
+                  const SizedBox(width: 20.0),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 18.0, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+              const Icon(
+                FontAwesomeIcons.arrowRight,
+                size: 20.0,
+              ),
+            ],
+          )),
+    );
   }
 
   Widget _languageButton({required String buttonLanguage}) {

@@ -212,6 +212,11 @@ Map<String, int> settings_cefr_vocabulary_levels = <String, int>{
   "C2": 999999
 };
 
+Map<String, String> settings_page_level = <String, String>{
+  "english": "level",
+  "hungarian": "szint",
+};
+
 /// CATEGORIES =================================================================
 Map<String, dynamic> categories = <String, dynamic>{
   "food": {
