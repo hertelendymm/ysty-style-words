@@ -29,6 +29,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   final box = GetStorage();
   List<String> knownWordIDs = [];
   bool isDisplayCards = true;
+  final int _showingAdsFrequency = 10;
 
   @override
   void initState() {
@@ -86,19 +87,19 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       print("knownWords: $knownWords");
       print("notKnownWords: $notKnownWords");
 
-      /// If notKnownWords >= 6 load 6 notKnownWords into wordData
-      if(notKnownWords.length >= 6){
-        for(int i=0; i < 6; i++){
+      /// If notKnownWords >= _showingAdsFrequency load _showingAdsFrequency notKnownWords into wordData
+      if(notKnownWords.length >= _showingAdsFrequency){
+        for(int i=0; i < _showingAdsFrequency; i++){
           wordData.add(notKnownWords[i]);
         }
       }
-      /// If notKnownWords < 6 use knownWords to fill the 6 card places
+      /// If notKnownWords < _showingAdsFrequency use knownWords to fill the _showingAdsFrequency card places
       else {
         for(var n in notKnownWords){
           wordData.add(n);
         }
         int index = 0;
-        while(wordData.length < 6){
+        while(wordData.length < _showingAdsFrequency){
           wordData.add(knownWords[index]);
           index++;
         }
@@ -205,43 +206,47 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                         // const SizedBox(height: 40.0),
                       ],
                     )
-                  : Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 0.0),
-                          Text(
-                            flashcard_page_thank_you[widget.language]!,
-                            style: const TextStyle(
-                                fontSize: 26.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          /// TODO: Show real NativeAds
-                          Container(
-                            color: Colors.red,
-                            width: MediaQuery.sizeOf(context).width,
-                            height: MediaQuery.sizeOf(context).width * 0.8,
-                            child: const Center(
-                              child: Text(
-                                'Ad',
-                                style: TextStyle(fontSize: 30.0),
-                              ),
-                            ),
-                          ),
-                          Text(flashcard_page_ads_text[widget.language]!,
-                              style: const TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,),
-                          ButtonRounded(
-                            onPressed: () => _loadNewGameData(),
-                            text: flashcard_page_continue[widget.language]!,
-                          ),
-                        ],
-                      ),
-                    ),
+                  : _showNativeAdsView(),
             ),
+    );
+  }
+
+  Widget _showNativeAdsView(){
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 0.0),
+          Text(
+            flashcard_page_thank_you[widget.language]!,
+            style: const TextStyle(
+                fontSize: 26.0, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          /// TODO: Show real NativeAds
+          Container(
+            color: Colors.red,
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).width * 0.8,
+            child: const Center(
+              child: Text(
+                'Ad',
+                style: TextStyle(fontSize: 30.0),
+              ),
+            ),
+          ),
+          Text(flashcard_page_ads_text[widget.language]!,
+            style: const TextStyle(
+                fontSize: 16.0, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,),
+          ButtonRounded(
+            onPressed: () => _loadNewGameData(),
+            text: flashcard_page_continue[widget.language]!,
+          ),
+        ],
+      ),
     );
   }
 

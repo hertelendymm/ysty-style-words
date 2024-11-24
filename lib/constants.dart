@@ -203,6 +203,15 @@ Map<String, String> settings_page_links = <String, String>{
   "hungarian": "Linkek",
 };
 
+Map<String, int> settings_cefr_vocabulary_levels = <String, int>{
+  "A1": 1500,
+  "A2": 2500,
+  "B1": 3250,
+  "B2": 3750,
+  "C1": 5000,
+  "C2": 999999
+};
+
 /// CATEGORIES =================================================================
 Map<String, dynamic> categories = <String, dynamic>{
   "food": {

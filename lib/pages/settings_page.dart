@@ -62,6 +62,25 @@ class _SettingsPageState extends State<SettingsPage> {
     return '${myList.length}';
   }
 
+  String getCEFRLevel(int vocabularyLevel) {
+    Map<String, int> cefrVocabularyLevels = {
+      "A1": 1500,
+      "A2": 2500,
+      "B1": 3250,
+      "B2": 3750,
+      "C1": 5000,
+      "C2": 35000
+    };
+
+    for (String level in cefrVocabularyLevels.keys) {
+      if (vocabularyLevel <= cefrVocabularyLevels[level]!) {
+        return level;
+      }
+    }
+
+    return "C2"; // Default to the highest level if not found
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,6 +119,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                     fontSize: 80.0,
                                     fontWeight: FontWeight.bold)),
                             Text(settings_page_totalwords[_language]!,
+                                // "Your total word count",
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 18.0)),
+                            Text("CEFc",
                                 // "Your total word count",
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 18.0)),

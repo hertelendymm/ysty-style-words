@@ -8,7 +8,8 @@ import 'package:ysty_style_words/widgets/button_tts.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class DerDieDasPage extends StatefulWidget {
-  const DerDieDasPage({super.key, required this.category, required this.language});
+  const DerDieDasPage(
+      {super.key, required this.category, required this.language});
 
   final String category;
   final String language;
@@ -24,6 +25,8 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   String userAnswer = "";
   String? _selectedCategory;
   bool _isLoading = true;
+  bool _isAdViewUp = false;
+  final int _showingAdsFrequency = 10;
 
   @override
   void initState() {
@@ -34,7 +37,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     _loadNewGameData();
     // _loadSelectedCategory();
   }
-
 
   _loadNewGameData() {
     setState(() {
@@ -49,6 +51,16 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
       wordIndex = 0;
       userAnswer = "";
       _isLoading = false;
+    });
+  }
+
+  _checkForAds() {
+    setState(() {
+      if ((wordIndex + 1) % _showingAdsFrequency == 0) {
+        _isAdViewUp = true;
+      } else {
+        _getNextWord();
+      }
     });
   }
 
@@ -74,15 +86,17 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(_selectedCategory != widget.category){
+    if (_selectedCategory != widget.category) {
       _loadNewGameData();
     }
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: _isLoading
-            ? const CircularProgressIndicator(color: Colors.red)
-            : Padding(
+      body: _isLoading
+          ? const CircularProgressIndicator(color: Colors.red)
+          : SafeArea(
+              child: _isAdViewUp
+                  ? _showNativeAdsView()
+                  : Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: ["Verbs", "Numbers"].contains(widget.category)
                     ? _showNotAvailableForVerbs(widget.category)
@@ -91,7 +105,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                         children: [
                           // MainAppBar(updateParent: _refreshPage, selectedCategory: _selectedCategory.toString()),
                           Padding(
-                            padding:  const EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 0.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,7 +129,9 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              DerDieDasHelpPage(language: widget.language,))),
+                                              DerDieDasHelpPage(
+                                                language: widget.language,
+                                              ))),
                                   backgroundColor: Colors.grey.shade100,
                                   textColor: Colors.black,
                                   isIconWText: true,
@@ -130,10 +146,12 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20.0),
                                   child: ButtonRounded(
-                                      text: derdiedas_page_next[widget.language]!,
+                                      text:
+                                          derdiedas_page_next[widget.language]!,
                                       backgroundColor: Colors.green.shade800,
                                       textColor: Colors.white,
-                                      onPressed: () => _getNextWord()),
+                                      onPressed: () => _checkForAds()),
+                                  // onPressed: () => _getNextWord()),
                                 )
                               : Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -164,22 +182,64 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
                         ],
                       ),
               ),
+            ),
+    );
+  }
+
+  Widget _showNativeAdsView() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 0.0),
+          Text(
+            flashcard_page_thank_you[widget.language]!,
+            style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+
+          /// TODO: Show real NativeAds
+          Container(
+            color: Colors.red,
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).width * 0.8,
+            child: const Center(
+              child: Text(
+                'Ad',
+                style: TextStyle(fontSize: 30.0),
+              ),
+            ),
+          ),
+          Text(
+            flashcard_page_ads_text[widget.language]!,
+            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          ButtonRounded(
+            onPressed: () {
+              setState(() {
+                _isAdViewUp = false;
+                _getNextWord();
+              });
+            },
+            text: flashcard_page_continue[widget.language]!,
+          ),
+        ],
       ),
     );
   }
 
-  Widget _showCard(){
+  Widget _showCard() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 20.0, vertical: 0.0),
-      margin: const EdgeInsets.symmetric(
-          horizontal: 20.0, vertical: 0.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-              color: Colors.grey.shade300, width: 3),
+          border: Border.all(color: Colors.grey.shade300, width: 3),
           color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,27 +250,25 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40.0,
-                  color: isCorrectAnswerFound
-                      ? Colors.green
-                      : Colors.red)),
+                  color: isCorrectAnswerFound ? Colors.green : Colors.red)),
           const Text('------',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40.0)),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0)),
           Text(wordData[wordIndex].germanWord,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40.0)),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0)),
           const SizedBox(height: 14.0),
-          Text(widget.language == 'english' ? wordData[wordIndex].englishMeaning: wordData[wordIndex].hungarianMeaning,
+          Text(
+              widget.language == 'english'
+                  ? wordData[wordIndex].englishMeaning
+                  : wordData[wordIndex].hungarianMeaning,
               style: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0)),
           const SizedBox(height: 14.0),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 0.0, horizontal: 00.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 00.0),
             child: ButtonTts(
               text: wordData[wordIndex].germanWord,
               iconData: FontAwesomeIcons.play,
@@ -233,21 +291,29 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
         width: MediaQuery.sizeOf(context).width,
         height: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: Colors.black),
+            borderRadius: BorderRadius.circular(20.0), color: Colors.black),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text('Not Available',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0, color: Colors.white),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40.0,
+                      color: Colors.white),
                   textAlign: TextAlign.center),
               const SizedBox(height: 30.0),
-              Container(width: MediaQuery.sizeOf(context).width*0.3, height: 4, color: Colors.white),
+              Container(
+                  width: MediaQuery.sizeOf(context).width * 0.3,
+                  height: 4,
+                  color: Colors.white),
               const SizedBox(height: 30.0),
-              Text("This feature is not available for the '$category' category, as words in this category typically do not have a gender in German. \n\nPlease choose a different category to use this feature.",
+              Text(
+                  "This feature is not available for the '$category' category, as words in this category typically do not have a gender in German. \n\nPlease choose a different category to use this feature.",
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.white),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.white),
                   textAlign: TextAlign.justify)
             ]),
       ),
