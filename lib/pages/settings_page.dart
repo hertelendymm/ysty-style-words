@@ -285,6 +285,12 @@ class _SettingsPageState extends State<SettingsPage> {
                       iconColor: Colors.orange.shade800,
                         urlLink: "https://www.producthunt.com/@hertelendymm/activity"
                     ),
+                    _tempLinkButton(
+                      title: "GitHub",
+                      iconData: FontAwesomeIcons.github,
+                      iconColor: Colors.black,
+                        urlLink: "https://github.com/hertelendymm"
+                    ),
                     SizedBox(height: 0),
                     TitleWSeparator(title: "Legal notice"),
                     _tempLinkButton(
