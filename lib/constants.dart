@@ -189,13 +189,13 @@ Map<String, String> settings_page_totalwords = <String, String>{
 };
 
 Map<String, String> settings_page_derdiedas = <String, String>{
-  "english": "Der/Die/Das stat",
-  "hungarian": "Der/Die/Das találatod",
+  "english": "Der/Die/Das \n(last 100)",
+  "hungarian": "Der/Die/Das \n(utolsó 100)",
 };
 
 Map<String, String> settings_page_timetrial = <String, String>{
-  "english": "Time Trial Score",
-  "hungarian": "Időpróba rekord",
+  "english": "Time Trial \nScore",
+  "hungarian": "Időpróba \nrekord",
 };
 
 Map<String, String> settings_page_links = <String, String>{

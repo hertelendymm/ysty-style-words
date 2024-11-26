@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
+import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 import 'package:flutter/material.dart';
@@ -150,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
                                   color: Colors.grey.shade300, width: 1),
-                              color: Colors.grey.shade100,
+                              // color: Colors.grey.shade100,
                             ),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 20.0),
@@ -164,6 +165,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Text(
                                   settings_page_derdiedas[_language]!,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   // "Der/Die/Das stat",
                                 ),
@@ -178,7 +180,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
                                   color: Colors.grey.shade300, width: 1),
-                              color: Colors.grey.shade100,
+                                  // color: Colors.grey.shade300, width: 1),
+                              // color: Colors.grey.shade100,
                             ),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 20.0),
@@ -232,6 +235,17 @@ class _SettingsPageState extends State<SettingsPage> {
                       iconData: FontAwesomeIcons.link,
                       iconColor: Colors.lightBlue,
                       urlLink: "https://hertelendymm.netlify.app/"
+                    ),
+                    SizedBox(height: 0),
+                    TitleWSeparator(title: "Support"),
+                    _tempLinkButton(
+                      title: "Watch a video ad",
+                      iconData: FontAwesomeIcons.circlePlay,
+                      iconColor: Colors.orange,
+                      urlLink: "",
+                      function: (){
+                        /// TODO: Ad a RewardedAds here
+                      }
                     ),
                     _tempLinkButton(
                       title: "BuyMeACoffee/ystystyle",
@@ -325,11 +339,15 @@ class _SettingsPageState extends State<SettingsPage> {
     required IconData iconData,
     required Color iconColor,
     String urlLink = "",
+    Function? function,
   }) {
     return GestureDetector(
       onTap: () {
         if (urlLink != "") {
           _launchUrl(url: urlLink);
+        }
+        if(function != null){
+          function();
         }
       },
       child: Container(
