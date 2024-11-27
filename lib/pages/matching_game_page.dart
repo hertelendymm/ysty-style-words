@@ -1,12 +1,17 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import '../word_lists/flashcard_content.dart';
+
+const int maxFailedLoadAttempts = 10;
 
 class MatchingGamePage extends StatefulWidget {
   const MatchingGamePage({
@@ -50,11 +55,20 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
   int _matchCounter = 0; // founded good matches (answers)
   int _delayedWordIndex = -1;
   int _delayedMeaningIndex = -1;
+  InterstitialAd? _interstitialAd;
+  int _numInterstitialLoadAttempts = 0;
+  static final AdRequest request = AdRequest(
+    keywords: <String>['foo', 'bar'],
+    contentUrl: 'http://foo.com/bar.html',
+    nonPersonalizedAds: true,
+  );
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    /// Load ads
+    _createInterstitialAd();
 
     /// Setup when the game begins
     if (allWords.isEmpty) {
@@ -80,6 +94,60 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
     checkNext2();
     // _loadNext5Word();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd?.dispose();
+  }
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/1033173712'
+            : 'ca-app-pub-3940256099942544/4411468910',
+        request: request,
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (InterstitialAd ad) {
+            print('$ad loaded');
+            _interstitialAd = ad;
+            _numInterstitialLoadAttempts = 0;
+            _interstitialAd!.setImmersiveMode(true);
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('InterstitialAd failed to load: $error.');
+            _numInterstitialLoadAttempts += 1;
+            _interstitialAd = null;
+            if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
+              _createInterstitialAd();
+            }
+          },
+        ));
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd == null) {
+      print('Warning: attempt to show interstitial before loaded.');
+      return;
+    }
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _createInterstitialAd();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createInterstitialAd();
+      },
+    );
+    _interstitialAd!.show();
+    _interstitialAd = null;
+  }
+
 
   checkNext2() {
     /// Check the user already went through all the words, if true reshuffle list and reset index counter

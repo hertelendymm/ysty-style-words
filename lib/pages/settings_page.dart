@@ -1,6 +1,9 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
@@ -8,6 +11,8 @@ import 'package:ysty_style_words/widgets/appbar_secondary.dart';
 import 'package:ysty_style_words/widgets/title_w_sparator.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+const int maxFailedLoadAttempts = 10;
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key, required this.onRefresh});
@@ -27,14 +32,29 @@ class _SettingsPageState extends State<SettingsPage> {
   int allKnownWordsCounter = -1;
   int _highScore = 0;
 
+  RewardedAd? _rewardedAd;
+  int _numRewardedLoadAttempts = 0;
+  static final AdRequest request = AdRequest(
+    keywords: <String>['foo', 'bar'],
+    contentUrl: 'http://foo.com/bar.html',
+    nonPersonalizedAds: true,
+  );
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // _loadBoolIsEngLang();
     _loadLanguage();
+    _createRewardedAd();
     _loadHighScore();
     allKnownWordsCounter = getKnownWordIDsSize();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _rewardedAd?.dispose();
   }
 
   Future<void> _loadHighScore() async {
@@ -91,6 +111,58 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  void _createRewardedAd() {
+    RewardedAd.load(
+        adUnitId: Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/5224354917'
+            : 'ca-app-pub-3940256099942544/1712485313',
+        request: request,
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            print('$ad loaded.');
+            _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
+            _rewardedAd = null;
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
+              _createRewardedAd();
+            }
+          },
+        ));
+  }
+
+  void _showRewardedAd() {
+    print('_showRewardedAd ============= yey');
+    if (_rewardedAd == null) {
+      print('Warning: attempt to show rewarded before loaded.');
+      return;
+    }
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _createRewardedAd();
+      },
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createRewardedAd();
+      },
+    );
+
+    _rewardedAd!.setImmersiveMode(true);
+    _rewardedAd!.show(
+        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+    });
+    _rewardedAd = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,8 +185,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           horizontal: 0.0, vertical: 5.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        border:
-                            Border.all(color: Colors.grey.shade300, width: 1),
+                        // border:
+                        //     Border.all(color: Colors.grey.shade300, width: 1),
+                        color: Colors.grey.shade100,
                       ),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -132,12 +205,12 @@ class _SettingsPageState extends State<SettingsPage> {
                             Text(settings_page_totalwords[_language]!,
                                 // "Your total word count",
                                 style: const TextStyle(
-                                    color: Colors.grey, fontSize: 18.0)),
+                                    color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 18.0)),
                             Text(
                                 "CEFR ${getCEFRLevel(allKnownWordsCounter)} ${settings_page_level[_language]}",
                                 // "Your total word count",
                                 style: const TextStyle(
-                                    color: Colors.grey, fontSize: 18.0)),
+                                    color: Colors.black54, fontSize: 18.0)),
                           ],
                         ),
                       ),
@@ -149,8 +222,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                  color: Colors.grey.shade300, width: 1),
+                              color: Colors.grey.shade100,
+                              // border: Border.all(
+                              //     color: Colors.grey.shade300, width: 1),
                               // color: Colors.grey.shade100,
                             ),
                             padding: const EdgeInsets.symmetric(
@@ -167,6 +241,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.black54),
                                   // "Der/Die/Das stat",
                                 ),
                               ],
@@ -177,10 +252,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                  color: Colors.grey.shade300, width: 1),
-                                  // color: Colors.grey.shade300, width: 1),
+                              // border: Border.all(
+                              //     color: Colors.grey.shade300, width: 1),
+                              // color: Colors.grey.shade300, width: 1),
                               // color: Colors.grey.shade100,
                             ),
                             padding: const EdgeInsets.symmetric(
@@ -197,6 +273,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   // "High Score",
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.black54),
                                 ),
                               ],
                             ),
@@ -225,17 +302,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     SizedBox(height: 0),
                     TitleWSeparator(title: "About Me"),
                     _tempLinkButton(
-                      title: "Maximilian",
-                      iconData: FontAwesomeIcons.solidUser,
-                      iconColor: Colors.black,
-                      urlLink: "https://hertelendymm.netlify.app/"
-                    ),
+                        title: "Maximilian",
+                        iconData: FontAwesomeIcons.solidUser,
+                        iconColor: Colors.black,
+                        urlLink: "https://hertelendymm.netlify.app/"),
                     _tempLinkButton(
-                      title: "ystystyle.com",
-                      iconData: FontAwesomeIcons.link,
-                      iconColor: Colors.lightBlue,
-                      urlLink: "https://hertelendymm.netlify.app/"
-                    ),
+                        title: "ystystyle.com",
+                        iconData: FontAwesomeIcons.link,
+                        iconColor: Colors.lightBlue,
+                        urlLink: "https://hertelendymm.netlify.app/"),
                     SizedBox(height: 0),
                     TitleWSeparator(title: "Support"),
                     _tempLinkButton(
@@ -243,9 +318,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       iconData: FontAwesomeIcons.circlePlay,
                       iconColor: Colors.orange,
                       urlLink: "",
-                      function: (){
-                        /// TODO: Ad a RewardedAds here
-                      }
+                      function: () {
+                        _showRewardedAd();
+                      },
+                      // function: (){
+                      /// TODO: Ad a RewardedAds here
+                      // _showRewardedAd();
+                      // }
                     ),
                     _tempLinkButton(
                       title: "BuyMeACoffee/ystystyle",
@@ -256,55 +335,51 @@ class _SettingsPageState extends State<SettingsPage> {
                     SizedBox(height: 0),
                     TitleWSeparator(title: "More apps"),
                     _tempLinkButton(
-                      title: "Ysty Style",
-                      iconData: FontAwesomeIcons.android,
-                      iconColor: Colors.green,
-                      urlLink: "https://play.google.com/store/apps/developer?id=Ysty+Style&hl=hu"
-                    ),
+                        title: "Ysty Style",
+                        iconData: FontAwesomeIcons.android,
+                        iconColor: Colors.green,
+                        urlLink:
+                            "https://play.google.com/store/apps/developer?id=Ysty+Style&hl=hu"),
                     _tempLinkButton(
-                      title: "hertelendymm",
-                      iconData: FontAwesomeIcons.android,
-                      iconColor: Colors.green,
-                      urlLink: "https://play.google.com/store/apps/developer?id=hertelendymm&hl=hu"
-                    ),
+                        title: "hertelendymm",
+                        iconData: FontAwesomeIcons.android,
+                        iconColor: Colors.green,
+                        urlLink:
+                            "https://play.google.com/store/apps/developer?id=hertelendymm&hl=hu"),
                     _tempLinkButton(
-                      title: "hertelendymm",
-                      iconData: FontAwesomeIcons.apple,
-                      iconColor: Colors.grey,
-                      urlLink: "https://apps.apple.com/at/developer/marton-maximilian-hertelendy/id1579520614?l=en"
-                    ),
+                        title: "hertelendymm",
+                        iconData: FontAwesomeIcons.apple,
+                        iconColor: Colors.grey,
+                        urlLink:
+                            "https://apps.apple.com/at/developer/marton-maximilian-hertelendy/id1579520614?l=en"),
                     const SizedBox(height: 0.0),
                     TitleWSeparator(title: "Social Media"),
                     _tempLinkButton(
-                      title: "Discord",
-                      iconData: FontAwesomeIcons.discord,
-                      iconColor: Colors.indigo.shade300,
-                      urlLink: "https://discord.gg/feK4cj6"
-                    ),
+                        title: "Discord",
+                        iconData: FontAwesomeIcons.discord,
+                        iconColor: Colors.indigo.shade300,
+                        urlLink: "https://discord.gg/feK4cj6"),
                     _tempLinkButton(
-                      title: "Instagram",
-                      iconData: FontAwesomeIcons.instagram,
-                      iconColor: Colors.deepOrangeAccent,
-                        urlLink: "https://www.instagram.com/ystystyle"
-                    ),
+                        title: "Instagram",
+                        iconData: FontAwesomeIcons.instagram,
+                        iconColor: Colors.deepOrangeAccent,
+                        urlLink: "https://www.instagram.com/ystystyle"),
                     _tempLinkButton(
-                      title: "Twitter/X",
-                      iconData: FontAwesomeIcons.xTwitter,
-                      iconColor: Colors.black,
-                        urlLink: "https://x.com/ystystyle"
-                    ),
+                        title: "Twitter/X",
+                        iconData: FontAwesomeIcons.xTwitter,
+                        iconColor: Colors.black,
+                        urlLink: "https://x.com/ystystyle"),
                     _tempLinkButton(
-                      title: "ProductHunt",
-                      iconData: FontAwesomeIcons.productHunt,
-                      iconColor: Colors.orange.shade800,
-                        urlLink: "https://www.producthunt.com/@hertelendymm/activity"
-                    ),
+                        title: "ProductHunt",
+                        iconData: FontAwesomeIcons.productHunt,
+                        iconColor: Colors.orange.shade800,
+                        urlLink:
+                            "https://www.producthunt.com/@hertelendymm/activity"),
                     _tempLinkButton(
-                      title: "GitHub",
-                      iconData: FontAwesomeIcons.github,
-                      iconColor: Colors.black,
-                        urlLink: "https://github.com/hertelendymm"
-                    ),
+                        title: "GitHub",
+                        iconData: FontAwesomeIcons.github,
+                        iconColor: Colors.black,
+                        urlLink: "https://github.com/hertelendymm"),
                     SizedBox(height: 0),
                     TitleWSeparator(title: "Legal notice"),
                     _tempLinkButton(
@@ -346,9 +421,11 @@ class _SettingsPageState extends State<SettingsPage> {
         if (urlLink != "") {
           _launchUrl(url: urlLink);
         }
-        if(function != null){
+        if (function != null) {
           function();
+          print('hy');
         }
+        print('bye');
       },
       child: Container(
           padding: const EdgeInsets.all(20.0),
