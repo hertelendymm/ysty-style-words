@@ -111,18 +111,14 @@ class _MatchingPageState extends State<MatchingPage> {
                 // text: "Start Game",
                 onPressed: () {
                   _selectedCategory = widget.category;
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => MatchingGamePage(
-                  //               category: _selectedCategory!,
-                  //               highScore: _highScore,
-                  //               language: widget.language,
-                  //             )));
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const NativeAdsScreen()));
+                          builder: (context) => MatchingGamePage(
+                                category: _selectedCategory!,
+                                highScore: _highScore,
+                                language: widget.language,
+                              )));
                 },
               ),
             ),

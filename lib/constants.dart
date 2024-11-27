@@ -335,7 +335,7 @@ Map<String, dynamic> categories = <String, dynamic>{
     'icon': FontAwesomeIcons.microchip,
   },
   "hobbies": {
-    "english": "hobbies",
+    "english": "Hobbies",
     "hungarian": "Hobbik",
     'icon': FontAwesomeIcons.gamepad,
   },

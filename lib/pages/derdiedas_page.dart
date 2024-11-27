@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/pages/derdiedas_help_page.dart';
+import 'package:ysty_style_words/services/native_ads_helper.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/button_tts.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
@@ -26,7 +27,8 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   String? _selectedCategory;
   bool _isLoading = true;
   bool _isAdViewUp = false;
-  final int _showingAdsFrequency = 10;
+  final int _showingAdsFrequencyBetweenCards = 10;
+  final NativeAdHelper _adHelper = NativeAdHelper();
 
   @override
   void initState() {
@@ -38,7 +40,14 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     // _loadSelectedCategory();
   }
 
+  @override
+  void dispose() {
+    _adHelper.dispose();
+    super.dispose();
+  }
+
   _loadNewGameData() {
+    _adHelper.loadAd();
     setState(() {
       _selectedCategory = widget.category;
       wordData = [];
@@ -56,7 +65,7 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
 
   _checkForAds() {
     setState(() {
-      if ((wordIndex + 1) % _showingAdsFrequency == 0) {
+      if ((wordIndex + 1) % _showingAdsFrequencyBetweenCards == 0) {
         _isAdViewUp = true;
       } else {
         _getNextWord();
@@ -201,17 +210,18 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
           ),
 
           /// TODO: Show real NativeAds
-          Container(
-            color: Colors.red,
-            width: MediaQuery.sizeOf(context).width,
-            height: MediaQuery.sizeOf(context).width * 0.8,
-            child: const Center(
-              child: Text(
-                'Ad',
-                style: TextStyle(fontSize: 30.0),
-              ),
-            ),
-          ),
+          _adHelper.getAdWidget(),
+          // Container(
+          //   color: Colors.red,
+          //   width: MediaQuery.sizeOf(context).width,
+          //   height: MediaQuery.sizeOf(context).width * 0.8,
+          //   child: const Center(
+          //     child: Text(
+          //       'Ad',
+          //       style: TextStyle(fontSize: 30.0),
+          //     ),
+          //   ),
+          // ),
           Text(
             flashcard_page_ads_text[widget.language]!,
             style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),

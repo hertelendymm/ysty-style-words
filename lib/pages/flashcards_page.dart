@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/model/word_model.dart';
+import 'package:ysty_style_words/services/native_ads_helper.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/button_tts.dart';
 import 'package:ysty_style_words/widgets/native_ad.dart';
@@ -30,7 +31,8 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   final box = GetStorage();
   List<String> knownWordIDs = [];
   bool isDisplayCards = true;
-  final int _showingAdsFrequency = 10;
+  final int _showingAdsFrequencyBetweenCards = 10;
+  final NativeAdHelper _adHelper = NativeAdHelper();
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   @override
   void dispose() {
     controller.dispose();
+    _adHelper.dispose();
     super.dispose();
   }
 
@@ -59,6 +62,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
   }
 
   _loadNewGameData() {
+    _adHelper.loadAd();
     setState(() {
       _isLoading = true;
 
@@ -90,8 +94,8 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
       print("notKnownWords: $notKnownWords");
 
       /// If notKnownWords >= _showingAdsFrequency load _showingAdsFrequency notKnownWords into wordData
-      if(notKnownWords.length >= _showingAdsFrequency){
-        for(int i=0; i < _showingAdsFrequency; i++){
+      if(notKnownWords.length >= _showingAdsFrequencyBetweenCards){
+        for(int i=0; i < _showingAdsFrequencyBetweenCards; i++){
           wordData.add(notKnownWords[i]);
         }
       }
@@ -101,7 +105,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
           wordData.add(n);
         }
         int index = 0;
-        while(wordData.length < _showingAdsFrequency){
+        while(wordData.length < _showingAdsFrequencyBetweenCards){
           wordData.add(knownWords[index]);
           index++;
         }
@@ -228,7 +232,9 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
             textAlign: TextAlign.center,
           ),
           /// TODO: Show real NativeAds
-          NativeAdsScreen(),
+          _adHelper.getAdWidget(),
+          // nativeAdLoader.getNativeAdWidget(),
+          // NativeAdsScreen(),
           // Container(
           //   color: Colors.grey.shade100,
           //   width: MediaQuery.sizeOf(context).width,
