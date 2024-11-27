@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
+import 'package:ysty_style_words/widgets/native_ad.dart';
 
 import 'matching_game_page.dart';
 
@@ -66,16 +67,16 @@ class _MatchingPageState extends State<MatchingPage> {
               // padding: const EdgeInsets.all(0.0),
               // decoration: BoxDecoration(
               //   borderRadius: BorderRadius.circular(250.0),
-                // Half the height for a circular shape
-                // color: Colors.grey.shade100,
+              // Half the height for a circular shape
+              // color: Colors.grey.shade100,
               // ),
               child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Image.asset('assets/icon/stopwatch.png',
-                        width: MediaQuery.sizeOf(context).width * 0.5,
-                        height: MediaQuery.sizeOf(context).width * 0.5),
-                  )),
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Image.asset('assets/icon/stopwatch.png',
+                    width: MediaQuery.sizeOf(context).width * 0.5,
+                    height: MediaQuery.sizeOf(context).width * 0.5),
+              )),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0.0),
@@ -110,14 +111,18 @@ class _MatchingPageState extends State<MatchingPage> {
                 // text: "Start Game",
                 onPressed: () {
                   _selectedCategory = widget.category;
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => MatchingGamePage(
+                  //               category: _selectedCategory!,
+                  //               highScore: _highScore,
+                  //               language: widget.language,
+                  //             )));
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MatchingGamePage(
-                                category: _selectedCategory!,
-                                highScore: _highScore,
-                                language: widget.language,
-                              )));
+                          builder: (context) => const NativeAdsScreen()));
                 },
               ),
             ),

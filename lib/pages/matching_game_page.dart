@@ -304,7 +304,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
                         iconData: FontAwesomeIcons.solidStar,
                         numberValue: (_matchCounter - _mistakeCounter),
 
-                        /// TODO: decrease reaming time duration or count mistakes 2x for score calculations
+                        /// TODO: decrease remaining time duration or count mistakes 2x for score calculations
                         // numberValue: (_matchCounter - (_mistakeCounter * 2)),
                       ),
                       _resultsCard(
@@ -517,6 +517,7 @@ class _FlashcardsPageState extends State<MatchingGamePage> {
         print('Countdown Started');
       },
       onComplete: () {
+        _showInterstitialAd();
         print('Countdown Ended');
         setState(() {
           _isResultsPageOn = true;
