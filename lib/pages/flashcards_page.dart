@@ -7,7 +7,6 @@ import 'package:ysty_style_words/model/word_model.dart';
 import 'package:ysty_style_words/services/native_ads_helper.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/button_tts.dart';
-import 'package:ysty_style_words/widgets/native_ad.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
 
 class FlashcardsPage extends StatefulWidget {

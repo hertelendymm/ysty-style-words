@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ysty_style_words/constants.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
-import 'package:ysty_style_words/widgets/native_ad.dart';
 
 import 'matching_game_page.dart';
 
