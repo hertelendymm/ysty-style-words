@@ -1,6 +1,9 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-/// FLASHCARD PAGE ==============================================================
+/// APP VERSION ================================================================
+String appVersionNumberTitle = "1.0.0";
+
+/// FLASHCARD PAGE =============================================================
 Map<String, String> flashcard_page_flip = <String, String>{
   "english": "Tap card to flip",
   // "english": "Tap to flip",
@@ -182,7 +185,7 @@ Map<String, String> matching_game_page_description = <String, String>{
   "hungarian": "Verseny az idővel a szavak párosításáért",
 };
 
-/// SETTINGS PAGE ===========================================================
+/// SETTINGS PAGE ==============================================================
 Map<String, String> settings_page_totalwords = <String, String>{
   "english": "Your total word count",
   "hungarian": "Eddig megtanult szavaid száma",

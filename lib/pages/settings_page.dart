@@ -283,21 +283,19 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const SizedBox(height: 0.0),
                     const TitleWSeparator(title: "Spracheinstellungen"),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                              child:
-                                  _languageButton(buttonLanguage: "english")),
-                          // isActive: _language == "english", isEngLangCard: true)),
-                          const SizedBox(width: 20.0),
-                          Flexible(
-                              child:
-                                  _languageButton(buttonLanguage: "hungarian")),
-                          // isActive: _language == "hungarian", isEngLangCard: false)),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            child:
+                                Container(child: _languageButton(buttonLanguage: "english"))),
+                        // isActive: _language == "english", isEngLangCard: true)),
+                        const SizedBox(width: 20.0),
+                        Expanded(
+                            child:
+                                Container(child: _languageButton(buttonLanguage: "hungarian"))),
+                        // isActive: _language == "hungarian", isEngLangCard: false)),
+                      ],
                     ),
                     SizedBox(height: 0),
                     TitleWSeparator(title: "About Me"),
@@ -397,7 +395,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       iconData: FontAwesomeIcons.fileLines,
                       iconColor: Colors.grey,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 40),
+                    Center(child: Text('App version: $appVersionNumberTitle', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
+                    const SizedBox(height: 40),
                     // _tempLinkButton('More apps'),
                   ],
                 ),
