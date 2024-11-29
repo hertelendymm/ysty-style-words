@@ -7,6 +7,7 @@ import 'package:ysty_style_words/services/native_ads_helper.dart';
 import 'package:ysty_style_words/widgets/button_rounded.dart';
 import 'package:ysty_style_words/widgets/button_tts.dart';
 import 'package:ysty_style_words/word_lists/flashcard_content.dart';
+import 'package:get_storage/get_storage.dart';
 
 class DerDieDasPage extends StatefulWidget {
   const DerDieDasPage(
@@ -29,6 +30,8 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
   bool _isAdViewUp = false;
   final int _showingAdsFrequencyBetweenCards = 10;
   final NativeAdHelper _adHelper = NativeAdHelper();
+  final box = GetStorage();
+  List<bool> last100game = [];
 
   @override
   void initState() {
@@ -46,7 +49,16 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
     super.dispose();
   }
 
+  List<bool> getLast100GameResults(){
+    List<bool>? myList = box.read('derDieDasLast100')?.cast<String>();
+    myList ??= [];
+
+    box.write('my_list', myList);
+    return myList;
+  }
+
   _loadNewGameData() {
+    last100game = getLast100GameResults();
     _adHelper.loadAd();
     setState(() {
       _selectedCategory = widget.category;
@@ -211,17 +223,6 @@ class _DerDieDasPageState extends State<DerDieDasPage> {
 
           /// TODO: Show real NativeAds
           _adHelper.getAdWidget(),
-          // Container(
-          //   color: Colors.red,
-          //   width: MediaQuery.sizeOf(context).width,
-          //   height: MediaQuery.sizeOf(context).width * 0.8,
-          //   child: const Center(
-          //     child: Text(
-          //       'Ad',
-          //       style: TextStyle(fontSize: 30.0),
-          //     ),
-          //   ),
-          // ),
           Text(
             flashcard_page_ads_text[widget.language]!,
             style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),

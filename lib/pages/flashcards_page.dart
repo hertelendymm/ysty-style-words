@@ -77,7 +77,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
 
       /// Separate words in category based on the knownWordIDs list
       for (var n in flashcardContents[widget.category]!) {
-        // for (var n in flashcardContents[_selectedCategory!.toLowerCase()]!) {
         Word newWord = Word.fromJson(n);
         if(knownWordIDs.contains(newWord.wordId)){
           knownWords.add(newWord);
@@ -232,20 +231,6 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
           ),
           /// TODO: Show real NativeAds
           _adHelper.getAdWidget(),
-          // nativeAdLoader.getNativeAdWidget(),
-          // NativeAdsScreen(),
-          // Container(
-          //   color: Colors.grey.shade100,
-          //   width: MediaQuery.sizeOf(context).width,
-          //   height: MediaQuery.sizeOf(context).width * 0.8,
-          //   child: NativeAdsScreen(),
-          //   // child: const Center(
-          //   //   child: Text(
-          //   //     'Ad',
-          //   //     style: TextStyle(fontSize: 30.0),
-          //   //   ),
-          //   // ),
-          // ),
           Text(flashcard_page_ads_text[widget.language]!,
             style: const TextStyle(
                 fontSize: 16.0, fontWeight: FontWeight.bold),

@@ -205,7 +205,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             Text(settings_page_totalwords[_language]!,
                                 // "Your total word count",
                                 style: const TextStyle(
-                                    color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 18.0)),
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0)),
                             Text(
                                 "CEFR ${getCEFRLevel(allKnownWordsCounter)} ${settings_page_level[_language]}",
                                 // "Your total word count",
@@ -287,14 +289,14 @@ class _SettingsPageState extends State<SettingsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                            child:
-                                Container(child: _languageButton(buttonLanguage: "english"))),
-                        // isActive: _language == "english", isEngLangCard: true)),
+                            child: Container(
+                                child: _languageButton(
+                                    buttonLanguage: "english"))),
                         const SizedBox(width: 20.0),
                         Expanded(
-                            child:
-                                Container(child: _languageButton(buttonLanguage: "hungarian"))),
-                        // isActive: _language == "hungarian", isEngLangCard: false)),
+                            child: Container(
+                                child: _languageButton(
+                                    buttonLanguage: "hungarian"))),
                       ],
                     ),
                     SizedBox(height: 0),
@@ -396,7 +398,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       iconColor: Colors.grey,
                     ),
                     const SizedBox(height: 40),
-                    Center(child: Text('App version: $appVersionNumberTitle', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
+                    Center(
+                        child: Text(
+                      'App version: $appVersionNumberTitle',
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    )),
                     const SizedBox(height: 40),
                     // _tempLinkButton('More apps'),
                   ],
