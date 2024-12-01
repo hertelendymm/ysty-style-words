@@ -58,25 +58,25 @@ class _MatchingPageState extends State<MatchingPage> {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 40.0),
                 textAlign: TextAlign.center),
-            Container(
-              // height: 200,
-              // width: 200,
-              height: MediaQuery.sizeOf(context).width * 0.5,
-              width: MediaQuery.sizeOf(context).width * 0.5,
-              // padding: const EdgeInsets.all(0.0),
-              // decoration: BoxDecoration(
-              //   borderRadius: BorderRadius.circular(250.0),
-              // Half the height for a circular shape
-              // color: Colors.grey.shade100,
-              // ),
-              child: Center(
-                  child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Image.asset('assets/icon/stopwatch.png',
-                    width: MediaQuery.sizeOf(context).width * 0.5,
-                    height: MediaQuery.sizeOf(context).width * 0.5),
-              )),
-            ),
+            // Container(
+            //   // height: 200,
+            //   // width: 200,
+            //   height: MediaQuery.sizeOf(context).width * 0.5,
+            //   width: MediaQuery.sizeOf(context).width * 0.5,
+            //   // padding: const EdgeInsets.all(0.0),
+            //   // decoration: BoxDecoration(
+            //   //   borderRadius: BorderRadius.circular(250.0),
+            //   // Half the height for a circular shape
+            //   // color: Colors.grey.shade100,
+            //   // ),
+            //   child: Center(
+            //       child: Padding(
+            //     padding: const EdgeInsets.only(left: 10.0),
+            //     child: Image.asset('assets/icon/stopwatch.png',
+            //         width: MediaQuery.sizeOf(context).width * 0.5,
+            //         height: MediaQuery.sizeOf(context).width * 0.5),
+            //   )),
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0.0),
               child: Column(

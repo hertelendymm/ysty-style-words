@@ -21,7 +21,8 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   NavigationStatus _navigationStatus = NavigationStatus.flashcardsNav;
-  bool _isLoading = true;
+  bool _isLoadingLanguage = true;
+  bool _isLoadingCategory = true;
   String? _selectedCategory;
   // bool _isEngLang = true;
   String _language = "english";
@@ -41,13 +42,17 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 
   Future<void> _loadLanguage() async {
+    _isLoadingLanguage =  true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _language = prefs.getString('language') ?? "english";
     });
+    print('language: $_language');
+    _isLoadingLanguage =  false;
   }
 
   Future<void> _loadSelectedCategory() async {
+    _isLoadingCategory = true;
     // _isLoading = true;
     print("=+=+===+==++===+==");
     String? categoryName = await CategoryService.loadSelectedCategory();
@@ -55,13 +60,13 @@ class _NavigationPageState extends State<NavigationPage> {
       _selectedCategory = categoryName;
     });
     // _isLoading = false; // Update loading state after data is loaded
+    _isLoadingCategory = false;
   }
 
   _updatePages(){
-    _isLoading = true;
     _loadSelectedCategory();
     _loadLanguage();
-    _isLoading = false; // Update loading state after data is loaded
+    // Update loading state after data is loaded
   }
 
   @override
@@ -74,7 +79,9 @@ class _NavigationPageState extends State<NavigationPage> {
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 0.0),
                 // padding: const EdgeInsets.only(bottom: 60.0),
-                child: Column(
+                child: (_isLoadingLanguage || _isLoadingCategory)
+                    ? const LoadingScreen()
+                    : Column(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AppBarMain(
@@ -162,10 +169,10 @@ class _NavigationPageState extends State<NavigationPage> {
 
   _showNavPage() {
     print("_showNavPage");
-    if (_isLoading) {
-      print('loading');
-      return const LoadingScreen();
-    } else {
+    // if (_isLoadingLanguage || _isLoadingCategory) {
+    //   print('loading');
+    //   return const LoadingScreen();
+    // } else {
       switch (_navigationStatus) {
         case NavigationStatus.flashcardsNav:
           return FlashcardsPage(category: _selectedCategory!, language: _language);
@@ -177,6 +184,6 @@ class _NavigationPageState extends State<NavigationPage> {
           return const LoadingScreen();
           // return FlashcardsPage(category: _selectedCategory!);
       }
-    }
+    // }
   }
 }
